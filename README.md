@@ -81,7 +81,7 @@ It will create the following schema:
 	add_index "users", :payment_email
 	add_index "users", :role_id
 
-#### `property()`
+#### property()
 
 Use `property` to define and map DB columns. It accepts a number of arguments:
 
@@ -89,7 +89,7 @@ Use `property` to define and map DB columns. It accepts a number of arguments:
 2. SQL type of the column, same as the ones provided by ActiveRecord migrations.
 3. Other options, same as the ones provided by ActiveRecord migrations.
 
-#### `add_index()`
+#### add_index()
 
 Use `add_index` to add DB indexes. It accepts a number of arguments:
 

@@ -2,6 +2,9 @@ raise "Please install the AutoMigrations plugin from http://github.com/pjhyett/a
 
 require 'datamappify/associations'
 require 'datamappify/collection'
+require 'datamappify/fake/column'
+require 'datamappify/fake/connection'
+require 'datamappify/fake/index'
 require 'datamappify/resource'
 require 'datamappify/schema_dumper'
 

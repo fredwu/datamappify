@@ -7,16 +7,13 @@ module Datamappify
         name  = file[/.*\/(.*)\.rb/, 1]
         klass = name.camelize.constantize
         
-        next unless klass.respond_to?(:properties)
-        
-        options = klass.respond_to?(:resource_options) ? klass.resource_options : []
+        next unless klass.included_modules.include?(Datamappify::Resource) and klass.respond_to?(:properties)
         
         collection << {
-          :resource   => name,
+          :name       => name,
           :table_name => klass.table_name,
           :properties => klass.properties,
           :indexes    => klass.indexes,
-          :options    => options,
         }
       end
       

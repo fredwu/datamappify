@@ -87,7 +87,7 @@ Use `property` to define and map DB columns. It accepts a number of arguments:
 
 1. Name of the column.
 2. SQL type of the column, same as the ones provided by ActiveRecord migrations.
-3. Other options, same as the ones provided by ActiveRecord migrations.
+3. Column options, same as the ones provided by ActiveRecord migrations.
 
 #### add_index()
 
@@ -95,8 +95,7 @@ Use `add_index` to add DB indexes. It accepts a number of arguments:
 
 1. The column(s) to index on, can be just one column or a number of columns in an array.
 2. The name/label of the index, default to be generated automatically.
-3. Is this a unique index?
-4. Lengths of the index.
+3. Index options such as `unique` and `length`.
 
 ## Author
 

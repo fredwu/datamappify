@@ -16,7 +16,7 @@ Brought to you by [Envato](http://envato.com) and [Wuit](http://wuit.com).
 * Add tests
 * Remove the dependency of the `auto_migrate` plugin
 * Gemify the plugin
-* Possibly refactor `add_index` to be part of the `property` definition (such seen in the [DataMapper](http://datamapper.org/) library)
+* Possibly refactor `add_index` to be part of the `property` definition (as seen in the [DataMapper](http://datamapper.org/) library)
 
 ## Why?
 

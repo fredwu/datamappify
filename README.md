@@ -14,7 +14,6 @@ Brought to you by [Envato](http://envato.com) and [Wuit](http://wuit.com).
 
 * `has_and_belongs_to_many` and `has_many :through` associations
 * Add tests
-* Code refactor to get rid of copied code from ActiveRecord
 * Possibly refactor `add_index` to be part of the `property` definition (such seen in the [DataMapper](http://datamapper.org/) library)
 
 ## Why?

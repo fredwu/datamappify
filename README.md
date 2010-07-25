@@ -49,38 +49,38 @@ To use Datamappify, you will need the following libraries.
 
 Here's an example to get you started:
 
-	class User < ActiveRecord::Base
-	  include Datamappify::Resource
+  	class User < ActiveRecord::Base
+  	  include Datamappify::Resource
       
-	  property  :email, :string
-	  property  :password, :string, :limit => 40
-	  property  :first_name, :string, :limit => 50
-	  property  :last_name, :string, :limit => 50
-	  property  :payment_email, :string
-	  property  :timestamps
-	  add_index :email
-	  add_index :payment_email
-	  add_index :role_id
+  	  property  :email, :string
+  	  property  :password, :string, :limit => 40
+  	  property  :first_name, :string, :limit => 50
+  	  property  :last_name, :string, :limit => 50
+  	  property  :payment_email, :string
+  	  property  :timestamps
+  	  add_index :email
+  	  add_index :payment_email
+  	  add_index :role_id
       
-	  belongs_to :role
-	end
+  	  belongs_to :role
+  	end
 
 It will create the following schema:
 
-	create_table "users", :force => true do |t|
-	  t.string   :email,               :limit => nil
-	  t.string   :password,            :limit => nil
-	  t.string   :first_name,          :limit => nil
-	  t.string   :last_name,           :limit => nil
-	  t.string   :payment_email,       :limit => nil
-	  t.integer  :role_id,             :limit => nil
-	  t.datetime :created_at
-	  t.datetime :updated_at
-	end
+  	create_table "users", :force => true do |t|
+  	  t.string   :email,               :limit => nil
+  	  t.string   :password,            :limit => nil
+  	  t.string   :first_name,          :limit => nil
+  	  t.string   :last_name,           :limit => nil
+  	  t.string   :payment_email,       :limit => nil
+  	  t.integer  :role_id,             :limit => nil
+  	  t.datetime :created_at
+  	  t.datetime :updated_at
+  	end
 
-	add_index "users", :email
-	add_index "users", :payment_email
-	add_index "users", :role_id
+  	add_index "users", :email
+  	add_index "users", :payment_email
+  	add_index "users", :role_id
 
 #### property()
 
@@ -97,6 +97,21 @@ Use `add_index` to add DB indexes. It accepts a number of arguments:
 1. The column(s) to index on, can be just one column or a number of columns in an array.
 2. The name/label of the index, default to be generated automatically.
 3. Index options such as `unique` and `length`.
+
+### Rake Tasks
+
+To set up your database for the first time, please run:
+
+    rake db:schema:update
+    rake db:setup
+
+Later on, to only update the `schema.rb` file, run:
+
+    rake db:schema:update
+
+To update `schema.rb` and to 'migrate' the updated database structure, run:
+
+    rake db:schema:auto_migrate
 
 ## Author
 

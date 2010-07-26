@@ -8,7 +8,7 @@ module Datamappify
         
         # manually add the primary key property (without the :primary_key option)
         # as ActiveRecord ignores the primary_key column
-        add_primary_key_to(resource)
+        add_primary_key_to(resource) unless is_a_join_table?(table)
         
         resource[:properties].map do |property|
           if (property[:name] == :timestamps)
@@ -36,7 +36,7 @@ module Datamappify
       private
       
       def get_resource(table)
-        Datamappify::Collection.get.select do |r|
+        Collection.get.select do |r|
           r[:table_name].to_s == table.to_s
         end[0]
       end
@@ -67,6 +67,10 @@ module Datamappify
           :sql_type => :datetime,
           :options  => {},
         }
+      end
+      
+      def is_a_join_table?(table)
+        Associations.join_tables.key?(table)
       end
     end
   end

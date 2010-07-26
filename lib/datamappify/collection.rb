@@ -17,6 +17,31 @@ module Datamappify
         }
       end
       
+      Associations.join_tables.each do |table_name, ids|
+        collection << {
+          :name       => table_name,
+          :table_name => table_name,
+          :properties => [{
+            :name     => ids[0],
+            :sql_type => :integer,
+            :options  => {},
+          }, {
+            :name     => ids[1],
+            :sql_type => :integer,
+            :options  => {},
+          }],
+          :indexes    => [{
+            :columns => ids[0],
+            :name    => nil,
+            :options => {},
+          }, {
+            :columns => ids[1],
+            :name    => nil,
+            :options => {},
+          }],
+        }
+      end
+      
       collection
     end
   end

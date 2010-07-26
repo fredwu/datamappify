@@ -12,7 +12,6 @@ Brought to you by [Envato](http://envato.com) and [Wuit](http://wuit.com).
 
 ### Todo
 
-* Add `has_and_belongs_to_many` and `has_many :through` associations
 * Add tests
 * Remove the dependency of the `auto_migrate` plugin
 * Gemify the plugin

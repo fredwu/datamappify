@@ -11,7 +11,7 @@ module Datamappify
       end
       
       def has_and_belongs_to_many(association_id, options = {}, &extension)
-        reflection = self.send :create_has_and_belongs_to_many_reflection, association_id, {}
+        reflection = self.send :create_has_and_belongs_to_many_reflection, association_id, options
         Associations.join_tables[reflection.options[:join_table]] = [reflection.association_foreign_key, reflection.primary_key_name]
       end
     end

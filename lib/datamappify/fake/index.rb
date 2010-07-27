@@ -13,7 +13,7 @@ module Datamappify
       end
       
       def name
-        @index[:name] ? @index[:name].to_s : index_name(table, :column => @index[:columns])
+        @index[:options].include?(:name) ? @index[:options][:name].to_s : index_name(table, :column => @index[:columns])
       end
       
       def columns

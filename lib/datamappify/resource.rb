@@ -24,10 +24,9 @@ module Datamappify
         }
       end
       
-      def add_index(columns, name=nil, options={})
+      def add_index(columns, options={})
         @@model.indexes << {
           :columns => columns,
-          :name    => name,
           :options => options,
         }
       end

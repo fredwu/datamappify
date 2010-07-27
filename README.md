@@ -94,8 +94,7 @@ Use `property` to define and map DB columns. It accepts a number of arguments:
 Use `add_index` to add DB indexes. It accepts a number of arguments:
 
 1. The column(s) to index on, can be just one column or a number of columns in an array.
-2. The name/label of the index, default to be generated automatically.
-3. Index options such as `unique` and `length`.
+3. Index options such as `name`, `unique` and `length`.
 
 ### Rake Tasks
 

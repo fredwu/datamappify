@@ -32,11 +32,9 @@ module Datamappify
           }],
           :indexes    => [{
             :columns => ids[0],
-            :name    => nil,
             :options => {},
           }, {
             :columns => ids[1],
-            :name    => nil,
             :options => {},
           }],
         }

@@ -16,11 +16,17 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
-    "MIT-LICENSE",
+    ".gitignore",
+     "MIT-LICENSE",
      "README.md",
+     "Rakefile",
+     "datamappify.gemspec",
      "lib/datamappify.rb",
      "lib/datamappify/associations.rb",
      "lib/datamappify/collection.rb",
+     "lib/datamappify/fake/column.rb",
+     "lib/datamappify/fake/connection.rb",
+     "lib/datamappify/fake/index.rb",
      "lib/datamappify/resource.rb",
      "lib/datamappify/schema_dumper.rb",
      "lib/tasks/datamappify.rake"

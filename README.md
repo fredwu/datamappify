@@ -13,7 +13,6 @@ Brought to you by [Envato](http://envato.com) and [Wuit](http://wuit.com).
 ### Todo
 
 * Add tests
-* Remove the dependency of the `auto_migrate` plugin
 * Possibly refactor `add_index` to be part of the `property` definition (as seen in the [DataMapper](http://datamapper.org/) library)
 
 ## Why?
@@ -36,14 +35,15 @@ Basically, it -
 2. `schema.rb` is automatically updated according to the model properties.
 3. Automatically 'migrates' the database according to the updated schema file.
 
-## Dependencies
+## Installation
 
-To use Datamappify, you will need the following libraries.
+    gem install datamappify
 
-* ActiveRecord
-* [auto_migrations](http://github.com/pjhyett/auto_migrations)
+Don't forget to include the library in your `Gemfile`:
 
-## Usages
+    gem 'datamappify'
+
+## Usage
 
 Here's an example to get you started:
 

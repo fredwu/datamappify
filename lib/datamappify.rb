@@ -1,10 +1,12 @@
-raise "Please install the AutoMigrations plugin from http://github.com/pjhyett/auto_migrations" unless defined?(AutoMigrations.run)
+raise "ActiveRecord is not present!" unless defined?(ActiveRecord)
 
+require 'auto_migrations'
 require 'datamappify/associations'
 require 'datamappify/collection'
 require 'datamappify/fake/column'
 require 'datamappify/fake/connection'
 require 'datamappify/fake/index'
+require 'datamappify/railtie'
 require 'datamappify/resource'
 require 'datamappify/schema_dumper'
 

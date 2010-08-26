@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{datamappify}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fred Wu"]
-  s.date = %q{2010-08-04}
+  s.date = %q{2010-08-26}
   s.description = %q{ActiveRecord is without doubt the de facto ORM library for Rails and many Ruby web frameworks. Many developers however, do not like database migrations and prefer to use DSL for data mapping. Datamappify is created with the sole purpose of getting rid of the DB migration headaches.}
   s.email = %q{ifredwu@gmail.com}
   s.extra_rdoc_files = [
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
      "MIT-LICENSE",
      "README.md",
      "Rakefile",
+     "VERSION",
      "datamappify.gemspec",
      "lib/datamappify.rb",
      "lib/datamappify/associations.rb",
@@ -27,13 +28,21 @@ Gem::Specification.new do |s|
      "lib/datamappify/fake/column.rb",
      "lib/datamappify/fake/connection.rb",
      "lib/datamappify/fake/index.rb",
+     "lib/datamappify/railtie.rb",
      "lib/datamappify/resource.rb",
      "lib/datamappify/schema_dumper.rb",
-     "lib/tasks/datamappify.rake"
+     "lib/tasks/datamappify.rake",
+     "vendor/auto_migrations/MIT-LICENSE",
+     "vendor/auto_migrations/README",
+     "vendor/auto_migrations/Rakefile",
+     "vendor/auto_migrations/init.rb",
+     "vendor/auto_migrations/lib/auto_migrations.rb",
+     "vendor/auto_migrations/lib/tasks/auto_migrations_tasks.rake",
+     "vendor/auto_migrations/test/auto_migrations_test.rb"
   ]
   s.homepage = %q{http://github.com/fredwu/datamappify}
   s.rdoc_options = ["--charset=UTF-8"]
-  s.require_paths = ["lib"]
+  s.require_paths = ["lib", "vendor/auto_migrations/lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Turn ActiveRecord into DataMapper (sort of)!}
 

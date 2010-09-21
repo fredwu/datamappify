@@ -1,3 +1,5 @@
+require 'active_record/connection_adapters/abstract/schema_statements'
+
 module Datamappify
   module Fake
     class Index

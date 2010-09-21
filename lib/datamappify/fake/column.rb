@@ -1,3 +1,5 @@
+require 'active_record/connection_adapters/abstract/schema_definitions'
+
 module Datamappify
   module Fake
     class Column < ActiveRecord::ConnectionAdapters::Column

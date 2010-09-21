@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{datamappify}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fred Wu"]
-  s.date = %q{2010-08-26}
+  s.date = %q{2010-09-21}
   s.description = %q{ActiveRecord is without doubt the de facto ORM library for Rails and many Ruby web frameworks. Many developers however, do not like database migrations and prefer to use DSL for data mapping. Datamappify is created with the sole purpose of getting rid of the DB migration headaches.}
   s.email = %q{ifredwu@gmail.com}
   s.extra_rdoc_files = [

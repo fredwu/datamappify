@@ -1,3 +1,5 @@
+[![](http://stillmaintained.com/fredwu/datamappify.png)](http://stillmaintained.com/fredwu/datamappify)
+
 # Datamappify
 
 ## Introduction

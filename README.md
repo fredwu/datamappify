@@ -1,4 +1,4 @@
-[![](http://stillmaintained.com/fredwu/datamappify.png)](http://stillmaintained.com/fredwu/datamappify)
+### [![](http://stillmaintained.com/fredwu/datamappify.png)](http://stillmaintained.com/fredwu/datamappify) Datamappify has long been abandoned. Please see [MiniRecord](https://github.com/DAddYE/mini_record) instead. :)
 
 # Datamappify
 

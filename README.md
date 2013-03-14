@@ -1,4 +1,4 @@
-# Datamappify [![Build Status](https://secure.travis-ci.org/fredwu/datamappify.png?branch=master)](http://travis-ci.org/fredwu/datamappify) [![Dependency Status](https://gemnasium.com/fredwu/datamappify.png)](https://gemnasium.com/fredwu/datamappify) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/fredwu/datamappify)
+# Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png)](http://travis-ci.org/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
 Separate domain logic from data persistence, based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html).
 

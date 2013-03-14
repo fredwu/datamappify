@@ -83,6 +83,7 @@ user_repository.destroy(user)
 
 - Entity should dictate Data, so schema and migrations should be automatically generated
 - Repository should handle asscociated data
+- Support for HABTM association type
 
 ## Similar Projects
 

@@ -10,6 +10,10 @@ module Datamappify
       end
     end
 
+    def find(entity_or_id)
+      data_class.find(extract_entity_id(entity_or_id))
+    end
+
     [:save, :save!].each do |save_method_name|
       define_method save_method_name do |entity_or_collection|
         entity = collection = entity_or_collection
@@ -26,11 +30,7 @@ module Datamappify
 
     [:destroy, :destroy!].each do |destroy_method_name|
       define_method destroy_method_name do |entity_or_id|
-        entity = id = entity_or_id
-
-        id = id.is_a?(Integer) ? id : entity.id
-
-        data_class.send(destroy_method_name, id)
+        data_class.send(destroy_method_name, extract_entity_id(entity_or_id))
       end
     end
 
@@ -50,6 +50,10 @@ module Datamappify
     end
 
     private
+
+    def extract_entity_id(entity_or_id)
+      entity_or_id.is_a?(Integer) ? entity_or_id : entity_or_id.id
+    end
 
     def data_class_is_defined?
       Data.const_defined?(@entity_class.name, false)

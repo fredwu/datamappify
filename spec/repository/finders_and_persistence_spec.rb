@@ -22,7 +22,7 @@ describe Datamappify::Repository do
 
     it "#save success" do
       new_user = user_repository.save(user_valid)
-      new_user.class.must_equal User
+      new_user.must_be_kind_of User
       new_user.first_name.must_equal 'Batman'
     end
 
@@ -50,7 +50,7 @@ describe Datamappify::Repository do
 
   describe "collection records" do
     it "#find" do
-      user_repository.all.class.must_equal ActiveRecord::Relation::ActiveRecord_Relation_Datamappify_Data_User
+      user_repository.all.must_be_kind_of ActiveRecord::Relation::ActiveRecord_Relation_Datamappify_Data_User
       user_repository.count.must_equal 1
     end
 

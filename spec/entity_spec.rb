@@ -21,7 +21,7 @@ describe Datamappify::Entity do
 
     it "coerces an attribute" do
       user.age = '42'
-      user.age.class.must_equal Fixnum
+      user.age.must_be_kind_of Fixnum
       user.age.must_equal 42
     end
   end
@@ -39,15 +39,15 @@ describe Datamappify::Entity do
   describe "relationships" do
     describe "getters" do
       it "belongs_to" do
-        comment.user.class.must_equal User
+        comment.user.must_be_kind_of User
       end
 
       it "has_one" do
-        user.role.class.must_equal Role
+        user.role.must_be_kind_of Role
       end
 
       it "has_many" do
-        user.comments.class.must_equal Array
+        user.comments.must_be_kind_of Array
         user.comments.must_be_empty
       end
     end
@@ -57,20 +57,20 @@ describe Datamappify::Entity do
 
       it "belongs_to" do
         comment.user = entity
-        comment.user.class.must_equal Object
+        comment.user.must_be_kind_of Object
         comment.user.must_equal entity
       end
 
       it "has_one" do
         user.role = entity
-        user.role.class.must_equal Object
+        user.role.must_be_kind_of Object
         user.role.must_equal entity
       end
 
       it "has_many" do
         user.comments << entity
         user.comments << entity
-        user.comments.class.must_equal Array
+        user.comments.must_be_kind_of Array
         user.comments.count.must_equal 2
         user.comments[0].must_equal entity
 

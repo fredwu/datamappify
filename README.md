@@ -42,6 +42,10 @@ Model:
 class User
   include Datamappify::Entity
 
+  attribute :first_name, String
+  attribute :last_name, String
+  attribute :age, Integer
+
   # ActiveModel::Validations rules are wrapped in the `validations` block
   validations do
     validates :first_name, :presence => true
@@ -51,6 +55,10 @@ class User
   relationships do
     has_one  :role
     has_many :comments
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 end
 ```

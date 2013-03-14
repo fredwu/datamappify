@@ -14,10 +14,6 @@ module Datamappify
       end
     end
 
-    def find(entity_or_id)
-      data_class.find(extract_entity_id(entity_or_id))
-    end
-
     def method_missing(symbol, *args)
       data_class.send symbol, *args
     end

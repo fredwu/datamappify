@@ -12,12 +12,9 @@ describe Datamappify::Repository do
   end
 
   describe "single record" do
-    it "#find via id" do
+    it "#find" do
       user_repository.find(1).must_equal user
-    end
-
-    it "#find via entity" do
-      user_repository.find(user.entity).must_equal user
+      user_repository.find([1]).must_equal [user]
     end
 
     it "#save success" do

@@ -1,18 +1,25 @@
-require 'rake'
+require "bundler/gem_tasks"
+require 'rake/testtask'
+
+Rake::TestTask.new do |t|
+  t.libs.push 'lib'
+  t.test_files = FileList['spec/**/*_spec.rb']
+  t.verbose = true
+end
 
 begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "datamappify"
-    s.summary = "Turn ActiveRecord into DataMapper (sort of)!"
-    s.description = "ActiveRecord is without doubt the de facto ORM library for Rails and many Ruby web frameworks. Many developers however, do not like database migrations and prefer to use DSL for data mapping. Datamappify is created with the sole purpose of getting rid of the DB migration headaches."
-    s.email = "ifredwu@gmail.com"
-    s.homepage = "http://github.com/fredwu/datamappify"
-    s.authors = ["Fred Wu"]
-    s.require_paths = ["lib", "vendor/auto_migrations/lib"]
-    s.add_dependency("activerecord")
+  require 'cane/rake_task'
+
+  desc "Run cane to check quality metrics"
+  Cane::RakeTask.new(:quality) do |cane|
+    cane.abc_max       = 8
+    cane.no_doc        = true
+    cane.style_glob    = './lib/**/*.rb'
+    cane.style_measure = 120
+    cane.abc_exclude   = []
   end
-  Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: gem install jeweler"
+  warn "cane not available, quality task not provided."
 end
+
+task :default => [:test, :quality]

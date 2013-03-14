@@ -1,120 +1,98 @@
-### [![](http://stillmaintained.com/fredwu/datamappify.png)](http://stillmaintained.com/fredwu/datamappify) Datamappify has long been abandoned. Please see [MiniRecord](https://github.com/DAddYE/mini_record) instead. :)
+# Datamappify [![Build Status](https://secure.travis-ci.org/fredwu/datamappify.png?branch=master)](http://travis-ci.org/fredwu/datamappify) [![Dependency Status](https://gemnasium.com/fredwu/datamappify.png)](https://gemnasium.com/fredwu/datamappify) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/fredwu/datamappify)
 
-# Datamappify
+Separate domain logic from data persistence, based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html).
 
-## Introduction
+__This library is current in Proof-of-Concept stage, do NOT use it for anything other than experimentation.__
 
-ActiveRecord is without doubt the *de facto* ORM library for Rails and many Ruby web frameworks. Many developers however, do not like database migrations and prefer to use DSL for data mapping. Datamappify is created with the sole purpose of getting rid of the DB migration headaches.
+## Overview
 
-Brought to you by [Envato](http://envato.com) and [Wuit](http://wuit.com).
+Datamappify is a thin layer on top of ActiveRecord. The design goal is to utilise ActiveRecord but separate domain logic (behaviour) and data persistence.
 
-## Disclaimer
+Datamappify consists of three components:
 
-**This plugin is NOT production-ready yet!** Use with caution.
+- Entity
+- Data
+- Repository
 
-### Todo
+__Entity__ is your model, it is responsible for mainly storing behaviour. Some structure (i.e. model relationships) is also stored here for convenience.
 
-* Add tests
-* Possibly refactor `add_index` to be part of the `property` definition (as seen in the [DataMapper](http://datamapper.org/) library)
+__Data__ as the name suggests, holds your model data. It is an ActiveRecord object.
 
-## Why?
-
-### Why Not DB Migrations?
-
-Well, depending on your specific project, DB migrations might create more trouble than it's worth. Besides, your code is already version controlled, so why create a separate version control for your DB schema?
-
-### Why Not Use DataMapper, Sequel, etc?
-
-As stated in the introduction, ActiveRecord is the most popular ORM in the rails community, it is actively developed and battle-tested. If your only grief with ActiveRecord is the DB migrations, why not just eliminate it be happy? ;)
-
-## How?
-
-How does this plugin work?
-
-Basically, it -
-
-1. Uses a DSL similar to DataMapper's for defining model properties (DB mapping).
-2. `schema.rb` is automatically updated according to the model properties.
-3. Automatically 'migrates' the database according to the updated schema file.
+__Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
 
 ## Installation
 
-    gem install datamappify
-
-Don't forget to include the library in your `Gemfile`:
+Add this line to your application's Gemfile:
 
     gem 'datamappify'
 
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install datamappify
+
 ## Usage
 
-Here's an example to get you started:
+Model:
 
-  	class User < ActiveRecord::Base
-  	  include Datamappify::Resource
-      
-  	  property  :email, :string
-  	  property  :password, :string, :limit => 40
-  	  property  :first_name, :string, :limit => 50
-  	  property  :last_name, :string, :limit => 50
-  	  property  :payment_email, :string
-  	  property  :timestamps
-  	  add_index :email
-  	  add_index :payment_email
-  	  add_index :role_id
-      
-  	  belongs_to :role
-  	end
+```ruby
+class User
+  include Datamappify::Entity
 
-It will create the following schema:
+  # ActiveModel::Validations rules are wrapped in the `validations` block
+  validations do
+    validates :first_name, :presence => true
+  end
 
-  	create_table "users", :force => true do |t|
-  	  t.string   :email,               :limit => nil
-  	  t.string   :password,            :limit => nil
-  	  t.string   :first_name,          :limit => nil
-  	  t.string   :last_name,           :limit => nil
-  	  t.string   :payment_email,       :limit => nil
-  	  t.integer  :role_id,             :limit => nil
-  	  t.datetime :created_at
-  	  t.datetime :updated_at
-  	end
+  # ActiveRelation collections are wrapped in the `relationships` block
+  relationships do
+    has_one  :role
+    has_many :comments
+  end
+end
+```
 
-  	add_index "users", :email
-  	add_index "users", :payment_email
-  	add_index "users", :role_id
+Corresponding repository:
 
-#### property()
+```ruby
+user_repository = Datamappify::Repository.new(User)
+```
 
-Use `property` to define and map DB columns. It accepts a number of arguments:
+Retrieving records:
 
-1. Name of the column.
-2. SQL type of the column, same as the ones provided by ActiveRecord migrations.
-3. Column options, same as the ones provided by ActiveRecord migrations.
+```ruby
+user = user_repository.find(1)
+```
 
-#### add_index()
+Saving/updating a record:
 
-Use `add_index` to add DB indexes. It accepts a number of arguments:
+```ruby
+user_repository.save(user)
+```
 
-1. The column(s) to index on, can be just one column or a number of columns in an array.
-3. Index options such as `name`, `unique` and `length`.
+Destroying a record:
 
-### Rake Tasks
+```ruby
+user_repository.destroy(user)
+```
 
-To set up your database for the first time, please run:
+## Todo
 
-    rake db:schema:update
-    rake db:setup
+- Entity should dictate Data, so schema and migrations should be automatically generated
+- Repository should handle asscociated data
 
-Later on, to only update the `schema.rb` file, run:
+## Similar Projects
 
-    rake db:schema:update
-
-To update `schema.rb` and to 'migrate' the updated database structure, run:
-
-    rake db:schema:auto_migrate
+- [Curator](https://github.com/braintree/curator)
+- [Edr](https://github.com/nulogy/edr)
 
 ## Author
 
-Copyright (c) 2010 Fred Wu (<http://fredwu.me>), released under the MIT license
+[Fred Wu](http://fredwu.me/)
 
-* Envato - <http://envato.com>
-* Wuit - <http://wuit.com>
+## License
+
+Licensed under [MIT](http://fredwu.mit-license.org/)

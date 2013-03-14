@@ -1,5 +1,9 @@
+require 'datamappify/repository/persistence'
+
 module Datamappify
   class Repository
+    include Persistence
+
     def initialize(entity_class)
       @entity_class = entity_class
 
@@ -14,46 +18,11 @@ module Datamappify
       data_class.find(extract_entity_id(entity_or_id))
     end
 
-    [:save, :save!].each do |save_method_name|
-      define_method save_method_name do |entity_or_collection|
-        entity = collection = entity_or_collection
-
-        if collection.is_a?(Array)
-          collection.map { |e| send(save_method_name, e) }
-        elsif entity.id
-          update_data_record(save_method_name, entity)
-        else
-          create_data_record(save_method_name, entity)
-        end
-      end
-    end
-
-    [:destroy, :destroy!].each do |destroy_method_name|
-      define_method destroy_method_name do |entity_or_id|
-        data_class.send(destroy_method_name, extract_entity_id(entity_or_id))
-      end
-    end
-
-    def create_data_record(save_method_name, entity)
-      data_object = data_class.new(entity.attributes)
-      data_object.send(save_method_name) && data_object.entity
-    end
-
-    def update_data_record(save_method_name, entity)
-      data_object = data_class.find(entity.id)
-      data_object.update_attributes(entity.attributes)
-      data_object.send(save_method_name) && data_object.entity
-    end
-
     def method_missing(symbol, *args)
       data_class.send symbol, *args
     end
 
     private
-
-    def extract_entity_id(entity_or_id)
-      entity_or_id.is_a?(Integer) ? entity_or_id : entity_or_id.id
-    end
 
     def data_class_is_defined?
       Data.const_defined?(@entity_class.name, false)
@@ -87,6 +56,10 @@ module Datamappify
           Data.const_set(@entity_class.name, Class.new(Data::Base))
         end
       end
+    end
+
+    def extract_entity_id(entity_or_id)
+      entity_or_id.is_a?(Integer) ? entity_or_id : entity_or_id.id
     end
   end
 end

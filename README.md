@@ -78,7 +78,7 @@ class UserRepository
   map_attribute :passport, 'UserPassport#number'
 end
 
-user_repository = UserRepository.new
+user_repository = UserRepository.instance
 ```
 
 #### Retrieving an entity

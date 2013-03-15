@@ -101,6 +101,10 @@ Note that due to the attributes mapping, any data found in mapped ActiveRecord o
 user_repository.destroy(user)
 ```
 
+## Changelog
+
+Refer to [CHANGELOG](CHANGELOG.md).
+
 ## Todo
 
 - Perform `save` in a transaction.

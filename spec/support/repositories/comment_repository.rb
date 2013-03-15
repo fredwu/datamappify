@@ -1,3 +1,5 @@
+require_relative '../entities/comment'
+
 class CommentRepository
   include Datamappify::Repository
 

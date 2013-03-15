@@ -1,3 +1,5 @@
+require_relative '../entities/role'
+
 class RoleRepository
   include Datamappify::Repository
 

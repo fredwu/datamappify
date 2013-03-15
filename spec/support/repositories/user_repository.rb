@@ -1,3 +1,5 @@
+require_relative '../entities/user'
+
 class UserRepository
   include Datamappify::Repository
 

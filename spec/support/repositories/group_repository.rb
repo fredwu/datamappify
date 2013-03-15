@@ -1,3 +1,5 @@
+require_relative '../entities/group'
+
 class GroupRepository
   include Datamappify::Repository
 

@@ -36,26 +36,22 @@ Or install it yourself as:
 
 ## Usage
 
-Model:
+### Entity
 
 ```ruby
 class User
   include Datamappify::Entity
 
   attribute :first_name, String
-  attribute :last_name, String
-  attribute :age, Integer
+  attribute :last_name,  String
+  attribute :gender,     String
+  attribute :age,        Integer
+  attribute :passport,   Integer
 
-  # ActiveModel::Validations rules are wrapped in the `validations` block
-  validations do
-    validates :first_name, :presence => true
-  end
-
-  # ActiveRelation collections are wrapped in the `relationships` block
-  relationships do
-    has_one  :role
-    has_many :comments
-  end
+  validates :first_name, :presence => true,
+                         :length   => { :minimum => 2 }
+  validates :passport,   :presence => true,
+                         :length   => { :minimum => 8 }
 
   def full_name
     "#{first_name} #{last_name}"
@@ -63,25 +59,43 @@ class User
 end
 ```
 
-Corresponding repository:
+### Repository
 
 ```ruby
-user_repository = Datamappify::Repository.new(User)
+class UserRepository
+  include Datamappify::Repository
+
+  # specify the entity class
+  for_entity User
+
+  # specify any attributes that need to be mapped
+  #
+  # for example:
+  #   - 'gender' is mapped to the 'User' ActiveRecord class and its 'sex' attribute
+  #   - 'passport' is mapped to the 'UserPassport' ActiveRecord class and its 'number' attribute
+  #   - attributes not specified here are mapped automatically to their attributes in the ActiveRecord class
+  map_attribute :gender,   'User#sex'
+  map_attribute :passport, 'UserPassport#number'
+end
+
+user_repository = UserRepository.new
 ```
 
-Retrieving records:
+#### Retrieving an entity
 
 ```ruby
 user = user_repository.find(1)
 ```
 
-Saving/updating a record:
+#### Saving/updating an entity
 
 ```ruby
 user_repository.save(user)
 ```
 
-Destroying a record:
+#### Destroying an entity
+
+Note that due to the attributes mapping, any data found in mapped ActiveRecord objects are not touched.
 
 ```ruby
 user_repository.destroy(user)
@@ -89,10 +103,11 @@ user_repository.destroy(user)
 
 ## Todo
 
-- Entity should dictate Data, so schema and migrations should be automatically generated
-- Support for `set_primary_key` (currently the PK is hard coded to `id`)
-- Support for entity attribute and data column mapping
-- Repository should handle asscociated data
+- Perform `save` in a transaction.
+- Hooks for persistence (`before_save` and `after_save`, etc).
+- Track dirty entity attributes to avoid unnecessary DB queries.
+- Support for configurable primary keys and foreign keys.
+- Entity should dictate Data, so schema and migrations should be automatically generated.
 
 ## Similar Projects
 

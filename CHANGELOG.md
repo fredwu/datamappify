@@ -1,5 +1,7 @@
 ## master
 
+## 0.10.0 [2013-03-16]
+
 - Refactored `Repository`. `Entity` can now have attributes sourced from different `Data` objects.
 - Removed relationships support - the effort required to make it work is not worth it.
 

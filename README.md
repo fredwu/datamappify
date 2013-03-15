@@ -91,7 +91,6 @@ user_repository.destroy(user)
 
 - Entity should dictate Data, so schema and migrations should be automatically generated
 - Support for `set_primary_key` (currently the PK is hard coded to `id`)
-- Support for HABTM association type
 - Support for entity attribute and data column mapping
 - Repository should handle asscociated data
 

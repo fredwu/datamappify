@@ -50,6 +50,11 @@ describe Datamappify::Entity do
         user.comments.must_be_kind_of Array
         user.comments.must_be_empty
       end
+
+      it "has_and_belongs_to_many" do
+        user.groups.must_be_kind_of Array
+        user.groups.must_be_empty
+      end
     end
 
     describe "setters" do
@@ -76,6 +81,17 @@ describe Datamappify::Entity do
 
         user.comments = [entity]
         user.comments.count.must_equal 1
+      end
+
+      it "has_and_belongs_to_many" do
+        user.groups << entity
+        user.groups << entity
+        user.groups.must_be_kind_of Array
+        user.groups.count.must_equal 2
+        user.groups[0].must_equal entity
+
+        user.groups = [entity]
+        user.groups.count.must_equal 1
       end
     end
   end

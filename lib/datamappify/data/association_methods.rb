@@ -1,22 +1,24 @@
 module Datamappify
   module Data
     module AssociationMethods
-      def belongs_to(name, scope = nil, options = {})
-        build_associated_repository(name)
-
-        super(name, scope = nil, options)
+      def belongs_to(*args)
+        build_associated_repository(args[0])
+        super
       end
 
-      def has_one(name, scope = nil, options = {})
-        build_associated_repository(name)
-
-        super(name, scope = nil, options)
+      def has_one(*args)
+        build_associated_repository(args[0])
+        super
       end
 
-      def has_many(name, scope = nil, options = {}, &extension)
-        build_associated_repository(name)
+      def has_many(*args)
+        build_associated_repository(args[0])
+        super
+      end
 
-        super(name, scope = nil, options, &extension)
+      def has_and_belongs_to_many(*args)
+        build_associated_repository(args[0])
+        super
       end
 
       private

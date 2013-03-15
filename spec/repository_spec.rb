@@ -2,8 +2,6 @@ require_relative 'spec_helper'
 
 describe Datamappify::Repository do
   let(:user_repository)    { Datamappify::Repository.new(User) }
-  let(:comment_repository) { Datamappify::Repository.new(Comment) }
-  let(:role_repository)    { Datamappify::Repository.new(Role) }
 
   describe "ActiveRecord data objects" do
     it "defines the Data::User class after the repository is initialised" do
@@ -31,6 +29,7 @@ describe Datamappify::Repository do
         let(:user)    { Datamappify::Data::User.new }
         let(:comment) { Datamappify::Data::Comment.new }
         let(:role)    { Datamappify::Data::Role.new }
+        let(:group)   { Datamappify::Data::Group.new }
 
         it "belongs_to" do
           assert_correct_associated_data_class_name(comment, :user, 'Datamappify::Data::User')
@@ -47,6 +46,13 @@ describe Datamappify::Repository do
           assert_correct_associated_data_class_name(role, :users, 'Datamappify::Data::User')
           user.comments.must_be_empty
           role.users.must_be_empty
+        end
+
+        it "has_and_belongs_to_many" do
+          assert_correct_associated_data_class_name(user, :groups, 'Datamappify::Data::Group')
+          assert_correct_associated_data_class_name(group, :users, 'Datamappify::Data::User')
+          user.groups.must_be_empty
+          group.users.must_be_empty
         end
       end
     end

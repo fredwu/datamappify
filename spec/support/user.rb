@@ -11,8 +11,9 @@ class User
   end
 
   relationships do
-    has_one  :role
-    has_many :comments
+    has_one                 :role
+    has_many                :comments
+    has_and_belongs_to_many :groups
   end
 
   def full_name

@@ -15,6 +15,10 @@ module Datamappify
       def has_many(name, *args)
         AssociatedCollection.new(self, name)
       end
+
+      def has_and_belongs_to_many(name, *args)
+        AssociatedCollection.new(self, name)
+      end
     end
   end
 end

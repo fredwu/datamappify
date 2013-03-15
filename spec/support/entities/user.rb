@@ -5,7 +5,7 @@ class User
   attribute :last_name,  String
   attribute :gender,     String
   attribute :age,        Integer
-  attribute :passport,   Integer
+  attribute :passport,   String
 
   validates :first_name, :presence => true,
                          :length   => { :minimum => 2 }

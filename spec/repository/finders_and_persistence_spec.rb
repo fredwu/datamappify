@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 describe Datamappify::Repository do
-  let(:user_repository) { Datamappify::Repository.new(User) }
+  let(:user_repository) { UserRepository.instance }
   let(:user)            { user_repository.first }
   let(:user_valid)      { User.new(:first_name => 'Batman') }
   let(:user_invalid)    { User.new(:first_name => 'a') }

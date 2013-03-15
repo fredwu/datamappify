@@ -1,5 +1,5 @@
 module Datamappify
-  class Repository
+  module Repository
     module Persistence
       [:save, :save!].each do |save_method_name|
         define_method save_method_name do |entity_or_collection|

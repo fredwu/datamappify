@@ -2,8 +2,8 @@ class User
   include Datamappify::Entity
 
   attribute :first_name, String
-  attribute :last_name, String
-  attribute :age, Integer
+  attribute :last_name,  String
+  attribute :age,        Integer
 
   validations do
     validates :first_name, :presence => true,

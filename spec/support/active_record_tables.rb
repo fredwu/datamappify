@@ -22,7 +22,7 @@ ActiveRecord::Migration.suppress_messages do
 
     create_table :comments do |t|
       t.string :content
-      t.references :user
+      t.belongs_to :user
       t.timestamps
     end
 

@@ -15,7 +15,7 @@ ActiveRecord::Migration.suppress_messages do
     create_table :users do |t|
       t.string :first_name, :null => false
       t.string :last_name
-      t.string :sex
+      t.string :sex,        :null => false
       t.integer :age
       t.references :role
       t.timestamps
@@ -44,6 +44,13 @@ ActiveRecord::Migration.suppress_messages do
 
     create_table :user_passports do |t|
       t.string :number
+      t.belongs_to :user
+      t.timestamps
+    end
+
+    create_table :user_driver_licenses do |t|
+      t.string :number
+      t.string :expiry, :null => false
       t.belongs_to :user
       t.timestamps
     end

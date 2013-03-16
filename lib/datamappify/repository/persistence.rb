@@ -58,18 +58,24 @@ module Datamappify
       def data_mapping_walker(data_mapping, main_object_id, updated_attributes = nil)
         composed_attributes = {}
 
-        data_mapping.each do |data_class_name, data_fields_mapping|
-          values = extract_data_field_values(data_class_name, main_object_id, updated_attributes, data_fields_mapping)
+        default_data_class.transaction do
 
-          data_fields_with_values = {}
+          data_mapping.each do |data_class_name, data_fields_mapping|
+            values = extract_data_field_values(
+              data_class_name, main_object_id, updated_attributes, data_fields_mapping
+            )
 
-          data_fields_mapping.each_with_index do |(data_field_name, attribute_name), index|
-            composed_attributes[attribute_name] = data_fields_with_values[data_field_name] = values[index]
+            data_fields_with_values = {}
+
+            data_fields_mapping.each_with_index do |(data_field_name, attribute_name), index|
+              composed_attributes[attribute_name] = data_fields_with_values[data_field_name] = values[index]
+            end
+
+            if updated_attributes && data_fields_need_updating?(data_fields_with_values)
+              create_or_update_data_object(data_class_name, main_object_id, data_fields_with_values)
+            end
           end
 
-          if updated_attributes
-            create_or_update_data_object(data_class_name, main_object_id, data_fields_with_values)
-          end
         end
 
         composed_attributes
@@ -105,6 +111,10 @@ module Datamappify
 
       def find_data_field_values_from_attributes(attributes, attribute_names)
         attribute_names.map { |name| attributes[name] }
+      end
+
+      def data_fields_need_updating?(data_fields_with_values)
+        data_fields_with_values.values.compact.any?
       end
 
       def create_or_update_data_object(data_class_name, main_object_id, data_fields_with_values)

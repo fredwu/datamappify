@@ -1,11 +1,12 @@
 class User
   include Datamappify::Entity
 
-  attribute :first_name, String
-  attribute :last_name,  String
-  attribute :gender,     String
-  attribute :age,        Integer
-  attribute :passport,   String
+  attribute :first_name,     String
+  attribute :last_name,      String
+  attribute :gender,         String
+  attribute :age,            Integer
+  attribute :passport,       String
+  attribute :driver_license, String
 
   validates :first_name, :presence => true,
                          :length   => { :minimum => 2 }

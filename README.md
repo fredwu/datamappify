@@ -107,7 +107,6 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
-- Perform `save` in a transaction.
 - Enforce attribute type casting.
 - Hooks for persistence (`before_save` and `after_save`, etc).
 - Track dirty entity attributes to avoid unnecessary DB queries.

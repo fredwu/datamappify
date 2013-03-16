@@ -55,12 +55,11 @@ module Datamappify
         entity_class.new data_mapping_walker(data_mapping, entity.id, entity.attributes)
       end
 
-      def data_mapping_walker(data_mapping, id, updated_attributes = nil)
+      def data_mapping_walker(data_mapping, main_object_id, updated_attributes = nil)
         composed_attributes = {}
 
         data_mapping.each do |data_class_name, data_fields_mapping|
-          id     = find_data_object_id(data_class_name, id)
-          values = extract_data_field_values(data_class_name, id, updated_attributes, data_fields_mapping)
+          values = extract_data_field_values(data_class_name, main_object_id, updated_attributes, data_fields_mapping)
 
           data_fields_with_values = {}
 
@@ -68,8 +67,8 @@ module Datamappify
             composed_attributes[attribute_name] = data_fields_with_values[data_field_name] = values[index]
           end
 
-          if id && updated_attributes
-            update_data_object(data_class_name, id, data_fields_with_values)
+          if updated_attributes
+            create_or_update_data_object(data_class_name, main_object_id, data_fields_with_values)
           end
         end
 
@@ -84,16 +83,12 @@ module Datamappify
         "Datamappify::Data::#{data_class_name}".constantize
       end
 
-      def foreign_key_field_name
-        "#{entity_class.name.underscore}_id"
+      def key_field_name(data_class_name)
+        entity_class.name == data_class_name ? :id : foreign_key_field_name
       end
 
-      def find_data_object_id(data_class_name, id)
-        if entity_class.name == data_class_name
-          id
-        else
-          data_class(data_class_name).where(foreign_key_field_name => id).pluck(:id).first
-        end
+      def foreign_key_field_name
+        "#{entity_class.name.underscore}_id".to_sym
       end
 
       def extract_data_field_values(data_class_name, id, updated_attributes, data_fields_mapping)
@@ -112,8 +107,15 @@ module Datamappify
         attribute_names.map { |name| attributes[name] }
       end
 
-      def update_data_object(data_class_name, id, data_fields_with_values)
-        data_object = data_class(data_class_name).find_or_initialize_by(:id => id)
+      def create_or_update_data_object(data_class_name, main_object_id, data_fields_with_values)
+        unless entity_class.name == data_class_name
+          data_fields_with_values[foreign_key_field_name] = main_object_id
+        end
+
+        data_object = data_class(data_class_name).find_or_initialize_by(
+          key_field_name(data_class_name) => main_object_id
+        )
+
         data_object.update_attributes data_fields_with_values
       end
 

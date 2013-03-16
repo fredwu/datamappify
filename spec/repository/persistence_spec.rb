@@ -22,14 +22,20 @@ describe Datamappify::Repository do
     user_repository.find([1]).must_equal [user]
   end
 
-  it "#save success" do
-    new_user = user_repository.save(user_valid)
-    new_user.must_be_kind_of User
-    new_user.first_name.must_equal 'Batman'
-  end
+  describe "#save" do
+    it "success" do
+      user_repository.save(user_valid)
+      user_repository.count.must_equal 1
 
-  it "#save! failure" do
-    -> { user_repository.save!(user_invalid) }.must_raise Datamappify::Data::EntityNotSaved
+      new_user = user_repository.find(1)
+      new_user.must_be_kind_of User
+      new_user.first_name.must_equal 'Batman'
+      new_user.passport.must_equal 'ARKHAMCITY'
+    end
+
+    it "failure" do
+      -> { user_repository.save!(user_invalid) }.must_raise Datamappify::Data::EntityNotSaved
+    end
   end
 
   it "updates an existing record" do

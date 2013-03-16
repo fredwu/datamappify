@@ -1,5 +1,7 @@
 ## master
 
+## 0.10.1 [2013-03-16]
+
 - Fixed `#save` for creating new objects.
 - `#save` now performs in a transaction.
 

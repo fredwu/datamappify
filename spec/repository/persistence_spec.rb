@@ -15,11 +15,23 @@ describe Datamappify::Repository do
     user_repository
   end
 
-  it "#find" do
-    has_db_user
+  describe "#find" do
+    it "found" do
+      has_db_user
 
-    user_repository.find(1).must_equal user
-    user_repository.find([1]).must_equal [user]
+      user_repository.find(1).must_equal user
+      user_repository.find([1]).must_equal [user]
+    end
+
+    it "not found" do
+      user_repository.find(1).must_equal nil
+    end
+
+    it "partial found collection" do
+      has_db_user
+
+      user_repository.find([1, 2]).must_equal [user]
+    end
   end
 
   describe "#save" do

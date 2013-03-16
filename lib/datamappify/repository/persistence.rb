@@ -34,11 +34,11 @@ module Datamappify
       private
 
       def find_many(ids)
-        ids.map { |id| find_one(id) }
+        ids.map { |id| find_one(id) }.compact
       end
 
       def find_one(id)
-        entity_class.new data_mapping_walker(data_mapping, id)
+        exists?(id) ? entity_class.new(data_mapping_walker(data_mapping, id)) : nil
       end
 
       def create_or_update(entity)

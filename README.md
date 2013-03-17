@@ -117,6 +117,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 - [Curator](https://github.com/braintree/curator)
 - [Edr](https://github.com/nulogy/edr)
+- [Minimapper](https://github.com/joakimk/minimapper)
 
 ## Author
 

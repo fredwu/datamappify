@@ -10,15 +10,9 @@ Datamappify is a thin layer on top of ActiveRecord and [Virtus](https://github.c
 
 Datamappify consists of three components:
 
-- Entity
-- Data
-- Repository
-
-__Entity__ is your model, it is responsible for mainly storing behaviour. Some structure (i.e. model relationships) is also stored here for convenience.
-
-__Data__ as the name suggests, holds your model data. It is an ActiveRecord object.
-
-__Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
+- __Entity__ is your model, it is responsible for mainly storing behaviour.
+- __Data__ as the name suggests, holds your model data. It is an ActiveRecord object.
+- __Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
 
 ## Installation
 

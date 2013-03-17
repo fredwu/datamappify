@@ -1,8 +1,6 @@
 require 'simplecov'
 require 'pry'
-require 'minitest/autorun'
-require 'minitest/spec'
-require 'minitest/colorize'
+require 'rspec/autorun'
 require 'database_cleaner'
 
 SimpleCov.start
@@ -15,10 +13,10 @@ require File.expand_path('../../lib/datamappify', __FILE__)
 
 Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |f| require f }
 
-DatabaseCleaner.strategy = :truncation
+RSpec.configure do |config|
+  DatabaseCleaner.strategy = :truncation
 
-class MiniTest::Spec
-  before do
+  config.before do
     DatabaseCleaner.clean
   end
 end

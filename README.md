@@ -77,20 +77,18 @@ class UserRepository
   map_attribute :gender,   'User#sex'
   map_attribute :passport, 'UserPassport#number'
 end
-
-user_repository = UserRepository.instance
 ```
 
 #### Retrieving an entity
 
 ```ruby
-user = user_repository.find(1)
+user = UserRepository.instance.find(1)
 ```
 
 #### Saving/updating an entity
 
 ```ruby
-user_repository.save(user)
+UserRepository.instance.save(user)
 ```
 
 #### Destroying an entity
@@ -98,7 +96,7 @@ user_repository.save(user)
 Note that due to the attributes mapping, any data found in mapped ActiveRecord objects are not touched.
 
 ```ruby
-user_repository.destroy(user)
+UserRepository.instance.destroy(user)
 ```
 
 ## Changelog

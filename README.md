@@ -110,6 +110,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 - Track dirty entity attributes to avoid unnecessary DB queries.
 - Support for configurable primary keys and foreign keys.
 - Entity should dictate Data, so schema and migrations should be automatically generated.
+- Support for multiple ORMs on attribute level.
 
 ## Similar Projects
 

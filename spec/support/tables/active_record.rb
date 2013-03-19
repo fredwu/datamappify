@@ -1,3 +1,5 @@
+require 'active_record'
+
 ActiveRecord::Migration.suppress_messages do
   ActiveRecord::Base.establish_connection(
     :adapter  => 'sqlite3',

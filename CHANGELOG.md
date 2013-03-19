@@ -6,6 +6,8 @@
   - Repository is now much more robust
   - As a result of robustness, it fixed an issue where updating an existing entity with new data records from mapped attributes will not persist the new data records correctly
   - `#save` and `#destroy` now support accepting an array as their argument
+  - Added support for Sequel!
+  - Added support for mapping entity attributes to different ORMs!
 
 ## 0.10.1 [2013-03-16]
 

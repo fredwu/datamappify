@@ -5,24 +5,24 @@ require 'datamappify/data/provider/common/relational/record/writer'
 module Datamappify
   module Data
     module Provider
-      module ActiveRecord
+      module Sequel
         class Persistence < Data::Provider::Common::Relational::Persistence
           def destroy(ids)
-            data_class.destroy(ids)
+            data_class.where(:id => ids).destroy
           end
 
           def exists?(id)
-            data_class.exists?(id)
+            data_class.where(:id => id).any?
           end
 
           def transaction(&block)
-            data_class.transaction(&block)
+            data_class.db.transaction(&block)
           end
 
           private
 
           def record_attributes_method
-            :attributes
+            :values
           end
         end
       end

@@ -1,4 +1,5 @@
 require 'singleton'
+require 'datamappify/util'
 require 'datamappify/repository/mapping_hash'
 require 'datamappify/repository/dsl'
 require 'datamappify/repository/attributes_mapper'
@@ -53,9 +54,11 @@ module Datamappify
     end
 
     def destroy(id_ids_or_entity_entities)
-      Array.wrap(id_ids_or_entity_entities).each do |id_or_entity|
-        default_persistence.destroy(id_or_entity)
+      ids = Array.wrap(id_ids_or_entity_entities).map do |id_or_entity|
+        Util.extract_entity_id(id_or_entity)
       end
+
+      default_persistence.destroy(ids)
     end
 
     def destroy!(id_ids_or_entity_entities)
@@ -75,7 +78,7 @@ module Datamappify
     end
 
     def persistence_class(provider_class_name)
-      "Datamappify::Data::#{provider_class_name}::Persistence".constantize
+      "Datamappify::Data::Provider::#{provider_class_name}::Persistence".constantize
     end
 
     def create_or_update(entity)

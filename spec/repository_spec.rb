@@ -8,14 +8,6 @@ shared_examples_for "a repository" do |data_provider|
   it "defines the data class after the repository is initialised" do
     subject.const_defined?(:User, false).should == true
   end
-
-  describe "data objects" do
-    subject { data_provider_module::User }
-
-    it "inherites from Datamappify::Data" do
-      subject.superclass.name.should match("Datamappify::Data::#{data_provider}")
-    end
-  end
 end
 
 describe Datamappify::Repository do

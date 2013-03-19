@@ -17,7 +17,7 @@ module Datamappify
       private
 
       def provider_module
-        @provider_module ||= "Datamappify::Data::#{@provider_class_name}".constantize
+        @provider_module ||= "Datamappify::Data::Provider::#{@provider_class_name}".constantize
       end
 
       def data_class_is_defined?

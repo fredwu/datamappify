@@ -34,6 +34,8 @@ Or install it yourself as:
 
 ### Entity
 
+Entity uses [Virtus](https://github.com/solnic/virtus) DSL for defining attributes and [ActiveModel::Validations](http://api.rubyonrails.org/classes/ActiveModel/Validations.html) DSL for validations.
+
 ```ruby
 class User
   include Datamappify::Entity
@@ -58,6 +60,8 @@ end
 
 ### Repository
 
+Map entity attributes to DB columns - better yet, you can even map attributes to __different ORMs__!
+
 ```ruby
 class UserRepository
   include Datamappify::Repository
@@ -72,12 +76,13 @@ class UserRepository
   #
   # for example:
   #   - 'last_name' is mapped to the 'User' ActiveRecord class and its 'surname' attribute
-  #   - 'passport' is mapped to the 'UserPassport' ActiveRecord class and its 'number' attribute
+  #   - 'driver_license' is mapped to the 'UserDriverLicense' ActiveRecord class and its 'number' attribute
+  #   - 'passport' is mapped to the 'UserPassport' Sequel class and its 'number' attribute
   #   - attributes not specified here are mapped automatically to 'ActiveRecord::User'
   map_attribute :last_name,      'ActiveRecord::User#surname'
   map_attribute :driver_license, 'ActiveRecord::UserDriverLicense#number'
-  map_attribute :passport,       'ActiveRecord::UserPassport#number'
-  map_attribute :health_care,    'ActiveRecord::UserHealthCare#number'
+  map_attribute :passport,       'Sequel::UserPassport#number'
+  map_attribute :health_care,    'Sequel::UserHealthCare#number'
 end
 ```
 
@@ -119,6 +124,7 @@ UserRepository.instance.destroy([user, user2, user3])
 ## Supported ORMs
 
 - ActiveRecord
+- Sequel
 
 ## Changelog
 
@@ -131,7 +137,6 @@ Refer to [CHANGELOG](CHANGELOG.md).
 - Track dirty entity attributes to avoid unnecessary DB queries.
 - Support for configurable primary keys and foreign keys.
 - Entity should dictate Data, so schema and migrations should be automatically generated.
-- Support for multiple ORMs on attribute level.
 
 ## Similar Projects
 

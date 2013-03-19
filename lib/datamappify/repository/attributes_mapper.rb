@@ -6,27 +6,29 @@ module Datamappify
       def initialize(repository)
         @repository = repository
 
-        map_entity_attributes
+        map_non_custom_entity_attributes
+        map_custom_entity_attributes
       end
 
       def build_data_classes
-        @repository.data_mapping.each do |data_class_name, data_fields_mapping|
-          AttributeSourceDataClassBuilder.build(data_class_name, data_fields_mapping)
+        @repository.data_mapping.each do |provider_class_name, data_class_mapping|
+          data_class_mapping.each do |data_class_name, data_fields_mapping|
+            AttributeSourceDataClassBuilder.new(provider_class_name, data_class_name).build(data_fields_mapping)
+          end
         end
       end
 
       private
 
-      def map_entity_attributes
-        map_non_custom_entity_attributes
-        map_custom_entity_attributes
-      end
-
       def map_non_custom_entity_attributes
-        @repository.data_mapping[@repository.entity_class.name] = {}
+        provider_name   = @repository.default_provider_class_name
+        data_class_name = @repository.entity_class.name
+
+        @repository.data_mapping[provider_name] ||= {}
+        @repository.data_mapping[provider_name][data_class_name] ||= MappingHash.new
 
         non_custom_attributes.each do |attribute_name|
-          @repository.data_mapping[@repository.entity_class.name][attribute_name] = attribute_name
+          @repository.data_mapping[provider_name][data_class_name][attribute_name] = attribute_name
         end
       end
 
@@ -41,10 +43,12 @@ module Datamappify
       end
 
       def map_custom_entity_attribute(attribute_name, source)
-        data_class_name, data_field_name = source.split('#')
+        namespaced_data_class_name, data_field_name = source.split('#')
+        provider_name, data_class_name = namespaced_data_class_name.split('::')
 
-        @repository.data_mapping[data_class_name] ||= {}
-        @repository.data_mapping[data_class_name][data_field_name.to_sym] = attribute_name
+        @repository.data_mapping[provider_name] ||= {}
+        @repository.data_mapping[provider_name][data_class_name] ||= MappingHash.new
+        @repository.data_mapping[provider_name][data_class_name][data_field_name.to_sym] = attribute_name
       end
     end
   end

@@ -36,11 +36,12 @@ Or install it yourself as:
 class User
   include Datamappify::Entity
 
-  attribute :first_name, String
-  attribute :last_name,  String
-  attribute :gender,     String
-  attribute :age,        Integer
-  attribute :passport,   String
+  attribute :first_name,     String
+  attribute :last_name,      String
+  attribute :age,            Integer
+  attribute :passport,       String
+  attribute :driver_license, String
+  attribute :health_care,    String
 
   validates :first_name, :presence => true,
                          :length   => { :minimum => 2 }
@@ -62,14 +63,19 @@ class UserRepository
   # specify the entity class
   for_entity User
 
+  # specify the default data provider for unmapped attributes
+  default_provider :ActiveRecord
+
   # specify any attributes that need to be mapped
   #
   # for example:
   #   - 'gender' is mapped to the 'User' ActiveRecord class and its 'sex' attribute
   #   - 'passport' is mapped to the 'UserPassport' ActiveRecord class and its 'number' attribute
-  #   - attributes not specified here are mapped automatically (in this case, 'User')
-  map_attribute :gender,   'User#sex'
-  map_attribute :passport, 'UserPassport#number'
+  #   - attributes not specified here are mapped automatically to 'ActiveRecord::User'
+  map_attribute :last_name,      'ActiveRecord::User#surname'
+  map_attribute :driver_license, 'ActiveRecord::UserDriverLicense#number'
+  map_attribute :passport,       'ActiveRecord::UserPassport#number'
+  map_attribute :health_care,    'ActiveRecord::UserHealthCare#number'
 end
 ```
 

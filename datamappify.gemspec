@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "virtus",        "~> 0.5"
   spec.add_dependency "activesupport", ">= 4.0.0.beta1", "< 5"
-  spec.add_dependency "activerecord",  ">= 4.0.0.beta1", "< 5"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
@@ -29,5 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "cane"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "activerecord",  ">= 4.0.0.beta1", "< 5"
   spec.add_development_dependency "database_cleaner", ">= 1.0.0.RC1", "< 2"
 end

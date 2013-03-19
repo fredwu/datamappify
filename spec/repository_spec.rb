@@ -1,33 +1,25 @@
 require_relative 'spec_helper'
 
+shared_examples_for "a repository" do |data_provider|
+  let(:data_provider_module) { "Datamappify::Data::#{data_provider}".constantize }
+  let!(:user_repository)     { "UserRepository#{data_provider}".constantize.instance }
+  subject                    { data_provider_module }
+
+  it "defines the data class after the repository is initialised" do
+    subject.const_defined?(:User, false).should == true
+  end
+
+  describe "data objects" do
+    subject { data_provider_module::User }
+
+    it "inherites from Datamappify::Data" do
+      subject.superclass.name.should match("Datamappify::Data::#{data_provider}")
+    end
+  end
+end
+
 describe Datamappify::Repository do
-  let!(:user_repository)    { UserRepository.instance }
-  let!(:comment_repository) { CommentRepository.instance }
-  let!(:role_repository)    { RoleRepository.instance }
-  let!(:group_repository)   { GroupRepository.instance }
-
-  describe "ActiveRecord data objects" do
-    it "defines the Data::User class after the repository is initialised" do
-      Datamappify::Data.const_defined?(:User, false).should == true
-    end
-
-    describe "data objects" do
-      subject { Datamappify::Data::User }
-
-      it "inherites from Datamappify::Data::Base" do
-        subject.superclass.should == Datamappify::Data::Base
-        subject.ancestors.should include(ActiveRecord::Base)
-      end
-
-      it "has 'users' as the table name" do
-        subject.table_name.should == 'users'
-      end
-    end
-
-    def assert_correct_associated_data_class_name(klass, association_name, data_class_name)
-      klass.class.reflect_on_all_associations.find { |a|
-        a.name == association_name
-      }.klass.name.should == data_class_name
-    end
+  DATA_PROVIDERS.each do |data_provider|
+    it_behaves_like "a repository", data_provider
   end
 end

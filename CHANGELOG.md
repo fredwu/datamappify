@@ -1,5 +1,11 @@
 ## master
 
+- __Completed rewritten Repository__
+  - Repository now handles data construction from different ORM objects
+  - ActiveRecord has now been demoted to being a data provider, it no longer tightly couples with Repository, this means __we could have multiple data providers__!
+  - Repository is now much more robust
+  - As a result of the more robust system, it fixed an issue where updating an existing entity with new data records from mapped attributes will not persist the new data records correctly
+
 ## 0.10.1 [2013-03-16]
 
 - Fixed `#save` for creating new objects.

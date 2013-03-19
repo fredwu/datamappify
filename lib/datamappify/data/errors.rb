@@ -3,6 +3,9 @@ module Datamappify
     class Error < StandardError
     end
 
+    class MethodNotImplemented < NoMethodError
+    end
+
     class EntityInvalid < Error
       def initialize(entity)
         super entity.errors.full_messages.join(', ')

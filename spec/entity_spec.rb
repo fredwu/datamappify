@@ -8,10 +8,11 @@ describe Datamappify::Entity do
   describe "attributes" do
     it "has defined attributes" do
       user.first_name.should be_nil
+      user.last_name.should be_nil
     end
 
     it "raises error on undefined attributes" do
-      -> { user.attribute_that_does_not_exist }.should raise_error(NoMethodError)
+      -> { user.surname }.should raise_error(NoMethodError)
     end
 
     it "assigns an attribute" do
@@ -31,7 +32,7 @@ describe Datamappify::Entity do
       user.valid?.should == false
 
       user.first_name = 'Fred'
-      user.passport = 'FREDWU42'
+      user.driver_license = 'FREDWU42'
       user.valid?.should == true
     end
   end

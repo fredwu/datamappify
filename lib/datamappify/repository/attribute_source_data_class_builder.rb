@@ -1,22 +1,27 @@
 module Datamappify
   module Repository
     class AttributeSourceDataClassBuilder
-      class << self
-        def build(data_class_name, data_fields_mapping)
-          @data_class_name = data_class_name
+      def initialize(provider_class_name, data_class_name)
+        @provider_class_name = provider_class_name
+        @data_class_name     = data_class_name
+      end
 
-          build_data_class unless data_class_is_defined?
+      def build(data_fields_mapping)
+        require "datamappify/data/provider/#{@provider_class_name.underscore}"
+
+        unless data_class_is_defined?
+          provider_module.build_data_class(@data_class_name)
         end
+      end
 
-        private
+      private
 
-        def build_data_class
-          Data.const_set(@data_class_name, Class.new(Data::Base))
-        end
+      def provider_module
+        @provider_module ||= "Datamappify::Data::#{@provider_class_name}".constantize
+      end
 
-        def data_class_is_defined?
-          Data.const_defined?(@data_class_name, false)
-        end
+      def data_class_is_defined?
+        provider_module.const_defined?(@data_class_name, false)
       end
     end
   end

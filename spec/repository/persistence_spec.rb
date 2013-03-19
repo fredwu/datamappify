@@ -1,93 +1,128 @@
 require_relative '../spec_helper'
 
-describe Datamappify::Repository do
-  let!(:user_repository) { UserRepository.instance }
-  let(:user)             { User.new(:id => 1, :first_name => 'Fred', :gender => 'male', :passport => 'FREDWU42') }
-  let(:user_valid)       { User.new(:first_name => 'Batman', :gender => 'male', :passport => 'ARKHAMCITY') }
-  let(:user_invalid)     { User.new(:first_name => 'a') }
+shared_examples_for "repository persistence" do |data_provider|
+  let!(:user_repository)     { "UserRepository#{data_provider}".constantize.instance }
+  let(:existing_user)        { User.new(:id => 1, :first_name => 'Fred', :driver_license => 'FREDWU42') }
+  let(:new_valid_user)       { User.new(:first_name => 'Batman', :driver_license => 'ARKHAMCITY') }
+  let(:new_invalid_user)     { User.new(:first_name => 'a') }
+  let(:data_passports)       { "Datamappify::Data::#{data_provider}::UserPassport".constantize }
+  let(:data_driver_licenses) { "Datamappify::Data::#{data_provider}::UserDriverLicense".constantize }
 
-  let(:has_db_user) do
-    Datamappify::Data::User.create!(:first_name => 'Fred', :sex => 'male')
-    Datamappify::Data::UserPassport.create!(:number => 'FREDWU42', :user_id => 1)
+  before do
+    user_repository.save(existing_user)
   end
 
   describe "#find" do
-    it "found" do
-      has_db_user
+    describe "resource" do
+      it "found" do
+        user_repository.find(1).should == existing_user
+        user_repository.find([1]).should == [existing_user]
+      end
 
-      user_repository.find(1).should == user
-      user_repository.find([1]).should == [user]
+      it "not found" do
+        user_repository.find(42).should == nil
+      end
     end
 
-    it "not found" do
-      user_repository.find(1).should == nil
-    end
+    describe "collection" do
+      it "found" do
+        user_repository.find([1]).should == [existing_user]
+      end
 
-    it "partial found collection" do
-      has_db_user
+      it "partial found" do
+        user_repository.find([1, 2]).should == [existing_user]
+      end
 
-      user_repository.find([1, 2]).should == [user]
+      it "not found" do
+        user_repository.find([42, 255]).should == []
+      end
     end
   end
 
   describe "#save" do
     it "success" do
-      user_repository.save(user_valid)
-      user_repository.count.should == 1
+      expect { user_repository.save(new_valid_user) }.to change { user_repository.count }.by(1)
 
-      new_user = user_repository.find(1)
+      new_user = user_repository.find(user_repository.count)
       new_user.should be_kind_of(User)
       new_user.first_name.should == 'Batman'
-      new_user.passport.should == 'ARKHAMCITY'
+      new_user.driver_license.should == 'ARKHAMCITY'
     end
 
     it "failure" do
-      -> { user_repository.save!(user_invalid) }.should raise_error(Datamappify::Data::EntityNotSaved)
+      -> { user_repository.save!(new_invalid_user) }.should raise_error(Datamappify::Data::EntityNotSaved)
     end
 
     it "transaction" do
-      user_valid.driver_license = 'DEVOPS'
-      -> { user_repository.save(user_valid) }.should raise_error(ActiveRecord::StatementInvalid)
+      DatabaseCleaner.clean
+
+      new_valid_user.passport = 'DEVOPS'
+
+      -> { user_repository.save(new_valid_user) }.should raise_error(ActiveRecord::StatementInvalid)
 
       user_repository.count.should == 0
-      Datamappify::Data::UserPassport.count.should == 0
-      Datamappify::Data::UserDriverLicense.count.should == 0
+      data_passports.count.should == 0
+      data_driver_licenses.count.should == 0
+    end
+
+    describe "update an existing entity" do
+      it "updates existing records" do
+        user = user_repository.find(1)
+
+        user.first_name = 'Vivian'
+        user.driver_license = 'LOCOMOTE'
+
+        updated_user = user_repository.save(user)
+
+        updated_user.first_name.should == 'Vivian'
+        updated_user.driver_license.should == 'LOCOMOTE'
+
+        persisted_user = user_repository.find(updated_user.id)
+
+        persisted_user.first_name.should == 'Vivian'
+        persisted_user.driver_license.should == 'LOCOMOTE'
+
+        user_repository.count.should == 1
+      end
+
+      it "updates existing and new records" do
+        user = user_repository.find(1)
+
+        user.first_name = 'Vivian'
+        user.health_care = 'BATMANCAVE'
+
+        updated_user = user_repository.save(user)
+
+        updated_user.first_name.should == 'Vivian'
+        updated_user.health_care.should == 'BATMANCAVE'
+
+        persisted_user = user_repository.find(updated_user.id)
+
+        persisted_user.first_name.should == 'Vivian'
+        persisted_user.health_care.should == 'BATMANCAVE'
+
+        user_repository.count.should == 1
+      end
     end
   end
 
-  it "updates an existing record" do
-    has_db_user
+  describe "#destroy" do
+    it "via id" do
+      user_repository.destroy!(1)
+      user_repository.count.should == 0
+    end
 
-    user.first_name = 'Vivian'
-    user.gender = 'female'
-    user.passport = 'LOCOMOTE'
+    it "via entity" do
+      user = user_repository.find(1)
 
-    updated_user = user_repository.save(user)
-
-    updated_user.first_name.should == 'Vivian'
-    updated_user.gender.should == 'female'
-    updated_user.passport.should == 'LOCOMOTE'
-
-    persisted_user = user_repository.find(user.id)
-
-    persisted_user.first_name.should == 'Vivian'
-    persisted_user.gender.should == 'female'
-    persisted_user.passport.should == 'LOCOMOTE'
-
-    user_repository.count.should == 1
+      user_repository.destroy!(user)
+      user_repository.count.should == 0
+    end
   end
+end
 
-  it "#destroy via id" do
-    has_db_user
-
-    user_repository.destroy!(1)
-    user_repository.count.should == 0
-  end
-
-  it "#destroy via entity" do
-    has_db_user
-
-    user_repository.destroy!(user)
-    user_repository.count.should == 0
+describe Datamappify::Repository do
+  DATA_PROVIDERS.each do |data_provider|
+    it_behaves_like "repository persistence", data_provider
   end
 end

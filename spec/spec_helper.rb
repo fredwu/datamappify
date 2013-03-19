@@ -4,8 +4,10 @@ require 'pry'
 require 'rspec/autorun'
 require 'database_cleaner'
 
-Coveralls.wear!
-SimpleCov.start
+case ENV['COV'].to_i
+when 1 then SimpleCov.start
+when 2 then Coveralls.wear!
+end
 
 SimpleCov.configure do
   add_filter "/spec/"

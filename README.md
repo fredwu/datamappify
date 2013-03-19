@@ -92,6 +92,8 @@ users = UserRepository.instance.find([1, 2, 3])
 
 Pass in an entity or an array of entities.
 
+There is also `save!` that raises `Datamappify::Data::EntityNotSaved`.
+
 ```ruby
 UserRepository.instance.save(user)
 UserRepository.instance.save([user, user2, user3])
@@ -100,6 +102,8 @@ UserRepository.instance.save([user, user2, user3])
 #### Destroying an entity
 
 Pass in an entity, an id, an array of entities or an array of ids.
+
+There is also `destroy!` that raises `Datamappify::Data::EntityNotDestroyed`.
 
 Note that due to the attributes mapping, any data found in mapped ActiveRecord objects are not touched.
 

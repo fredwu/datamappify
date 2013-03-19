@@ -2,7 +2,9 @@
 
 Separate domain logic from data persistence, based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html).
 
-__This library is current in Proof-of-Concept stage, do NOT use it for anything other than experimentation.__
+Datamappify is NOT associated with the [Datamapper](https://github.com/datamapper/) project.
+
+__Datamappify is current in Proof-of-Concept stage, do NOT use it for anything other than experimentation.__
 
 ## Overview
 

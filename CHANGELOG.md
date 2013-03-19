@@ -1,5 +1,9 @@
 ## master
 
+## 0.20.1 [2013-03-19]
+
+- Fixed the leftover `require 'active_record'` in the code so the gem works without ActiveRecord.
+
 ## 0.20.0 [2013-03-19]
 
 - __Completely rewritten Repository__

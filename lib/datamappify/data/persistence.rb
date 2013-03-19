@@ -52,10 +52,6 @@ module Datamappify
       def key_field_name
         is_entity_class? ? :id : "#{entity_class_name.underscore}_id".to_sym
       end
-
-      def extract_entity_id(id_or_entity)
-        id_or_entity.is_a?(Integer) ? id_or_entity : id_or_entity.id
-      end
     end
   end
 end

@@ -1,5 +1,7 @@
 ## master
 
+## 0.20.0 [2013-03-19]
+
 - __Completely rewritten Repository__
   - Repository now handles data construction from different ORM objects
   - ActiveRecord has now been demoted to being a data provider, it is no longer tightly coupled with Repository, this means __we could have multiple data providers__!

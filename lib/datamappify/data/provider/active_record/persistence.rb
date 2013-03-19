@@ -46,7 +46,7 @@ module Datamappify
         end
 
         def transaction(&block)
-          data_class.send :transaction, &block
+          data_class.transaction(&block)
         end
 
         private

@@ -38,7 +38,7 @@ module Datamappify
         end
 
         def destroy(id_or_entity)
-          data_class.send :destroy, extract_entity_id(id_or_entity)
+          data_class.destroy(Util.extract_entity_id(id_or_entity))
         end
 
         def exists?(id)

@@ -4,7 +4,9 @@ shared_examples_for "repository persistence" do |data_provider|
   let!(:user_repository)     { "UserRepository#{data_provider}".constantize.instance }
   let(:existing_user)        { User.new(:id => 1, :first_name => 'Fred', :driver_license => 'FREDWU42') }
   let(:new_valid_user)       { User.new(:first_name => 'Batman', :driver_license => 'ARKHAMCITY') }
+  let(:new_valid_user2)      { User.new(:first_name => 'Ironman', :driver_license => 'NEWYORKCITY') }
   let(:new_invalid_user)     { User.new(:first_name => 'a') }
+  let(:new_invalid_user2)    { User.new(:first_name => 'b') }
   let(:data_passports)       { "Datamappify::Data::#{data_provider}::UserPassport".constantize }
   let(:data_driver_licenses) { "Datamappify::Data::#{data_provider}::UserDriverLicense".constantize }
 
@@ -65,6 +67,36 @@ shared_examples_for "repository persistence" do |data_provider|
       data_driver_licenses.count.should == 0
     end
 
+    describe "update multiple entities" do
+      describe "#save" do
+        it "all successes" do
+          expect { user_repository.save([new_valid_user, new_valid_user2]) }.to change { user_repository.count }.by(2)
+        end
+
+        it "successes + failures" do
+          expect { user_repository.save([new_valid_user, new_invalid_user]) }.to change { user_repository.count }.by(1)
+        end
+
+        it "all failures" do
+          expect { user_repository.save([new_invalid_user, new_invalid_user2]) }.to change { user_repository.count }.by(0)
+        end
+      end
+
+      describe "#save!" do
+        it "all successes" do
+          expect { user_repository.save!([new_valid_user, new_valid_user2]) }.to change { user_repository.count }.by(2)
+        end
+
+        it "successes + failures" do
+          expect { -> { user_repository.save!([new_valid_user, new_invalid_user]) }.should raise_error(Datamappify::Data::EntityNotSaved) }.to change { user_repository.count }.by(1)
+        end
+
+        it "all failures" do
+          expect { -> { user_repository.save!([new_invalid_user, new_invalid_user2]) }.should raise_error(Datamappify::Data::EntityNotSaved) }.to change { user_repository.count }.by(0)
+        end
+      end
+    end
+
     describe "update an existing entity" do
       it "updates existing records" do
         user = user_repository.find(1)
@@ -107,16 +139,36 @@ shared_examples_for "repository persistence" do |data_provider|
   end
 
   describe "#destroy" do
-    it "via id" do
-      user_repository.destroy!(1)
-      user_repository.count.should == 0
+    describe "resource" do
+      it "via id" do
+        user_repository.destroy!(1)
+        user_repository.count.should == 0
+      end
+
+      it "via entity" do
+        user = user_repository.find(1)
+
+        user_repository.destroy!(user)
+        user_repository.count.should == 0
+      end
     end
 
-    it "via entity" do
-      user = user_repository.find(1)
+    describe "collection" do
+      before do
+        user_repository.save(new_valid_user)
+      end
 
-      user_repository.destroy!(user)
-      user_repository.count.should == 0
+      it "via id" do
+        user_repository.destroy!([1, 2])
+        user_repository.count.should == 0
+      end
+
+      it "via entity" do
+        users = user_repository.find([1, 2])
+
+        user_repository.destroy!(users)
+        user_repository.count.should == 0
+      end
     end
   end
 end

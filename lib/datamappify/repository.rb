@@ -38,22 +38,28 @@ module Datamappify
       id_or_ids.is_a?(Array) ? entities : entities[0]
     end
 
-    def save(entity)
-      create_or_update(entity)
+    def save(entity_or_entities)
+      Array.wrap(entity_or_entities).each do |entity|
+        create_or_update(entity)
+      end
+
+      entity_or_entities
     rescue Datamappify::Data::EntityInvalid
       false
     end
 
-    def save!(entity)
-      save(entity) || raise(Datamappify::Data::EntityNotSaved)
+    def save!(entity_or_entities)
+      save(entity_or_entities) || raise(Datamappify::Data::EntityNotSaved)
     end
 
-    def destroy(id_or_entity)
-      default_persistence.destroy(id_or_entity)
+    def destroy(id_ids_or_entity_entities)
+      Array.wrap(id_ids_or_entity_entities).each do |id_or_entity|
+        default_persistence.destroy(id_or_entity)
+      end
     end
 
-    def destroy!(id_or_entity)
-      destroy(id_or_entity) || raise(Datamappify::Data::EntityNotDestroyed)
+    def destroy!(id_ids_or_entity_entities)
+      destroy(id_ids_or_entity_entities) || raise(Datamappify::Data::EntityNotDestroyed)
     end
 
     def method_missing(symbol, *args)

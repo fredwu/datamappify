@@ -79,24 +79,35 @@ class UserRepository
 end
 ```
 
-#### Retrieving an entity
+#### Retrieving entities
+
+Pass in an id or an array of ids.
 
 ```ruby
-user = UserRepository.instance.find(1)
+user  = UserRepository.instance.find(1)
+users = UserRepository.instance.find([1, 2, 3])
 ```
 
-#### Saving/updating an entity
+#### Saving/updating entities
+
+Pass in an entity or an array of entities.
 
 ```ruby
 UserRepository.instance.save(user)
+UserRepository.instance.save([user, user2, user3])
 ```
 
 #### Destroying an entity
 
+Pass in an entity, an id, an array of entities or an array of ids.
+
 Note that due to the attributes mapping, any data found in mapped ActiveRecord objects are not touched.
 
 ```ruby
+UserRepository.instance.destroy(1)
+UserRepository.instance.destroy([1, 2, 3])
 UserRepository.instance.destroy(user)
+UserRepository.instance.destroy([user, user2, user3])
 ```
 
 ## Supported ORMs

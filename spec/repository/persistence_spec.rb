@@ -10,10 +10,6 @@ shared_examples_for "repository persistence" do |data_provider|
   let(:data_passports)       { "Datamappify::Data::#{data_provider}::UserPassport".constantize }
   let(:data_driver_licenses) { "Datamappify::Data::#{data_provider}::UserDriverLicense".constantize }
 
-  before do
-    user_repository.save(existing_user)
-  end
-
   describe "#find" do
     describe "resource" do
       let!(:user) { user_repository.save(existing_user) }
@@ -102,7 +98,7 @@ shared_examples_for "repository persistence" do |data_provider|
 
     describe "update an existing entity" do
       it "updates existing records" do
-        user = user_repository.find(1)
+        user = user_repository.save(existing_user)
 
         user.first_name = 'Vivian'
         user.driver_license = 'LOCOMOTE'
@@ -121,7 +117,7 @@ shared_examples_for "repository persistence" do |data_provider|
       end
 
       it "updates existing and new records" do
-        user = user_repository.find(1)
+        user = user_repository.save(existing_user)
 
         user.first_name = 'Vivian'
         user.health_care = 'BATMANCAVE'

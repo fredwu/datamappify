@@ -27,7 +27,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "cane"
+  spec.add_development_dependency "coveralls"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sequel"
   spec.add_development_dependency "activerecord",  ">= 4.0.0.beta1", "< 5"
   spec.add_development_dependency "database_cleaner", ">= 1.0.0.RC1", "< 2"
 end

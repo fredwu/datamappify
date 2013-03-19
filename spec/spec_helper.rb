@@ -1,8 +1,10 @@
+require 'coveralls'
 require 'simplecov'
 require 'pry'
 require 'rspec/autorun'
 require 'database_cleaner'
 
+Coveralls.wear!
 SimpleCov.start
 
 SimpleCov.configure do

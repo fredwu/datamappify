@@ -69,7 +69,7 @@ class UserRepository
   # specify any attributes that need to be mapped
   #
   # for example:
-  #   - 'gender' is mapped to the 'User' ActiveRecord class and its 'sex' attribute
+  #   - 'last_name' is mapped to the 'User' ActiveRecord class and its 'surname' attribute
   #   - 'passport' is mapped to the 'UserPassport' ActiveRecord class and its 'number' attribute
   #   - attributes not specified here are mapped automatically to 'ActiveRecord::User'
   map_attribute :last_name,      'ActiveRecord::User#surname'

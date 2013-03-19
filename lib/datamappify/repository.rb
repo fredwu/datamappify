@@ -84,24 +84,12 @@ module Datamappify
     def create_or_update(entity)
       raise Datamappify::Data::EntityInvalid.new(entity) if entity.invalid?
 
-      default_persistence.exists?(entity.id) ? update(entity) : create(entity)
-    end
+      method = default_persistence.exists?(entity.id) ? :update : :create
 
-    def create(entity)
       data_mapping_walker do |provider_class_name, data_class_name, data_fields_mapping|
         persistence_class(provider_class_name).new(
           provider_class_name, [entity], data_class_name
-        ).create(data_fields_mapping)
-      end
-
-      entity
-    end
-
-    def update(entity)
-      data_mapping_walker do |provider_class_name, data_class_name, data_fields_mapping|
-        persistence_class(provider_class_name).new(
-          provider_class_name, [entity], data_class_name
-        ).update(data_fields_mapping)
+        ).send(method, data_fields_mapping)
       end
 
       entity

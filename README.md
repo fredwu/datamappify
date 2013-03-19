@@ -6,7 +6,7 @@ __This library is current in Proof-of-Concept stage, do NOT use it for anything 
 
 ## Overview
 
-Datamappify is a thin layer on top of ActiveRecord and [Virtus](https://github.com/solnic/virtus). The design goal is to utilise ActiveRecord but separate domain logic (behaviour) and data persistence.
+Datamappify is a thin layer on top of [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord, etc). The design goal is to utilise the powerfulness of existing ORMs but separate domain logic (behaviour) from data persistence.
 
 Datamappify consists of three components:
 
@@ -98,6 +98,10 @@ Note that due to the attributes mapping, any data found in mapped ActiveRecord o
 ```ruby
 UserRepository.instance.destroy(user)
 ```
+
+## Supported ORMs
+
+- ActiveRecord
 
 ## Changelog
 

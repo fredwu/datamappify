@@ -6,6 +6,8 @@ Datamappify is NOT associated with the [Datamapper](https://github.com/datamappe
 
 __Datamappify is current in Proof-of-Concept stage, do NOT use it for anything other than experimentation.__
 
+Right now I'm reevaluating the implementation based on the feedback and discussions I've had so far with people who are smarter than myself. In particular I'm interested to re-architect the whole implementation to decouple Repository and Data, as well as to investigate lazy-loading of entity attributes - which is useful for aggregating data from say, a web service.
+
 ## Overview
 
 Datamappify is a thin layer on top of [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord, etc). The design goal is to utilise the powerfulness of existing ORMs but separate domain logic (behaviour) from data persistence.

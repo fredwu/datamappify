@@ -137,9 +137,11 @@ Refer to [CHANGELOG](CHANGELOG.md).
 - [Edr](https://github.com/nulogy/edr)
 - [Minimapper](https://github.com/joakimk/minimapper)
 
-## Author
+## Credits
 
-[Fred Wu](http://fredwu.me/)
+- [Fred Wu](http://fredwu.me/) - author.
+- [James Ladd](http://jamesladdcode.com/) for reviewing the code and giving advice on architectural decisions.
+- [Locomote](http://www.locomote.com.au/) - where Datamappify is built and being tested in product development.
 
 ## License
 

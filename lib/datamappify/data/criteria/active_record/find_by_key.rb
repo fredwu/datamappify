@@ -2,12 +2,7 @@ module Datamappify
   module Data
     module Criteria
       module ActiveRecord
-        class FindByKey < Find
-          def initialize(source_class, entity, attributes, &block)
-            super(source_class, entity, nil, attributes, &block)
-
-            @criteria = { key_name => entity.id }
-          end
+        class FindByKey < Relational::FindByKey
         end
       end
     end

@@ -2,10 +2,7 @@ module Datamappify
   module Data
     module Criteria
       module ActiveRecord
-        class Count < Common
-          def result
-            source_class.count
-          end
+        class Count < Relational::Count
         end
       end
     end

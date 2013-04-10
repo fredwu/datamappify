@@ -5,6 +5,7 @@ module Datamappify
         def initialize(mapper, entity_or_entities)
           @mapper             = mapper
           @entity_or_entities = entity_or_entities
+          @helper             = Helper.new(@mapper)
         end
 
         def result
@@ -28,20 +29,10 @@ module Datamappify
         end
 
         def dispatch_criteria_to_providers(entity)
-          attributes_walker do |provider_name, source_class, attributes|
+          @helper.attributes_walker do |provider_name, source_class, attributes|
             @mapper.provider(provider_name).build_criteria(
               :SaveByKey, source_class, entity, attributes
             )
-          end
-        end
-
-        def attributes_walker(&block)
-          Transaction.new(@mapper) do
-            @mapper.classified_attributes.each do |provider_name, attributes|
-              attributes.classify(&:source_class).each do |source_class, attrs|
-                block.call(provider_name, source_class, attrs)
-              end
-            end
           end
         end
       end

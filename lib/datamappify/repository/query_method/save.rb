@@ -2,10 +2,11 @@ module Datamappify
   module Repository
     module QueryMethod
       class Save
+        include Helper
+
         def initialize(mapper, entity_or_entities)
           @mapper             = mapper
           @entity_or_entities = entity_or_entities
-          @helper             = Helper.new(@mapper)
         end
 
         def result
@@ -29,7 +30,7 @@ module Datamappify
         end
 
         def dispatch_criteria_to_providers(entity)
-          @helper.attributes_walker do |provider_name, source_class, attributes|
+          attributes_walker do |provider_name, source_class, attributes|
             @mapper.provider(provider_name).build_criteria(
               :SaveByKey, source_class, entity, attributes
             )

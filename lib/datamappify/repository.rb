@@ -1,4 +1,3 @@
-require 'datamappify/repository/helper'
 require 'datamappify/repository/mapping_dsl'
 require 'datamappify/repository/query_method'
 require 'datamappify/data'

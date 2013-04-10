@@ -2,10 +2,11 @@ module Datamappify
   module Repository
     module QueryMethod
       class Find
+        include Helper
+
         def initialize(mapper, id_or_ids)
           @mapper    = mapper
           @id_or_ids = id_or_ids
-          @helper    = Helper.new(@mapper)
         end
 
         def result
@@ -30,7 +31,7 @@ module Datamappify
         end
 
         def dispatch_criteria_to_providers(entity)
-          @helper.attributes_walker do |provider_name, source_class, attributes|
+          attributes_walker do |provider_name, source_class, attributes|
             @mapper.provider(provider_name).build_criteria(
               :FindByKey, source_class, entity, attributes
             )

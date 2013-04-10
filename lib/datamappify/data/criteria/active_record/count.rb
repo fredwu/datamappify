@@ -1,3 +1,5 @@
+require 'datamappify/data/criteria/relational/count'
+
 module Datamappify
   module Data
     module Criteria

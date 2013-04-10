@@ -1,3 +1,5 @@
+require 'datamappify/data/criteria/relational/save'
+
 module Datamappify
   module Data
     module Criteria

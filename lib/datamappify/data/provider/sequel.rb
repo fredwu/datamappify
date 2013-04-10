@@ -1,16 +1,15 @@
-require 'datamappify/data/provider/sequel/persistence'
-
 module Datamappify
   module Data
-    module Sequel
-    end
-
     module Provider
       module Sequel
-        def self.build_data_class(data_class_name)
-          Datamappify::Data::Sequel.const_set(
-            data_class_name, Class.new(::Sequel::Model(data_class_name.pluralize.underscore.to_sym))
-          )
+        extend CommonProvider
+
+        def self.build_record(source_class_name)
+          Datamappify::Data::Record::Sequel.const_set(
+            source_class_name, Class.new(::Sequel::Model(source_class_name.pluralize.underscore.to_sym))
+          ).tap do |klass|
+            klass.raise_on_save_failure = true
+          end
         end
       end
     end

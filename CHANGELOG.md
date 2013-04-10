@@ -1,5 +1,8 @@
 ## master
 
+- __Completely reimplemented Datamappify__
+  - Things are more decoupled and cleaner in general.
+
 ## 0.20.1 [2013-03-19]
 
 - Fixed the leftover `require 'active_record'` in the code so the gem works without ActiveRecord.
@@ -7,11 +10,11 @@
 ## 0.20.0 [2013-03-19]
 
 - __Completely rewritten Repository__
-  - Repository now handles data construction from different ORM objects
+  - Repository now handles data construction from different ORM objects.
   - ActiveRecord has now been demoted to being a data provider, it is no longer tightly coupled with Repository, this means __we could have multiple data providers__!
-  - Repository is now much more robust
-  - As a result of robustness, it fixed an issue where updating an existing entity with new data records from mapped attributes will not persist the new data records correctly
-  - `#save` and `#destroy` now support accepting an array as their argument
+  - Repository is now much more robust.
+  - As a result of robustness, it fixed an issue where updating an existing entity with new data records from mapped attributes will not persist the new data records correctly.
+  - `#save` and `#destroy` now support accepting an array as their argument.
   - Added support for Sequel!
   - Added support for mapping entity attributes to different ORMs!
 

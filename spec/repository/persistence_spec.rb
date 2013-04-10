@@ -2,21 +2,19 @@ require_relative '../spec_helper'
 
 shared_examples_for "repository persistence" do |data_provider|
   let!(:user_repository)     { "UserRepository#{data_provider}".constantize.instance }
-  let(:existing_user)        { User.new(:id => 1, :first_name => 'Fred', :driver_license => 'FREDWU42') }
+  let(:existing_user)        { user_repository.save(User.new(:first_name => 'Fred', :driver_license => 'FREDWU42')) }
   let(:new_valid_user)       { User.new(:first_name => 'Batman', :driver_license => 'ARKHAMCITY') }
   let(:new_valid_user2)      { User.new(:first_name => 'Ironman', :driver_license => 'NEWYORKCITY') }
   let(:new_invalid_user)     { User.new(:first_name => 'a') }
   let(:new_invalid_user2)    { User.new(:first_name => 'b') }
-  let(:data_passports)       { "Datamappify::Data::#{data_provider}::UserPassport".constantize }
-  let(:data_driver_licenses) { "Datamappify::Data::#{data_provider}::UserDriverLicense".constantize }
+  let(:data_passports)       { "Datamappify::Data::Record::#{data_provider}::UserPassport".constantize }
+  let(:data_driver_licenses) { "Datamappify::Data::Record::#{data_provider}::UserDriverLicense".constantize }
 
   describe "#find" do
     describe "resource" do
-      let!(:user) { user_repository.save(existing_user) }
-
       it "found" do
-        user_repository.find(user.id).should == existing_user
-        user_repository.find([user.id]).should == [existing_user]
+        user_repository.find(existing_user.id).should == existing_user
+        user_repository.find([existing_user.id]).should == [existing_user]
       end
 
       it "not found" do
@@ -25,14 +23,12 @@ shared_examples_for "repository persistence" do |data_provider|
     end
 
     describe "collection" do
-      let!(:user) { user_repository.save(existing_user) }
-
       it "found" do
-        user_repository.find([user.id]).should == [existing_user]
+        user_repository.find([existing_user.id]).should == [existing_user]
       end
 
       it "partial found" do
-        user_repository.find([user.id, 42]).should == [existing_user]
+        user_repository.find([existing_user.id, 42]).should == [existing_user]
       end
 
       it "not found" do
@@ -98,14 +94,12 @@ shared_examples_for "repository persistence" do |data_provider|
 
     describe "update an existing entity" do
       it "updates existing records" do
-        user = user_repository.save(existing_user)
-
-        user.first_name = 'Vivian'
-        user.driver_license = 'LOCOMOTE'
+        existing_user.first_name = 'Vivian'
+        existing_user.driver_license = 'LOCOMOTE'
 
         updated_user = nil
 
-        expect { updated_user = user_repository.save(user) }.to change { user_repository.count }.by(0)
+        expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
 
         updated_user.first_name.should == 'Vivian'
         updated_user.driver_license.should == 'LOCOMOTE'
@@ -117,14 +111,12 @@ shared_examples_for "repository persistence" do |data_provider|
       end
 
       it "updates existing and new records" do
-        user = user_repository.save(existing_user)
-
-        user.first_name = 'Vivian'
-        user.health_care = 'BATMANCAVE'
+        existing_user.first_name = 'Vivian'
+        existing_user.health_care = 'BATMANCAVE'
 
         updated_user = nil
 
-        expect { updated_user = user_repository.save(user) }.to change { user_repository.count }.by(0)
+        expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
 
         updated_user.first_name.should == 'Vivian'
         updated_user.health_care.should == 'BATMANCAVE'

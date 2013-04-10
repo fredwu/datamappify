@@ -1,6 +1,6 @@
 # Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png)](http://travis-ci.org/fredwu/datamappify) [![Coverage Status](https://coveralls.io/repos/fredwu/datamappify/badge.png)](https://coveralls.io/r/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
-Separate domain logic from data persistence, based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html).
+Separate domain logic from data persistence, loosely based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html).
 
 Datamappify is NOT associated with the [Datamapper](https://github.com/datamapper/) project.
 
@@ -14,7 +14,7 @@ Datamappify is a thin layer on top of [Virtus](https://github.com/solnic/virtus)
 
 Datamappify consists of three components:
 
-- __Entity__ is your model, it is responsible for mainly storing behaviour.
+- __Entity__ contains models behaviour, think ActiveRecord model with the persistence specifics removed.
 - __Data__ as the name suggests, holds your model data. It is an ActiveRecord object.
 - __Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
 

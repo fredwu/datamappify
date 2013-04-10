@@ -1,36 +1,31 @@
 # Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png)](http://travis-ci.org/fredwu/datamappify) [![Coverage Status](https://coveralls.io/repos/fredwu/datamappify/badge.png)](https://coveralls.io/r/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
-Separate domain logic from data persistence, loosely based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html).
-
-Datamappify is NOT associated with the [Datamapper](https://github.com/datamapper/) project.
-
 __Datamappify is current in Proof-of-Concept stage, do NOT use it for anything other than experimentation.__
-
-Right now I'm reevaluating the implementation based on the feedback and discussions I've had so far with people who are smarter than myself. In particular I'm interested to investigate lazy-loading of entity attributes - which is useful for aggregating data from say, web services.
 
 ## Overview
 
-Datamappify is a thin layer on top of [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord, etc). The design goal is to utilise the powerfulness of existing ORMs but separate domain logic (behaviour) from data persistence.
+Compose and manage domain logic and data persistence separately and intelligently, Datamappify is loosely based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html) and [Entity Aggregation](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
+
+Datamappify is built using [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord and Sequel, etc). The design goal is to utilise the powerfulness of existing ORMs as well as to separate domain logic (model behaviour) from data persistence.
 
 Datamappify consists of three components:
 
-- __Entity__ contains models behaviour, think ActiveRecord model with the persistence specifics removed.
-- __Data__ as the name suggests, holds your model data. It is an ActiveRecord object.
+- __Entity__ contains models behaviour, think an ActiveRecord model with the persistence specifics removed.
+- __Data__ as the name suggests, holds your model data. It is an ORM object (ActiveRecord and Sequel, etc).
 - __Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
+
+Note: Datamappify is NOT affiliated with the [Datamapper](https://github.com/datamapper/) project.
+
+### Supported ORMs for Persistence
+
+- ActiveRecord
+- Sequel
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
     gem 'datamappify'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install datamappify
 
 ## Usage
 
@@ -123,22 +118,18 @@ UserRepository.instance.destroy(user)
 UserRepository.instance.destroy([user, user2, user3])
 ```
 
-## Supported ORMs
-
-- ActiveRecord
-- Sequel
-
 ## Changelog
 
 Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
-- Enforce attribute type casting.
+- Track dirty entity attributes.
+- Attribute lazy-loading.
 - Hooks for persistence (`before_save` and `after_save`, etc).
-- Track dirty entity attributes to avoid unnecessary DB queries.
+- [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
+- Enforce attribute type casting.
 - Support for configurable primary keys and foreign keys.
-- Entity should dictate Data, so schema and migrations should be automatically generated.
 
 ## Similar Projects
 

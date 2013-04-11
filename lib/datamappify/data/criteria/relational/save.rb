@@ -4,12 +4,12 @@ module Datamappify
       module Relational
         class Save < Common
           def result
-            new_record? ? insert : update unless ignore?
+            new_record? ? create_record : save_record unless ignore?
           end
 
           private
 
-          def insert
+          def create_record
             record = source_class.new(criteria)
             saved_record = save(record)
 

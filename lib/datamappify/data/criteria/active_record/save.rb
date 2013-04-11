@@ -7,7 +7,7 @@ module Datamappify
         class Save < Relational::Save
           private
 
-          def update
+          def save_record
             record = source_class.where(criteria).first_or_initialize
             save(record)
           end

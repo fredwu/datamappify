@@ -28,11 +28,7 @@ module Datamappify
           private
 
           def records_namespace
-            @records_namespace ||= if Datamappify::Data::Record.const_defined?(class_name, false)
-              Datamappify::Data::Record.const_get(class_name)
-            else
-              Datamappify::Data::Record.const_set(class_name, Module.new)
-            end
+            @records_namespace ||= Datamappify::Data::Record.const_set(class_name, Module.new)
           end
         end
 

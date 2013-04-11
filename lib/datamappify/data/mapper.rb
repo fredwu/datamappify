@@ -25,10 +25,6 @@ module Datamappify
         @default_source_class ||= default_provider.find_or_build_record(entity_class.name)
       end
 
-      def source_class(source_class_name)
-        Datamappify::Data::Record.const_get(source_class_name)
-      end
-
       def classified_attributes
         @classified_attributes ||= Set.new(custom_attributes + default_attributes).classify(&:provider_name)
       end
@@ -48,10 +44,6 @@ module Datamappify
         custom_attributes
 
         @custom_attribute_names
-      end
-
-      def id_attribute
-        @id_attribute ||= default_attributes[0]
       end
 
       def default_attributes

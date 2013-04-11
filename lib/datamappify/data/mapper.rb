@@ -14,11 +14,11 @@ module Datamappify
       end
 
       def default_provider
-        @default_provider ||= Datamappify::Data::Provider.const_get(default_provider_name)
+        @default_provider ||= Provider.const_get(default_provider_name)
       end
 
       def provider(provider_name)
-        Datamappify::Data::Provider.const_get(provider_name)
+        Provider.const_get(provider_name)
       end
 
       def default_source_class

@@ -15,14 +15,14 @@ module Datamappify
           end
 
           @entity_or_entities
-        rescue Datamappify::Data::EntityInvalid
+        rescue Data::EntityInvalid
           false
         end
 
         private
 
         def create_or_update(entity)
-          raise Datamappify::Data::EntityInvalid.new(entity) if entity.invalid?
+          raise Data::EntityInvalid.new(entity) if entity.invalid?
 
           dispatch_criteria_to_providers(entity)
 

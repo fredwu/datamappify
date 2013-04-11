@@ -28,7 +28,7 @@ module Datamappify
       end
 
       def save!(entity_or_entities)
-        save(entity_or_entities) || raise(Datamappify::Data::EntityNotSaved)
+        save(entity_or_entities) || raise(Data::EntityNotSaved)
       end
 
       def destroy(id_or_ids_or_entity_or_entities)
@@ -36,7 +36,7 @@ module Datamappify
       end
 
       def destroy!(id_or_ids_or_entity_or_entities)
-        destroy(id_or_ids_or_entity_or_entities) || raise(Datamappify::Data::EntityNotDestroyed)
+        destroy(id_or_ids_or_entity_or_entities) || raise(Data::EntityNotDestroyed)
       end
 
       def count

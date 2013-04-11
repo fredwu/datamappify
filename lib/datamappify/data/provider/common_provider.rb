@@ -28,12 +28,12 @@ module Datamappify
           private
 
           def records_namespace
-            @records_namespace ||= Datamappify::Data::Record.const_set(class_name, Module.new)
+            @records_namespace ||= Data::Record.const_set(class_name, Module.new)
           end
         end
 
         def build_criteria(name, *args, &block)
-          Datamappify::Data::Criteria.const_get(class_name).const_get(name).new(*args, &block).result
+          Data::Criteria.const_get(class_name).const_get(name).new(*args, &block).result
         end
       end
     end

@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 shared_examples_for "repository persistence" do |data_provider|
-  let!(:user_repository)     { "UserRepository#{data_provider}".constantize.instance }
+  let!(:user_repository)     { "UserRepository#{data_provider}".constantize }
   let(:existing_user)        { user_repository.save(User.new(:first_name => 'Fred', :driver_license => 'FREDWU42')) }
   let(:new_valid_user)       { User.new(:first_name => 'Batman', :driver_license => 'ARKHAMCITY') }
   let(:new_valid_user2)      { User.new(:first_name => 'Ironman', :driver_license => 'NEWYORKCITY') }
@@ -162,7 +162,7 @@ describe Datamappify::Repository do
   end
 
   describe "entity composed from multiple data providers" do
-    let!(:hero_repository) { HeroUserRepository.instance }
+    let!(:hero_repository) { HeroUserRepository }
     let!(:hero)            { HeroUser.new :first_name => 'Aaron', :last_name => 'Patterson' }
 
     it "#find" do

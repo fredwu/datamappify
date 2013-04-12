@@ -3,7 +3,7 @@ module Datamappify
     module QueryMethod
       # Provides a default set of methods to the varies {QueryMethod} classes
       class Method
-        private
+        protected
 
         # Dispatches a {Criteria} according to
         # the {Data::Mapper data mapper}'s default provider and default source class

@@ -2,10 +2,10 @@ module Datamappify
   module Repository
     module QueryMethod
       class Find < Method
-        # @param mapper [Data::Mapper]
+        # @param mapper (see Method#initialize)
         # @param id_or_ids [Integer, Array<Integer>] an entity id or a collection of entity ids
         def initialize(mapper, id_or_ids)
-          @mapper    = mapper
+          super
           @id_or_ids = id_or_ids
         end
 

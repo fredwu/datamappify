@@ -2,10 +2,10 @@ module Datamappify
   module Repository
     module QueryMethod
       class Save < Method
-        # @param mapper [Data::Mapper]
+        # @param mapper (see Method#initialize)
         # @param entity_or_entities [Entity, Array<Entity>] an entity or a collection of entities
         def initialize(mapper, entity_or_entities)
-          @mapper             = mapper
+          super
           @entity_or_entities = entity_or_entities
         end
 

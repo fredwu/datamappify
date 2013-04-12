@@ -3,6 +3,12 @@ module Datamappify
     module QueryMethod
       # Provides a default set of methods to the varies {QueryMethod} classes
       class Method
+        # @param mapper [Data::Mapper]
+        # @param args [any]
+        def initialize(mapper, *args)
+          @mapper = mapper
+        end
+
         protected
 
         # Dispatches a {Criteria} according to

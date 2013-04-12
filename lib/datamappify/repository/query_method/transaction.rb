@@ -1,7 +1,7 @@
 module Datamappify
   module Repository
     module QueryMethod
-      class Transaction
+      class Transaction < Method
         # @param mapper [Data::Mapper]
         # @yield queries to be performed in the transaction
         def initialize(mapper, &block)

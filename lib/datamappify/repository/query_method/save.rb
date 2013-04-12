@@ -1,9 +1,7 @@
 module Datamappify
   module Repository
     module QueryMethod
-      class Save
-        include Helper
-
+      class Save < Method
         # @param mapper [Data::Mapper]
         # @param entity_or_entities [Entity, Array<Entity>] an entity or a collection of entities
         def initialize(mapper, entity_or_entities)
@@ -30,7 +28,7 @@ module Datamappify
         def create_or_update(entity)
           raise Data::EntityInvalid.new(entity) if entity.invalid?
 
-          dispatch_criteria_to_providers(entity, :SaveByKey)
+          dispatch_criteria_to_providers(:SaveByKey, entity)
 
           entity
         end

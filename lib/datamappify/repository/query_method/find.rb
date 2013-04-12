@@ -1,9 +1,7 @@
 module Datamappify
   module Repository
     module QueryMethod
-      class Find
-        include Helper
-
+      class Find < Method
         # @param mapper [Data::Mapper]
         # @param id_or_ids [Integer, Array<Integer>] an entity id or a collection of entity ids
         def initialize(mapper, id_or_ids)
@@ -26,8 +24,8 @@ module Datamappify
           entity = @mapper.entity_class.new
           entity.id = id
 
-          if @mapper.default_provider.build_criteria(:Exists, @mapper.default_source_class, entity)
-            dispatch_criteria_to_providers(entity, :FindByKey)
+          if dispatch_criteria_to_default_source(:Exists, entity)
+            dispatch_criteria_to_providers(:FindByKey, entity)
           else
             entity = nil
           end

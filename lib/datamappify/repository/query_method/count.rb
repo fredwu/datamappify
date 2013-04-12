@@ -1,7 +1,7 @@
 module Datamappify
   module Repository
     module QueryMethod
-      class Count
+      class Count < Method
         # @param mapper [Data::Mapper]
         def initialize(mapper)
           @mapper = mapper
@@ -9,7 +9,7 @@ module Datamappify
 
         # @return [Integer]
         def result
-          @mapper.default_provider.build_criteria(:Count, @mapper.default_source_class)
+          dispatch_criteria_to_default_source(:Count)
         end
       end
     end

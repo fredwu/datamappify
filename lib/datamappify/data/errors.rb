@@ -7,6 +7,7 @@ module Datamappify
     end
 
     class EntityInvalid < Error
+      # @param entity [Entity]
       def initialize(entity)
         super entity.errors.full_messages.join(', ')
       end

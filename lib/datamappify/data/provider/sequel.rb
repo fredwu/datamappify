@@ -4,6 +4,7 @@ module Datamappify
       module Sequel
         extend CommonProvider
 
+        # @return [Sequel::Model]
         def self.build_record_class(source_class_name)
           Record::Sequel.const_set(
             source_class_name, Class.new(::Sequel::Model(source_class_name.pluralize.underscore.to_sym))

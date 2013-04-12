@@ -5,10 +5,14 @@ module Datamappify
         def self.extended(klass)
           klass.extend ModuleMethods
 
-          Dir[Datamappify.root.join("data/criteria/#{klass.path_name}/*.rb")].each { |file| require file }
+          klass.load_criterias
         end
 
         module ModuleMethods
+          def load_criterias
+            Dir[Datamappify.root.join("data/criteria/#{path_name}/*.rb")].each { |file| require file }
+          end
+
           def class_name
             @class_name ||= name.demodulize
           end

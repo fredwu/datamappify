@@ -1,5 +1,7 @@
 ## master
 
+## 0.30.0 [2013-04-12]
+
 - __Completely reimplemented Datamappify__
   - Things are more decoupled and cleaner in general.
 - Leaner `Repository` syntax, i.e. `UserRepository` instead of the more verbose `UserRepository.instance`.

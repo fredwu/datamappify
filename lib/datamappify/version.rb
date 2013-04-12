@@ -1,3 +1,3 @@
 module Datamappify
-  VERSION = '0.20.1'
+  VERSION = '0.30.0'
 end

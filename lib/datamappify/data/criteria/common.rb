@@ -1,7 +1,8 @@
 module Datamappify
   module Data
     module Criteria
-      # Provides a set of useful methods for common criteria tasks, all +Criteria+ objects inherit from +Common+
+      # Provides a set of useful methods for common criteria tasks,
+      # all +Criteria+ objects inherit from +Common+
       class Common
         # @return [Class]
         attr_reader :source_class
@@ -82,6 +83,8 @@ module Datamappify
         private
 
         # Ignores the attribute if it isn't dirty or if it's a primary key
+        #
+        # @todo implement proper dirty attribute tracking
         #
         # @return [Boolean]
         def ignore_attribute?(attribute)

@@ -30,19 +30,9 @@ module Datamappify
         def create_or_update(entity)
           raise Data::EntityInvalid.new(entity) if entity.invalid?
 
-          dispatch_criteria_to_providers(entity)
+          dispatch_criteria_to_providers(entity, :SaveByKey)
 
           entity
-        end
-
-        # @param entity [Entity]
-        # @return [void]
-        def dispatch_criteria_to_providers(entity)
-          attributes_walker do |provider_name, source_class, attributes|
-            @mapper.provider(provider_name).build_criteria(
-              :SaveByKey, source_class, entity, attributes
-            )
-          end
         end
       end
     end

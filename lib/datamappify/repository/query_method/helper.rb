@@ -4,6 +4,18 @@ module Datamappify
       module Helper
         private
 
+        # Dispatches a {Criteria} via {#attributes_walker}
+        #
+        # @param entity [Entity]
+        # @return [void]
+        def dispatch_criteria_to_providers(entity, criteria_name)
+          attributes_walker do |provider_name, source_class, attributes|
+            @mapper.provider(provider_name).build_criteria(
+              criteria_name, source_class, entity, attributes
+            )
+          end
+        end
+
         # Walks through the attributes and performs actions on them
         #
         # @yield [provider_name, source_class, attributes] action to be performed

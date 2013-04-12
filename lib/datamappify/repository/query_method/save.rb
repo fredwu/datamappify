@@ -3,7 +3,9 @@ module Datamappify
     module QueryMethod
       class Save < Method
         # @param mapper (see Method#initialize)
-        # @param entity_or_entities [Entity, Array<Entity>] an entity or a collection of entities
+        #
+        # @param entity_or_entities [Entity, Array<Entity>]
+        #   an entity or a collection of entities
         def initialize(mapper, entity_or_entities)
           super
           @entity_or_entities = entity_or_entities
@@ -23,7 +25,9 @@ module Datamappify
         private
 
         # @param entity [Entity]
+        #
         # @raise [Data::EntityInvalid]
+        #
         # @return [Entity]
         def create_or_update(entity)
           raise Data::EntityInvalid.new(entity) if entity.invalid?

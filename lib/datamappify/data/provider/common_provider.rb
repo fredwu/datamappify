@@ -30,7 +30,8 @@ module Datamappify
 
           # Finds or builds a data record class from the data provider
           #
-          # @return [Class] the data record class
+          # @return [Class]
+          #   the data record class
           def find_or_build_record_class(source_class_name)
             if records_namespace.const_defined?(source_class_name, false)
               records_namespace.const_get(source_class_name)
@@ -52,8 +53,11 @@ module Datamappify
         # Builds a {Criteria}
         #
         # @param name [Symbol]
+        #
         # @param args [any]
-        # @yield an optional block passed to the +Criteria+ {Criteria::Common#initialize initialiser}
+        #
+        # @yield
+        #   an optional block passed to the +Criteria+ {Criteria::Common#initialize initialiser}
         def build_criteria(name, *args, &block)
           Data::Criteria.const_get(class_name).const_get(name).new(*args, &block).result
         end

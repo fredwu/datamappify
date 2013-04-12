@@ -5,16 +5,22 @@ module Datamappify
       class Common
         # @return [Class]
         attr_reader :source_class
+
         # @return [Entity]
         attr_reader :entity
+
         # @return [void]
         attr_reader :criteria
+
         # @return [Set]
         attr_reader :attributes
 
         # @param source_class [Class]
+        #
         # @param args [any]
-        # @yield an optional block
+        #
+        # @yield
+        #   an optional block
         def initialize(source_class, *args, &block)
           @source_class = source_class
           @entity, @criteria, @attributes = *args

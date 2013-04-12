@@ -6,9 +6,12 @@ module Datamappify
     class Mapper
       # @return [Class]
       attr_accessor :entity_class
+
       # @return [String]
       attr_accessor :default_provider_name
-      # @return [Hash] attribute name to source mapping as specified in {Repository::MappingDSL#map_attribute}
+
+      # @return [Hash]
+      #   attribute name to source mapping as specified in {Repository::MappingDSL#map_attribute}
       attr_accessor :custom_mapping
 
       def initialize
@@ -31,7 +34,8 @@ module Datamappify
         @default_source_class ||= default_provider.find_or_build_record_class(entity_class.name)
       end
 
-      # @return [Hash] attribute sets classified by the names of their data provider
+      # @return [Hash]
+      #   attribute sets classified by the names of their data provider
       def classified_attributes
         @classified_attributes ||= Set.new(custom_attributes + default_attributes).classify(&:provider_name)
       end
@@ -71,6 +75,7 @@ module Datamappify
       end
 
       # @param (see Data::Mapper::Attribute#initialize)
+      #
       # @return [Attribute]
       def map_attribute(name, source)
         @custom_attribute_names << name
@@ -78,7 +83,9 @@ module Datamappify
         Attribute.new(name, source)
       end
 
-      # @param attribute [Symbol] name of the attribute
+      # @param attribute [Symbol]
+      #   name of the attribute
+      #
       # @return [String]
       def default_source_for(attribute)
         "#{default_provider_name}::#{entity_class.name}##{attribute}"

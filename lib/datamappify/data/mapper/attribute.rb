@@ -5,15 +5,22 @@ module Datamappify
       class Attribute
         # @return [String]
         attr_reader :name
+
         # @return [String]
         attr_reader :provider_name
+
         # @return [String]
         attr_reader :source_class_name
+
         # @return [String]
         attr_reader :source_attribute_name
 
-        # @param name [Symbol] name of the attribute
-        # @param source [String] data provider, class and attribute, e.g. "ActiveRecord::User#surname"
+        # @param name [Symbol]
+        #   name of the attribute
+        #
+        # @param source [String]
+        #   data provider, class and attribute,
+        #   e.g. "ActiveRecord::User#surname"
         def initialize(name, source)
           @name = name.to_s
 
@@ -32,7 +39,8 @@ module Datamappify
 
         private
 
-        # @return [Array<String>] an array with provider name, source class name and source attribute name
+        # @return [Array<String>]
+        #   an array with provider name, source class name and source attribute name
         def parse_source(source)
           provider_name, source_class_and_attribute = source.split('::')
 

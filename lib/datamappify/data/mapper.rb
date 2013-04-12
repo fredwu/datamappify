@@ -22,7 +22,7 @@ module Datamappify
       end
 
       def default_source_class
-        @default_source_class ||= default_provider.find_or_build_record(entity_class.name)
+        @default_source_class ||= default_provider.find_or_build_record_class(entity_class.name)
       end
 
       def classified_attributes

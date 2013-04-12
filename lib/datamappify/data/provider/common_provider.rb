@@ -21,11 +21,11 @@ module Datamappify
             @path_name ||= class_name.underscore
           end
 
-          def find_or_build_record(source_class_name)
+          def find_or_build_record_class(source_class_name)
             if records_namespace.const_defined?(source_class_name, false)
               records_namespace.const_get(source_class_name)
             else
-              build_record(source_class_name)
+              build_record_class(source_class_name)
             end
           end
 

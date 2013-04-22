@@ -3,7 +3,7 @@ module Datamappify
     module Criteria
       module ActiveRecord
         class Exists < Common
-          def result
+          def perform
             source_class.exists?(entity.id)
           end
         end

@@ -24,7 +24,7 @@ module Datamappify
       #
       # @return [Entity, Array<Entity>, nil]
       def find(id_or_ids)
-        QueryMethod::Find.new(data_mapper, id_or_ids).result
+        QueryMethod::Find.new(data_mapper, id_or_ids).perform
       end
 
       # @param entity_or_entities [Entity, Array<Entity>]
@@ -32,7 +32,7 @@ module Datamappify
       #
       # @return [Entity, Array<Entity>, false]
       def save(entity_or_entities)
-        QueryMethod::Save.new(data_mapper, entity_or_entities).result
+        QueryMethod::Save.new(data_mapper, entity_or_entities).perform
       end
 
       # @param (see #save)
@@ -49,7 +49,7 @@ module Datamappify
       #
       # @return [void, false]
       def destroy(id_or_ids_or_entity_or_entities)
-        QueryMethod::Destroy.new(data_mapper, id_or_ids_or_entity_or_entities).result
+        QueryMethod::Destroy.new(data_mapper, id_or_ids_or_entity_or_entities).perform
       end
 
       # @param (see #destroy)
@@ -63,7 +63,7 @@ module Datamappify
 
       # @return [Integer]
       def count
-        QueryMethod::Count.new(data_mapper).result
+        QueryMethod::Count.new(data_mapper).perform
       end
     end
 

@@ -7,7 +7,7 @@ module Datamappify
             super(source_class, nil, id)
           end
 
-          def result
+          def perform
             source_class.where(:id => criteria).destroy
           end
         end

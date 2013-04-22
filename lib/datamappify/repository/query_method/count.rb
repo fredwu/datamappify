@@ -3,7 +3,7 @@ module Datamappify
     module QueryMethod
       class Count < Method
         # @return [Integer]
-        def result
+        def perform
           dispatch_criteria_to_default_source(:Count)
         end
       end

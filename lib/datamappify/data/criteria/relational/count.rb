@@ -3,7 +3,7 @@ module Datamappify
     module Criteria
       module Relational
         class Count < Common
-          def result
+          def perform
             source_class.count
           end
         end

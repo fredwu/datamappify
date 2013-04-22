@@ -3,7 +3,7 @@ module Datamappify
     module Criteria
       module Relational
         class Save < Common
-          def result
+          def perform
             new_record? ? create_record : save_record unless ignore?
           end
 

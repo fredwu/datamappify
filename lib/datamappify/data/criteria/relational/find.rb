@@ -3,7 +3,7 @@ module Datamappify
     module Criteria
       module Relational
         class Find < Common
-          def result
+          def perform
             record = source_class.where(criteria).first
 
             update_entity_with(record) if record

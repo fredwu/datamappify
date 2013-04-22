@@ -12,7 +12,7 @@ module Datamappify
         end
 
         # @return [void, false]
-        def result
+        def perform
           entities = Array.wrap(@id_or_ids_or_entity_or_entities).map do |id_or_entity|
             dispatch_criteria_to_default_source(:Destroy, extract_entity_id(id_or_entity))
           end

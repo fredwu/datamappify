@@ -3,7 +3,7 @@ module Datamappify
     module Criteria
       module Sequel
         class Transaction < Common
-          def result
+          def perform
             source_class.db.transaction(&@block)
           end
         end

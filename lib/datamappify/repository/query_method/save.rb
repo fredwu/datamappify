@@ -12,7 +12,7 @@ module Datamappify
         end
 
         # @return [Entity, Array<Entity>, false]
-        def result
+        def perform
           Array.wrap(@entity_or_entities).each do |entity|
             create_or_update(entity)
           end

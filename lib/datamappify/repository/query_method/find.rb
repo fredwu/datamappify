@@ -12,7 +12,7 @@ module Datamappify
         end
 
         # @return [Entity, Array<Entity>, nil]
-        def result
+        def perform
           entities = Array.wrap(@id_or_ids).map { |id| setup_new_entity(id) }.compact
 
           @id_or_ids.is_a?(Array) ? entities : entities[0]

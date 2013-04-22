@@ -3,7 +3,7 @@ module Datamappify
     module Criteria
       module ActiveRecord
         class Transaction < Common
-          def result
+          def perform
             source_class.transaction(&@block)
           end
         end

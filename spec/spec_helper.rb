@@ -15,11 +15,11 @@ end
 
 require File.expand_path('../../lib/datamappify', __FILE__)
 
-%w{tables entities repositories}.each do |sub_dir|
+%w{tables entities repositories shared}.each do |sub_dir|
   Dir[File.expand_path("../support/#{sub_dir}/**/*.rb", __FILE__)].each { |f| require f }
 end
 
-DATA_PROVIDERS = %w{ActiveRecord Sequel}
+DATA_PROVIDERS = ENV['DATA_PROVIDER'] ? [ENV['DATA_PROVIDER']] : %w{ActiveRecord Sequel}
 
 RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation

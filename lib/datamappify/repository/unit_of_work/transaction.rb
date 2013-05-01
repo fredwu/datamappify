@@ -1,8 +1,8 @@
 module Datamappify
   module Repository
-    module QueryMethod
-      class Transaction < Method
-        # @param mapper (see Method#initialize)
+    module UnitOfWork
+      class Transaction
+        # @param mapper (see QueryMethod::Method#initialize)
         #
         # @yield
         #   queries to be performed in the transaction

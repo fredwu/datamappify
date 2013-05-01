@@ -2,11 +2,11 @@ module Datamappify
   module Repository
     module QueryMethod
       class Find < Method
-        # @param mapper (see Method#initialize)
+        # @param repository (see Method#initialize)
         #
         # @param id_or_ids [Integer, Array<Integer>]
         #   an entity id or a collection of entity ids
-        def initialize(mapper, id_or_ids)
+        def initialize(repository, id_or_ids)
           super
           @id_or_ids = id_or_ids
         end
@@ -24,7 +24,7 @@ module Datamappify
         #
         # @return [Entity, nil]
         def setup_new_entity(id)
-          entity = @mapper.entity_class.new
+          entity = mapper.entity_class.new
           entity.id = id
 
           if dispatch_criteria_to_default_source(:Exists, entity)

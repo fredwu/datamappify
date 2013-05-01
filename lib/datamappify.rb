@@ -1,4 +1,4 @@
-require 'active_support'
+require 'active_model'
 require 'datamappify/version'
 
 module Datamappify

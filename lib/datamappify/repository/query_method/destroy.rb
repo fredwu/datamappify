@@ -2,11 +2,11 @@ module Datamappify
   module Repository
     module QueryMethod
       class Destroy < Method
-        # @param mapper (see Method#initialize)
+        # @param repository (see Method#initialize)
         #
         # @param id_or_ids_or_entity_or_entities [Entity, Array<Entity>]
         #   an entity or a collection of ids or entities
-        def initialize(mapper, id_or_ids_or_entity_or_entities)
+        def initialize(repository, id_or_ids_or_entity_or_entities)
           super
           @id_or_ids_or_entity_or_entities = id_or_ids_or_entity_or_entities
         end

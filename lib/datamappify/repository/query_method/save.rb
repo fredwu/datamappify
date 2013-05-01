@@ -2,11 +2,11 @@ module Datamappify
   module Repository
     module QueryMethod
       class Save < Method
-        # @param mapper (see Method#initialize)
+        # @param repository (see Method#initialize)
         #
         # @param entity_or_entities [Entity, Array<Entity>]
         #   an entity or a collection of entities
-        def initialize(mapper, entity_or_entities)
+        def initialize(repository, entity_or_entities)
           super
           @entity_or_entities = entity_or_entities
         end
@@ -14,7 +14,9 @@ module Datamappify
         # @return [Entity, Array<Entity>, false]
         def perform
           Array.wrap(@entity_or_entities).each do |entity|
-            create_or_update(entity)
+            states.update(entity) do
+              create_or_update(entity)
+            end
           end
 
           @entity_or_entities

@@ -15,11 +15,16 @@ module Datamappify
         #
         # @return [Entity]
         def find(entity)
-          if @objects.has_key?(entity.object_id)
-            refresh_states(entity)
-          else
-            attach(entity)
-          end
+          @objects.has_key?(entity.object_id) ? refresh(entity) : attach(entity)
+        end
+
+        # Refreshes the states stored for an entity
+        #
+        # @param entity [Entity]
+        #
+        # @return [Entity]
+        def refresh(entity)
+          @objects[entity.object_id].tap { |o| o.update_values(entity) }
         end
 
         # Attaches the entity
@@ -42,17 +47,6 @@ module Datamappify
           block.call
 
           attach(entity)
-        end
-
-        private
-
-        # Refreshes the states stored for an entity
-        #
-        # @param entity [Entity]
-        #
-        # @return [Entity]
-        def refresh_states(entity)
-          @objects[entity.object_id].tap { |o| o.update_values(entity) }
         end
       end
     end

@@ -1,5 +1,7 @@
 ## master
 
+- Added dirty attribute tracking.
+
 ## 0.30.0 [2013-04-12]
 
 - __Completely reimplemented Datamappify__

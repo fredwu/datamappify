@@ -124,7 +124,6 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
-- Track dirty entity attributes.
 - Attribute lazy-loading.
 - Hooks for persistence (`before_save` and `after_save`, etc).
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).

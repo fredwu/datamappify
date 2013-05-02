@@ -23,6 +23,8 @@ module Datamappify
         # Should the method be aware of the dirty state?
         # i.e. {Find} probably doesn't whereas {Save} does
         #
+        # Override this method for individual query methods
+        #
         # @return [Boolean]
         def dirty_aware?
           false

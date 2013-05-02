@@ -24,6 +24,7 @@ module Datamappify
           false
         end
 
+        # @see Method#dirty_aware?
         def dirty_aware?
           true
         end

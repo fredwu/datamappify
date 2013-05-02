@@ -2,11 +2,11 @@ module Datamappify
   module Repository
     module QueryMethod
       class Save < Method
-        # @param repository (see Method#initialize)
+        # @param options (see Method#initialize)
         #
         # @param entity_or_entities [Entity, Array<Entity>]
         #   an entity or a collection of entities
-        def initialize(repository, entity_or_entities)
+        def initialize(options, entity_or_entities)
           super
           @entity_or_entities = entity_or_entities
         end
@@ -22,6 +22,10 @@ module Datamappify
           @entity_or_entities
         rescue Data::EntityInvalid
           false
+        end
+
+        def dirty_aware?
+          true
         end
 
         private

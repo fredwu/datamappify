@@ -12,7 +12,7 @@ shared_examples_for "repository persistence" do |data_provider|
         end
 
         it "not found" do
-          user_repository.find(42).should == nil
+          user_repository.find(233).should == nil
         end
       end
 
@@ -22,11 +22,11 @@ shared_examples_for "repository persistence" do |data_provider|
         end
 
         it "partial found" do
-          user_repository.find([existing_user.id, 42]).should == [existing_user]
+          user_repository.find([existing_user.id, 233]).should == [existing_user]
         end
 
         it "not found" do
-          user_repository.find([42, 255]).should == []
+          user_repository.find([233, 255]).should == []
         end
       end
     end

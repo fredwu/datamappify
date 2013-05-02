@@ -8,13 +8,18 @@ module Datamappify
 
           # @param entity [Entity]
           def initialize(entity)
+            @entity = entity
+
             self.class.define_attribute_methods entity.attributes.keys
 
             entity.attributes.each do |name, value|
               construct_getter(name)
               construct_setter(name)
+              construct_changed(name)
               set_value(name, value)
             end
+
+            mark_as_dirty if new?
           end
 
           # Updates all the attribute values according to the entity
@@ -26,6 +31,20 @@ module Datamappify
             entity.attributes.each do |name, value|
               send("#{name}=", value)
             end
+          end
+
+          # Has the object been persisted?
+          #
+          # @return [Boolean]
+          def persisted?
+            ! new?
+          end
+
+          # Is the object new (not persisted yet)?
+          #
+          # @return [Boolean]
+          def new?
+            @entity.id.nil?
           end
 
           private
@@ -51,7 +70,18 @@ module Datamappify
           # @return [void]
           def construct_setter(name)
             define_singleton_method "#{name}=" do |value|
-              send "#{name}_will_change!" unless send(name) == value
+              send(:attribute_will_change!, name) unless send(name) == value
+            end
+          end
+
+          # Constructs the `attr_changed?` method
+          #
+          # @param name [Symbol]
+          #
+          # @return [void]
+          def construct_changed(name)
+            define_singleton_method "#{name}_changed?" do
+              changed_attributes.include?(name)
             end
           end
 
@@ -64,6 +94,15 @@ module Datamappify
           # @return [any]
           def set_value(name, value)
             instance_variable_set "@#{name}", Marshal.load(Marshal.dump(value))
+          end
+
+          # Mark all attributes as dirty, useful for a non-persisted object
+          #
+          # @return [void]
+          def mark_as_dirty
+            @entity.attributes.each do |name, _|
+              send(:attribute_will_change!, name)
+            end
           end
         end
       end

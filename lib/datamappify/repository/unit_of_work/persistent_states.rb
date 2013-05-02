@@ -6,7 +6,7 @@ module Datamappify
       # Tracks dirty entity attributes
       class PersistentStates
         def initialize
-          @objects = {}
+          @pool = {}
         end
 
         # Finds or attaches the entity
@@ -15,7 +15,7 @@ module Datamappify
         #
         # @return [Entity]
         def find(entity)
-          @objects.has_key?(entity.object_id) ? refresh(entity) : attach(entity)
+          @pool.has_key?(entity.object_id) ? refresh(entity) : attach(entity)
         end
 
         # Refreshes the states stored for an entity
@@ -24,7 +24,7 @@ module Datamappify
         #
         # @return [Entity]
         def refresh(entity)
-          @objects[entity.object_id].tap { |o| o.update_values(entity) }
+          @pool[entity.object_id].tap { |o| o.update_values(entity) }
         end
 
         # Attaches the entity
@@ -33,7 +33,7 @@ module Datamappify
         #
         # @return [Entity]
         def attach(entity)
-          @objects[entity.object_id] = Object.new(entity)
+          @pool[entity.object_id] = Object.new(entity)
         end
 
         # Executes a block then reattaches the entity

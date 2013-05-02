@@ -1,20 +1,31 @@
+require 'datamappify/repository/query_method/method/source_attributes_walker'
+
 module Datamappify
   module Repository
     module QueryMethod
       # Provides a default set of methods to the varies {QueryMethod} classes
       class Method
         # @return [Data::Mapper]
-        attr_reader :mapper
+        attr_reader :data_mapper
 
         # @return [UnitOfWork::PersistentStates]
         attr_reader :states
 
-        # @param repository [Repository]
+        # @param options [Hash]
+        #   a hash containing required items like data_mapper and states
         #
         # @param args [any]
-        def initialize(repository, *args)
-          @mapper = repository.data_mapper
-          @states = repository.states
+        def initialize(options, *args)
+          @data_mapper = options[:data_mapper]
+          @states      = options[:states]
+        end
+
+        # Should the method be aware of the dirty state?
+        # i.e. {Find} probably doesn't whereas {Save} does
+        #
+        # @return [Boolean]
+        def dirty_aware?
+          false
         end
 
         protected
@@ -26,7 +37,9 @@ module Datamappify
         #
         # @param args [any]
         def dispatch_criteria_to_default_source(criteria_name, *args)
-          mapper.default_provider.build_criteria(criteria_name, mapper.default_source_class, *args)
+          data_mapper.default_provider.build_criteria(
+            criteria_name, data_mapper.default_source_class, *args
+          )
         end
 
         # Dispatches a {Criteria} via {#attributes_walker}
@@ -37,8 +50,8 @@ module Datamappify
         #
         # @return [void]
         def dispatch_criteria_to_providers(criteria_name, entity)
-          attributes_walker do |provider_name, source_class, attributes|
-            mapper.provider(provider_name).build_criteria(
+          attributes_walker(entity) do |provider_name, source_class, attributes|
+            data_mapper.provider(provider_name).build_criteria(
               criteria_name, source_class, entity, attributes
             )
           end
@@ -46,22 +59,24 @@ module Datamappify
 
         # Walks through the attributes and performs actions on them
         #
-        # @yield [provider_name, source_class, attributes]
-        #   action to be performed on the attributes grouped by their source class
+        # @param entity [Entity]
         #
-        # @yieldparam provider_name [String]
+        # @yield (see SourceAttributesWalker#execute)
         #
-        # @yieldparam source_class [Class]
-        #
-        # @yieldparam attributes [Set]
+        # @yieldparam (see SourceAttributesWalker#execute)
         #
         # @return [void]
-        def attributes_walker(&block)
-          UnitOfWork::Transaction.new(@mapper) do
-            mapper.classified_attributes.each do |provider_name, attributes|
-              attributes.classify(&:source_class).each do |source_class, attrs|
-                block.call(provider_name, source_class, attrs)
-              end
+        #
+        # @see SourceAttributesWalker#execute
+        def attributes_walker(entity, &block)
+          UnitOfWork::Transaction.new(data_mapper) do
+            data_mapper.classified_attributes.each do |provider_name, attributes|
+              SourceAttributesWalker.new({
+                :entity        => entity,
+                :provider_name => provider_name,
+                :attributes    => attributes,
+                :query_method  => self
+              }).execute(&block)
             end
           end
         end
@@ -73,6 +88,18 @@ module Datamappify
         # @return [Integer]
         def extract_entity_id(id_or_entity)
           id_or_entity.is_a?(Integer) ? id_or_entity : id_or_entity.id
+        end
+
+        class << self
+          private
+
+          # A meta method to help record whether a criteria has been performed,
+          # it is useful for testing the action(s) of dirty attributes
+          #
+          # @return [TrueClass]
+          def performed
+            true
+          end
         end
       end
     end

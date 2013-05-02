@@ -3,6 +3,11 @@ module Datamappify
     class Mapper
       # Represents an entity attribute and its associated data source
       class Attribute
+        # Same as name, but in symbol
+        #
+        # @return [Symbol]
+        attr_reader :key
+
         # @return [String]
         attr_reader :name
 
@@ -22,6 +27,7 @@ module Datamappify
         #   data provider, class and attribute,
         #   e.g. "ActiveRecord::User#surname"
         def initialize(name, source)
+          @key  = name
           @name = name.to_s
 
           @provider_name, @source_class_name, @source_attribute_name = parse_source(source)

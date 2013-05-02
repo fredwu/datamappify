@@ -13,7 +13,7 @@ module Datamappify
         # @return [void]
         attr_reader :criteria
 
-        # @return [Set]
+        # @return [Set<Mapper::Attribute>]
         attr_reader :attributes
 
         # @param source_class [Class]

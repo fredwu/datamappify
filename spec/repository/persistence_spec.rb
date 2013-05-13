@@ -1,4 +1,4 @@
-require_relative '../spec_helper'
+require 'spec_helper'
 
 shared_examples_for "repository persistence" do |data_provider|
   include_context "user repository", data_provider

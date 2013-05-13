@@ -59,7 +59,7 @@ module Datamappify
         # @yield
         #   an optional block passed to the +Criteria+ {Criteria::Common#initialize initialiser}
         def build_criteria(name, *args, &block)
-          Data::Criteria.const_get(class_name).const_get(name).new(*args, &block).perform
+          Data::Criteria.const_get(class_name).const_get(name).new(*args, &block).perform_with_callbacks
         end
       end
     end

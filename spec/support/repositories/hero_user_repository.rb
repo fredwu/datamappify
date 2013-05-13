@@ -6,4 +6,5 @@ class HeroUserRepository
 
   map_attribute :first_name, 'ActiveRecord::HeroUser#first_name'
   map_attribute :last_name,  'Sequel::HeroUserLastName#last_name'
+  map_attribute :gender,     'Sequel::HeroUserLastName#gender'
 end

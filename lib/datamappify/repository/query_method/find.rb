@@ -18,6 +18,11 @@ module Datamappify
           @id_or_ids.is_a?(Array) ? entities : entities[0]
         end
 
+        # @see Method#reader?
+        def reader?
+          true
+        end
+
         private
 
         # @param id [Integer]

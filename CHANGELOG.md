@@ -1,6 +1,7 @@
 ## master
 
 - Added dirty attribute tracking.
+- Implemented attribute lazy loading!
 
 ## 0.30.0 [2013-04-12]
 

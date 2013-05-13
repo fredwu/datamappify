@@ -18,19 +18,38 @@ module Datamappify
         def initialize(options, *args)
           @data_mapper = options[:data_mapper]
           @states      = options[:states]
+          @lazy_load   = options[:lazy_load?]
         end
 
         # Should the method be aware of the dirty state?
         # i.e. {Find} probably doesn't whereas {Save} does
         #
-        # Override this method for individual query methods
+        # @note Override this method for individual query methods
         #
         # @return [Boolean]
         def dirty_aware?
           false
         end
 
-        protected
+        # The method is for reading data?
+        #
+        # @note Override this method for individual query methods
+        #
+        # @return [Boolean]
+        def reader?
+          false
+        end
+
+        # The method is for writing data?
+        #
+        # @note Override this method for individual query methods
+        #
+        # @return [Boolean]
+        def writer?
+          false
+        end
+
+        private
 
         # Dispatches a {Criteria} according to
         # the {Data::Mapper data mapper}'s default provider and default source class
@@ -67,17 +86,21 @@ module Datamappify
         #
         # @yieldparam (see SourceAttributesWalker#execute)
         #
+        # @yieldreturn (see SourceAttributesWalker#execute)
+        #
         # @return [void]
         #
         # @see SourceAttributesWalker#execute
         def attributes_walker(entity, &block)
           UnitOfWork::Transaction.new(data_mapper) do
             data_mapper.classified_attributes.each do |provider_name, attributes|
-              SourceAttributesWalker.new({
-                :entity        => entity,
-                :provider_name => provider_name,
-                :attributes    => attributes,
-                :query_method  => self
+              source_attributes_walker.new({
+                :entity           => entity,
+                :provider_name    => provider_name,
+                :attributes       => attributes,
+                :dirty_aware?     => dirty_aware?,
+                :dirty_attributes => states.find(entity).changed,
+                :query_method     => self
               }).execute(&block)
             end
           end
@@ -92,9 +115,15 @@ module Datamappify
           id_or_entity.is_a?(Integer) ? id_or_entity : id_or_entity.id
         end
 
-        class << self
-          private
+        def source_attributes_walker
+          if @lazy_load
+            Lazy::SourceAttributesWalker
+          else
+            SourceAttributesWalker
+          end
+        end
 
+        class << self
           # A meta method to help record whether a criteria has been performed,
           # it is useful for testing the action(s) of dirty attributes
           #

@@ -8,6 +8,8 @@ module Datamappify
   end
 end
 
+require 'datamappify/logger'
 require 'datamappify/entity'
 require 'datamappify/data'
 require 'datamappify/repository'
+require 'datamappify/lazy'

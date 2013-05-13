@@ -9,7 +9,7 @@ module Datamappify
           @pool = {}
         end
 
-        # Finds or attaches the entity
+        # Finds or attaches an entity
         #
         # @param entity [Entity]
         #
@@ -27,7 +27,7 @@ module Datamappify
           @pool[entity.object_id].tap { |o| o.update_values(entity) }
         end
 
-        # Attaches the entity
+        # Attaches an entity
         #
         # @param entity [Entity]
         #

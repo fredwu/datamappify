@@ -5,6 +5,7 @@ DB = Sequel.sqlite
 DB.create_table :hero_user_last_names do
   primary_key :id
   String :last_name, :null => false
+  String :gender
   Integer :hero_user_id
   DateTime :created_at
   DateTime :updated_at

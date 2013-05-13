@@ -1,4 +1,4 @@
-require_relative '../spec_helper'
+require 'spec_helper'
 
 shared_examples_for "dirty persistence" do |data_provider|
   include_context "user repository", data_provider
@@ -12,21 +12,23 @@ shared_examples_for "dirty persistence" do |data_provider|
     end
 
     describe "#save" do
+      let(:save_method) { Datamappify::Repository::QueryMethod::Save }
+
       it "does not perform when there are no dirty attributes" do
-        Datamappify::Repository::QueryMethod::Save.should_not_receive(:performed)
+        Datamappify::Logger.should_not_receive(:performed).with(save_method)
 
         user_repository.save(existing_user)
       end
 
       it "performs when there are dirty attributes" do
-        Datamappify::Repository::QueryMethod::Save.should_receive(:performed).once
+        Datamappify::Logger.should_receive(:performed).with(save_method).once
 
         existing_user.first_name = 'Dirty'
         user_repository.save(existing_user)
       end
 
       it "performs when the entity is new" do
-        Datamappify::Repository::QueryMethod::Save.should_receive(:performed).at_least(:twice)
+        Datamappify::Logger.should_receive(:performed).with(save_method).at_least(:twice)
 
         user_repository.save(new_valid_user)
       end

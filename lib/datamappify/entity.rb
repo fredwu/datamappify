@@ -1,12 +1,16 @@
+require 'observer'
 require 'virtus'
+require 'datamappify/entity/lazy_checking'
 
 module Datamappify
   module Entity
     def self.included(klass)
       klass.class_eval do
+        include Observable
         include Virtus
         include Virtus::Equalizer.new(inspect)
         include ActiveModel::Validations
+        include LazyChecking
 
         attribute :id, Integer
       end

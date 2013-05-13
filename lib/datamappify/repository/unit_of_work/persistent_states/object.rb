@@ -10,14 +10,13 @@ module Datamappify
           def initialize(entity)
             @entity = entity
 
-            self.class.define_attribute_methods entity.attributes.keys
-
-            entity.attributes.each do |name, value|
-              construct_getter(name)
-              construct_setter(name)
-              construct_changed(name)
+            attributes = attributes_for(@entity)
+            attributes.each do |name, value|
+              construct_attribute(name)
               set_value(name, value)
             end
+
+            self.class.define_attribute_methods(attributes.keys)
 
             mark_as_dirty if new?
           end
@@ -28,16 +27,10 @@ module Datamappify
           #
           # @return [void]
           def update_values(entity)
-            entity.attributes.each do |name, value|
+            attributes_for(entity).each do |name, value|
+              construct_attribute(name)
               send("#{name}=", value)
             end
-          end
-
-          # Has the object been persisted?
-          #
-          # @return [Boolean]
-          def persisted?
-            ! new?
           end
 
           # Is the object new (not persisted yet)?
@@ -48,6 +41,15 @@ module Datamappify
           end
 
           private
+
+          # Constructs an attribute with a getter, setter and '_changed?' method
+          #
+          # @return [void]
+          def construct_attribute(name)
+            construct_getter(name)
+            construct_setter(name)
+            construct_changed(name)
+          end
 
           # Constructs an attribute getter
           #
@@ -100,9 +102,18 @@ module Datamappify
           #
           # @return [void]
           def mark_as_dirty
-            @entity.attributes.each do |name, _|
+            attributes_for(@entity).each do |name, _|
               send(:attribute_will_change!, name)
             end
+          end
+
+          # Entity attributes, based on whether the entity is lazy loaded
+          #
+          # @param entity [Entity]
+          #
+          # @return [Hash]
+          def attributes_for(entity)
+            entity.lazy_loaded? ? entity.cached_attributes : entity.attributes
           end
         end
       end

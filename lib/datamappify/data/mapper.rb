@@ -34,10 +34,15 @@ module Datamappify
         @default_source_class ||= default_provider.find_or_build_record_class(entity_class.name)
       end
 
+      # @return [Set<Attribute>]
+      def attributes
+        @attributes ||= Set.new(default_attributes + custom_attributes)
+      end
+
       # @return [Hash<Set>]
       #   attribute sets classified by the names of their data provider
       def classified_attributes
-        @classified_attributes ||= Set.new(custom_attributes + default_attributes).classify(&:provider_name)
+        @classified_attributes ||= Set.new(attributes).classify(&:provider_name)
       end
 
       private

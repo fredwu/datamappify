@@ -6,10 +6,12 @@ module Datamappify
         # the walker is aware of the dirty state so that certain operations (i.e. #save) can be bypassed
         class SourceAttributesWalker
           def initialize(options = {})
-            @entity        = options[:entity]
-            @provider_name = options[:provider_name]
-            @attributes    = options[:attributes]
-            @query_method  = options[:query_method]
+            @entity           = options[:entity]
+            @provider_name    = options[:provider_name]
+            @attributes       = options[:attributes]
+            @dirty_aware      = options[:dirty_aware?]
+            @dirty_attributes = options[:dirty_attributes]
+            @query_method     = options[:query_method]
           end
 
           # @yield [provider_name, source_class, attributes]
@@ -21,12 +23,14 @@ module Datamappify
           #
           # @yieldparam attributes [Set<Data::Mapper::Attribute>]
           #
+          # @yieldreturn [void]
+          #
           # @return [void]
           def execute(&block)
             @attributes.classify(&:source_class).each do |source_class, attributes|
-              if do_walk?(attributes)
+              if do_walk?(source_class, attributes)
                 block.call(@provider_name, source_class, attributes)
-                @query_method.class.send :performed
+                walk_performed(attributes)
               end
             end
           end
@@ -35,11 +39,31 @@ module Datamappify
 
           # Whether it is necessary to do the walk
           #
+          # @param source_class [Class]
+          #
           # @param attributes [Set<Data::Mapper::Attribute>]
           #
           # @return [Boolean]
-          def do_walk?(attributes)
-            !@query_method.dirty_aware? || dirty?(attributes)
+          def do_walk?(source_class, attributes)
+            check_dirty?(attributes)
+          end
+
+          # A hook method for when a walk is performed
+          #
+          # @param attributes [Set<Data::Mapper::Attribute>]
+          #
+          # @return [void]
+          def walk_performed(attributes)
+            Logger.performed(@query_method && @query_method.class)
+          end
+
+          # Only walk when it's not dirty aware, or it has dirty attributes
+          #
+          # @param attributes [Set<Data::Mapper::Attribute>]
+          #
+          # @return [Boolean]
+          def check_dirty?(attributes)
+            !@dirty_aware || dirty?(attributes)
           end
 
           # Whether the persistent state object is dirty
@@ -48,7 +72,7 @@ module Datamappify
           #
           # @return [Boolean]
           def dirty?(attributes)
-            (attributes.map(&:key) & @query_method.states.find(@entity).changed).any?
+            (attributes.map(&:key) & @dirty_attributes).any?
           end
         end
       end

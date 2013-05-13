@@ -19,6 +19,11 @@ module Datamappify
 
           @id_or_ids_or_entity_or_entities.is_a?(Array) ? entities : entities[0]
         end
+
+        # @see Method#writer?
+        def writer?
+          true
+        end
       end
     end
   end

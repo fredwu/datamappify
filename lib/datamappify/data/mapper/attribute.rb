@@ -20,6 +20,9 @@ module Datamappify
         # @return [String]
         attr_reader :source_attribute_name
 
+        # @return [any]
+        attr_accessor :value
+
         # @param name [Symbol]
         #   name of the attribute
         #

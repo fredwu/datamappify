@@ -1,3 +1,4 @@
+require 'datamappify/repository/lazy_checking'
 require 'datamappify/repository/mapping_dsl'
 require 'datamappify/repository/unit_of_work'
 require 'datamappify/repository/query_methods'
@@ -18,6 +19,7 @@ module Datamappify
 
         self.data_mapper = Data::Mapper.new
 
+        include LazyChecking
         extend  MappingDSL
         include QueryMethods
       end

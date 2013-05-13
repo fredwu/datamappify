@@ -28,6 +28,17 @@ module Datamappify
           @block = block
         end
 
+        # Performs the action (defined by child method classes) with callbacks
+        #
+        # @return [void]
+        def perform_with_callbacks
+          result = perform
+
+          store_attribute_value if attributes
+
+          result
+        end
+
         protected
 
         # Key name of either the primary key (e.g. +id+) or foreign key (e.g. +user_id+)
@@ -78,6 +89,15 @@ module Datamappify
           end
 
           hash
+        end
+
+        # Stores the attribute value in {Mapper::Attribute} for later use
+        #
+        # @return [void]
+        def store_attribute_value
+          attributes.each do |attribute|
+            attribute.value = entity.instance_variable_get("@#{attribute.name}")
+          end
         end
 
         private

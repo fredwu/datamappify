@@ -29,6 +29,11 @@ module Datamappify
           true
         end
 
+        # @see Method#writer?
+        def writer?
+          true
+        end
+
         private
 
         # @param entity [Entity]

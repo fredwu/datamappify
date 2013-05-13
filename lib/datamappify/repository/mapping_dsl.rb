@@ -1,12 +1,18 @@
 module Datamappify
   module Repository
     module MappingDSL
+      include LazyChecking
+
+      # If the entity is lazy loaded then it assigns
+      # the repository itself back to the entity
+      #
       # @param entity_class [Class]
-      #   entity class
       #
       # @return [void]
       def for_entity(entity_class)
         data_mapper.entity_class = entity_class
+
+        assign_to_entity if lazy_load?
       end
 
       # @param provider_name [String]

@@ -55,6 +55,19 @@ class User
 end
 ```
 
+#### Lazy loading
+
+Datamappify supports attribute lazy loading via the `Lazy` module.
+
+```ruby
+class User
+  include Datamappify::Entity
+  include Datamappify::Lazy
+end
+```
+
+When an entity is lazy loaded, only attributes from the default source will be loaded. Other attributes will only be loaded once they are called. This is especially useful if some of your data sources are external services.
+
 ### Repository
 
 Map entity attributes to DB columns - better yet, you can even map attributes to __different ORMs__!
@@ -102,6 +115,8 @@ There is also `save!` that raises `Datamappify::Data::EntityNotSaved`.
 UserRepository.save(user)
 UserRepository.save([user, user2, user3])
 ```
+
+Datamappify supports attribute dirty tracking - only dirty attributes will be saved.
 
 #### Destroying an entity
 

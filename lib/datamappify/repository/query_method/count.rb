@@ -6,6 +6,11 @@ module Datamappify
         def perform
           dispatch_criteria_to_default_source(:Count)
         end
+
+        # @see Method#reader?
+        def reader?
+          true
+        end
       end
     end
   end

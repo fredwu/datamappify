@@ -38,17 +38,11 @@ module Datamappify::Repository::QueryMethod
     end
 
     RSpec::Matchers.define :be_a_reader do
-      match { |method| query_method(method).reader? == true }
+      match { |method| method.new({}, {}).reader? == true }
     end
 
     RSpec::Matchers.define :be_a_writer do
-      match { |method| query_method(method).writer? == true }
-    end
-
-    def query_method(method)
-      Datamappify::Repository::QueryMethod.const_get(
-        method.to_s
-      ).new({}, {})
+      match { |method| method.new({}, {}).writer? == true }
     end
   end
 end

@@ -4,20 +4,16 @@ module Datamappify
       class Destroy < Method
         # @param options (see Method#initialize)
         #
-        # @param id_or_ids_or_entity_or_entities [Entity, Array<Entity>]
+        # @param id_or_entity [Entity]
         #   an entity or a collection of ids or entities
-        def initialize(options, id_or_ids_or_entity_or_entities)
+        def initialize(options, id_or_entity)
           super
-          @id_or_ids_or_entity_or_entities = id_or_ids_or_entity_or_entities
+          @id_or_entity = id_or_entity
         end
 
         # @return [void, false]
         def perform
-          entities = Array.wrap(@id_or_ids_or_entity_or_entities).map do |id_or_entity|
-            dispatch_criteria_to_default_source(:Destroy, extract_entity_id(id_or_entity))
-          end
-
-          @id_or_ids_or_entity_or_entities.is_a?(Array) ? entities : entities[0]
+          dispatch_criteria_to_default_source(:Destroy, extract_entity_id(@id_or_entity))
         end
 
         # @see Method#writer?

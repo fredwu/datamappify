@@ -100,29 +100,27 @@ end
 
 #### Retrieving entities
 
-Pass in an id or an array of ids.
+Pass in an id.
 
 ```ruby
 user  = UserRepository.find(1)
-users = UserRepository.find([1, 2, 3])
 ```
 
 #### Saving/updating entities
 
-Pass in an entity or an array of entities.
+Pass in an entity.
 
 There is also `save!` that raises `Datamappify::Data::EntityNotSaved`.
 
 ```ruby
 UserRepository.save(user)
-UserRepository.save([user, user2, user3])
 ```
 
 Datamappify supports attribute dirty tracking - only dirty attributes will be saved.
 
 #### Destroying an entity
 
-Pass in an entity, an id, an array of entities or an array of ids.
+Pass in an entity or an id.
 
 There is also `destroy!` that raises `Datamappify::Data::EntityNotDestroyed`.
 
@@ -130,9 +128,7 @@ Note that due to the attributes mapping, any data found in mapped ActiveRecord o
 
 ```ruby
 UserRepository.destroy(1)
-UserRepository.destroy([1, 2, 3])
 UserRepository.destroy(user)
-UserRepository.destroy([user, user2, user3])
 ```
 
 ## Changelog

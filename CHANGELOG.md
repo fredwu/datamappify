@@ -2,6 +2,8 @@
 
 - Added dirty attribute tracking.
 - Implemented attribute lazy loading!
+- Query methods (`find`, `save` and `destroy`) no longer support multiple entities.
+  - e.g. `UserRepository.find([1, 2, 3])` is no longer valid.
 
 ## 0.30.0 [2013-04-12]
 

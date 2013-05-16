@@ -5,37 +5,37 @@ Dir[Datamappify.root.join('repository/query_method/*')].each { |file| require fi
 module Datamappify
   module Repository
     module QueryMethods
-      # @param id_or_ids [Integer, Array<Integer>]
+      # @param id [Integer]
       #   an entity id or a collection of entity ids
       #
-      # @return [Entity, Array<Entity>, nil]
-      def find(id_or_ids)
-        QueryMethod::Find.new(query_options, id_or_ids).perform
+      # @return [Entity, nil]
+      def find(id)
+        QueryMethod::Find.new(query_options, id).perform
       end
 
-      # @param entity_or_entities [Entity, Array<Entity>]
+      # @param entity [Entity]
       #   an entity or a collection of entities
       #
-      # @return [Entity, Array<Entity>, false]
-      def save(entity_or_entities)
-        QueryMethod::Save.new(query_options, entity_or_entities).perform
+      # @return [Entity, false]
+      def save(entity)
+        QueryMethod::Save.new(query_options, entity).perform
       end
 
       # @param (see #save)
       #
       # @raise [Data::EntityNotSaved]
       #
-      # @return [Entity, Array<Entity>]
-      def save!(entity_or_entities)
-        save(entity_or_entities) || raise(Data::EntityNotSaved)
+      # @return [Entity]
+      def save!(entity)
+        save(entity) || raise(Data::EntityNotSaved)
       end
 
-      # @param id_or_ids_or_entity_or_entities [Entity, Array<Entity>]
+      # @param id_or_entity [Entity]
       #   an entity or a collection of ids or entities
       #
       # @return [void, false]
-      def destroy(id_or_ids_or_entity_or_entities)
-        QueryMethod::Destroy.new(query_options, id_or_ids_or_entity_or_entities).perform
+      def destroy(id_or_entity)
+        QueryMethod::Destroy.new(query_options, id_or_entity).perform
       end
 
       # @param (see #destroy)
@@ -43,8 +43,8 @@ module Datamappify
       # @raise [Data::EntityNotDestroyed]
       #
       # @return [void]
-      def destroy!(id_or_ids_or_entity_or_entities)
-        destroy(id_or_ids_or_entity_or_entities) || raise(Data::EntityNotDestroyed)
+      def destroy!(id_or_entity)
+        destroy(id_or_entity) || raise(Data::EntityNotDestroyed)
       end
 
       # @return [Integer]

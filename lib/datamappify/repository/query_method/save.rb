@@ -4,22 +4,20 @@ module Datamappify
       class Save < Method
         # @param options (see Method#initialize)
         #
-        # @param entity_or_entities [Entity, Array<Entity>]
+        # @param entity [Entity]
         #   an entity or a collection of entities
-        def initialize(options, entity_or_entities)
+        def initialize(options, entity)
           super
-          @entity_or_entities = entity_or_entities
+          @entity = entity
         end
 
-        # @return [Entity, Array<Entity>, false]
+        # @return [Entity, false]
         def perform
-          Array.wrap(@entity_or_entities).each do |entity|
-            states.update(entity) do
-              create_or_update(entity)
-            end
+          states.update(@entity) do
+            create_or_update(@entity)
           end
 
-          @entity_or_entities
+          @entity
         rescue Data::EntityInvalid
           false
         end

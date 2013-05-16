@@ -5,29 +5,12 @@ shared_examples_for "repository persistence" do |data_provider|
 
   context "#{data_provider}" do
     describe "#find" do
-      describe "resource" do
-        it "found" do
-          user_repository.find(existing_user.id).should == existing_user
-          user_repository.find([existing_user.id]).should == [existing_user]
-        end
-
-        it "not found" do
-          user_repository.find(233).should == nil
-        end
+      it "found" do
+        user_repository.find(existing_user.id).should == existing_user
       end
 
-      describe "collection" do
-        it "found" do
-          user_repository.find([existing_user.id]).should == [existing_user]
-        end
-
-        it "partial found" do
-          user_repository.find([existing_user.id, 233]).should == [existing_user]
-        end
-
-        it "not found" do
-          user_repository.find([233, 255]).should == []
-        end
+      it "not found" do
+        user_repository.find(233).should == nil
       end
     end
 
@@ -46,96 +29,50 @@ shared_examples_for "repository persistence" do |data_provider|
         -> { user_repository.save!(new_invalid_user) }.should raise_error(Datamappify::Data::EntityNotSaved)
       end
 
-      describe "update multiple entities" do
-        describe "#save" do
-          it "all successes" do
-            expect { user_repository.save([new_valid_user, new_valid_user2]) }.to change { user_repository.count }.by(2)
-          end
+      it "updates existing records" do
+        existing_user.first_name = 'Vivian'
+        existing_user.driver_license = 'LOCOMOTE'
 
-          it "successes + failures" do
-            expect { user_repository.save([new_valid_user, new_invalid_user]) }.to change { user_repository.count }.by(1)
-          end
+        updated_user = nil
 
-          it "all failures" do
-            expect { user_repository.save([new_invalid_user, new_invalid_user2]) }.to change { user_repository.count }.by(0)
-          end
-        end
+        expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
 
-        describe "#save!" do
-          it "all successes" do
-            expect { user_repository.save!([new_valid_user, new_valid_user2]) }.to change { user_repository.count }.by(2)
-          end
+        updated_user.first_name.should == 'Vivian'
+        updated_user.driver_license.should == 'LOCOMOTE'
 
-          it "successes + failures" do
-            expect { -> { user_repository.save!([new_valid_user, new_invalid_user]) }.should raise_error(Datamappify::Data::EntityNotSaved) }.to change { user_repository.count }.by(1)
-          end
+        persisted_user = user_repository.find(updated_user.id)
 
-          it "all failures" do
-            expect { -> { user_repository.save!([new_invalid_user, new_invalid_user2]) }.should raise_error(Datamappify::Data::EntityNotSaved) }.to change { user_repository.count }.by(0)
-          end
-        end
+        persisted_user.first_name.should == 'Vivian'
+        persisted_user.driver_license.should == 'LOCOMOTE'
       end
 
-      describe "update an existing entity" do
-        it "updates existing records" do
-          existing_user.first_name = 'Vivian'
-          existing_user.driver_license = 'LOCOMOTE'
+      it "updates existing and new records" do
+        existing_user.first_name = 'Vivian'
+        existing_user.health_care = 'BATMANCAVE'
 
-          updated_user = nil
+        updated_user = nil
 
-          expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
+        expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
 
-          updated_user.first_name.should == 'Vivian'
-          updated_user.driver_license.should == 'LOCOMOTE'
+        updated_user.first_name.should == 'Vivian'
+        updated_user.health_care.should == 'BATMANCAVE'
 
-          persisted_user = user_repository.find(updated_user.id)
+        persisted_user = user_repository.find(updated_user.id)
 
-          persisted_user.first_name.should == 'Vivian'
-          persisted_user.driver_license.should == 'LOCOMOTE'
-        end
-
-        it "updates existing and new records" do
-          existing_user.first_name = 'Vivian'
-          existing_user.health_care = 'BATMANCAVE'
-
-          updated_user = nil
-
-          expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
-
-          updated_user.first_name.should == 'Vivian'
-          updated_user.health_care.should == 'BATMANCAVE'
-
-          persisted_user = user_repository.find(updated_user.id)
-
-          persisted_user.first_name.should == 'Vivian'
-          persisted_user.health_care.should == 'BATMANCAVE'
-        end
+        persisted_user.first_name.should == 'Vivian'
+        persisted_user.health_care.should == 'BATMANCAVE'
       end
     end
 
     describe "#destroy" do
-      describe "resource" do
-        let!(:user) { user_repository.save(new_valid_user) }
+      let!(:user) { user_repository.save(new_valid_user) }
 
-        it "via id" do
-          expect { user_repository.destroy!(user.id) }.to change { user_repository.count }.by(-1)
-        end
-
-        it "via entity" do
-          expect { user_repository.destroy!(user) }.to change { user_repository.count }.by(-1)
-        end
+      it "via id" do
+        expect { user_repository.destroy!(user.id) }.to change { user_repository.count }.by(-1)
       end
 
-      describe "collection" do
-        let!(:users) { user_repository.save([new_valid_user, new_valid_user2]) }
-
-        it "via id" do
-          expect { user_repository.destroy!(users.map(&:id)) }.to change { user_repository.count }.by(-2)
-        end
-
-        it "via entity" do
-          expect { user_repository.destroy!(users) }.to change { user_repository.count }.by(-2)
-        end
+      it "via entity" do
+        expect { user_repository.destroy!(user) }.to change { user_repository.count }.by(-1)
       end
     end
   end

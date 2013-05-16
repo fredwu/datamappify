@@ -1,10 +1,20 @@
 require 'datamappify/repository/query_method/method'
+require 'datamappify/repository/query_method/save'
 
 Dir[Datamappify.root.join('repository/query_method/*')].each { |file| require file }
 
 module Datamappify
   module Repository
     module QueryMethods
+      # Does the entity exist already in the repository?
+      #
+      # @param entity [Entity]
+      #
+      # @return [Boolean]
+      def exists?(entity)
+        QueryMethod::Exists.new(query_options, entity).perform
+      end
+
       # @param id [Integer]
       #   an entity id or a collection of entity ids
       #
@@ -17,8 +27,46 @@ module Datamappify
       #   an entity or a collection of entities
       #
       # @return [Entity, false]
+      def create(entity)
+        QueryMethod::Create.new(query_options, entity).perform
+      end
+
+      # @param (see #create)
+      #
+      # @raise [Data::EntityNotSaved]
+      #
+      # @return [Entity]
+      def create!(entity)
+        create(entity) || raise(Data::EntityNotSaved)
+      end
+
+      # @param entity [Entity]
+      #   an entity or a collection of entities
+      #
+      # @return [Entity, false]
+      def update(entity)
+        QueryMethod::Update.new(query_options, entity).perform
+      end
+
+      # @param (see #update)
+      #
+      # @raise [Data::EntityNotSaved]
+      #
+      # @return [Entity]
+      def update!(entity)
+        update(entity) || raise(Data::EntityNotSaved)
+      end
+
+      # @param entity [Entity]
+      #   an entity or a collection of entities
+      #
+      # @return [Entity, false]
       def save(entity)
-        QueryMethod::Save.new(query_options, entity).perform
+        if exists?(entity)
+          QueryMethod::Update.new(query_options, entity).perform
+        else
+          QueryMethod::Create.new(query_options, entity).perform
+        end
       end
 
       # @param (see #save)

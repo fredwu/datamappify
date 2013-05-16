@@ -4,6 +4,7 @@
 - Implemented attribute lazy loading!
 - Query methods (`find`, `save` and `destroy`) no longer support multiple entities.
   - e.g. `UserRepository.find([1, 2, 3])` is no longer valid.
+- Added `exists?`, `create`, `create!`, `update` and `update!` to repository.
 
 ## 0.30.0 [2013-04-12]
 

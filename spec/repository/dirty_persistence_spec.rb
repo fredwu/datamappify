@@ -12,23 +12,24 @@ shared_examples_for "dirty persistence" do |data_provider|
     end
 
     describe "#save" do
-      let(:save_method) { Datamappify::Repository::QueryMethod::Save }
+      let(:create_method) { Datamappify::Repository::QueryMethod::Create }
+      let(:update_method) { Datamappify::Repository::QueryMethod::Update }
 
       it "does not perform when there are no dirty attributes" do
-        Datamappify::Logger.should_not_receive(:performed).with(save_method)
+        Datamappify::Logger.should_not_receive(:performed).with(update_method)
 
         user_repository.save(existing_user)
       end
 
       it "performs when there are dirty attributes" do
-        Datamappify::Logger.should_receive(:performed).with(save_method).once
+        Datamappify::Logger.should_receive(:performed).with(update_method).once
 
         existing_user.first_name = 'Dirty'
         user_repository.save(existing_user)
       end
 
       it "performs when the entity is new" do
-        Datamappify::Logger.should_receive(:performed).with(save_method).at_least(:twice)
+        Datamappify::Logger.should_receive(:performed).with(create_method).at_least(:twice)
 
         user_repository.save(new_valid_user)
       end

@@ -106,6 +106,14 @@ Pass in an id.
 user  = UserRepository.find(1)
 ```
 
+#### Checking if an entity exists in the repository
+
+Pass in an entity.
+
+```ruby
+UserRepository.exists?(user)
+```
+
 #### Saving/updating entities
 
 Pass in an entity.

@@ -5,7 +5,6 @@ module Datamappify
         # @param options (see Method#initialize)
         #
         # @param id [Integer]
-        #   an entity id or a collection of entity ids
         def initialize(options, id)
           super
           @id = id

@@ -5,7 +5,6 @@ module Datamappify
         # @param options (see Method#initialize)
         #
         # @param entity [Entity]
-        #   an entity or a collection of entities
         def initialize(options, entity)
           super
           @entity = entity

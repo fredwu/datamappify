@@ -4,16 +4,15 @@ module Datamappify
       class Destroy < Method
         # @param options (see Method#initialize)
         #
-        # @param id_or_entity [Entity]
-        #   an entity or a collection of ids or entities
-        def initialize(options, id_or_entity)
+        # @param entity [Entity]
+        def initialize(options, entity)
           super
-          @id_or_entity = id_or_entity
+          @entity = entity
         end
 
         # @return [void, false]
         def perform
-          dispatch_criteria_to_default_source(:Destroy, extract_entity_id(@id_or_entity))
+          dispatch_criteria_to_default_source(:Destroy, @entity.id)
         end
 
         # @see Method#writer?

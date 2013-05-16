@@ -67,11 +67,7 @@ shared_examples_for "repository persistence" do |data_provider|
     describe "#destroy" do
       let!(:user) { user_repository.save(new_valid_user) }
 
-      it "via id" do
-        expect { user_repository.destroy!(user.id) }.to change { user_repository.count }.by(-1)
-      end
-
-      it "via entity" do
+      it "destroys an entity" do
         expect { user_repository.destroy!(user) }.to change { user_repository.count }.by(-1)
       end
     end

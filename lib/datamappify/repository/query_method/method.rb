@@ -106,15 +106,6 @@ module Datamappify
           end
         end
 
-        # Extract the id out of an entity, unless the argument is already an id
-        #
-        # @param id_or_entity [Entity, Integer]
-        #
-        # @return [Integer]
-        def extract_entity_id(id_or_entity)
-          id_or_entity.is_a?(Integer) ? id_or_entity : id_or_entity.id
-        end
-
         def source_attributes_walker
           if @lazy_load
             Lazy::SourceAttributesWalker

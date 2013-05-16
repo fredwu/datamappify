@@ -128,14 +128,13 @@ Datamappify supports attribute dirty tracking - only dirty attributes will be sa
 
 #### Destroying an entity
 
-Pass in an entity or an id.
+Pass in an entity.
 
 There is also `destroy!` that raises `Datamappify::Data::EntityNotDestroyed`.
 
 Note that due to the attributes mapping, any data found in mapped ActiveRecord objects are not touched.
 
 ```ruby
-UserRepository.destroy(1)
 UserRepository.destroy(user)
 ```
 

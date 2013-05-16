@@ -1,5 +1,4 @@
 require 'datamappify/repository/query_method/method'
-require 'datamappify/repository/query_method/save'
 
 Dir[Datamappify.root.join('repository/query_method/*')].each { |file| require file }
 

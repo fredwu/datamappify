@@ -113,16 +113,6 @@ module Datamappify
             SourceAttributesWalker
           end
         end
-
-        class << self
-          # A meta method to help record whether a criteria has been performed,
-          # it is useful for testing the action(s) of dirty attributes
-          #
-          # @return [TrueClass]
-          def performed
-            true
-          end
-        end
       end
     end
   end

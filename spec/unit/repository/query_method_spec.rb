@@ -9,6 +9,13 @@ module Datamappify::Repository::QueryMethod
       it { should_not be_a_writer }
     end
 
+    describe Exists do
+      subject { Exists }
+
+      it { should     be_a_reader }
+      it { should_not be_a_writer }
+    end
+
     describe Count do
       subject { Count }
 

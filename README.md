@@ -138,13 +138,53 @@ Note that due to the attributes mapping, any data found in mapped ActiveRecord o
 UserRepository.destroy(user)
 ```
 
+#### Callbacks
+
+Datamappify supports the following callbacks via [Hooks](https://github.com/apotonick/hooks):
+
+- before_create
+- before_update
+- before_save
+- before_destroy
+- after_create
+- after_update
+- after_save
+- after_destroy
+
+Callbacks are defined in repositories, and they have access to the entity. Example:
+
+```ruby
+class UserRepository
+  include Datamappify::Repository
+
+  before_create :make_me_admin
+  before_create :make_me_awesome
+  after_save    :make_me_smile
+
+  private
+
+  def make_me_admin(entity)
+    # ...
+  end
+
+  def make_me_awesome(entity)
+    # ...
+  end
+
+  def make_me_smile(entity)
+    # ...
+  end
+
+  # ...
+end
+```
+
 ## Changelog
 
 Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
-- Hooks for persistence (`before_save` and `after_save`, etc).
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
 - Enforce attribute type casting.
 - Support for configurable primary keys and foreign keys.

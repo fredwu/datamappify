@@ -5,6 +5,12 @@ Dir[Datamappify.root.join('repository/query_method/*')].each { |file| require fi
 module Datamappify
   module Repository
     module QueryMethods
+      def self.included(klass)
+        klass.class_eval do
+          include QueryMethod::Callbacks
+        end
+      end
+
       # Does the entity exist already in the repository?
       #
       # @param entity [Entity]
@@ -27,7 +33,9 @@ module Datamappify
       #
       # @return [Entity, false]
       def create(entity)
-        QueryMethod::Create.new(query_options, entity).perform
+        run_callbacks entity, :save, :create do
+          QueryMethod::Create.new(query_options, entity).perform
+        end
       end
 
       # @param (see #create)
@@ -44,7 +52,9 @@ module Datamappify
       #
       # @return [Entity, false]
       def update(entity)
-        QueryMethod::Update.new(query_options, entity).perform
+        run_callbacks entity, :save, :update do
+          QueryMethod::Update.new(query_options, entity).perform
+        end
       end
 
       # @param (see #update)
@@ -61,11 +71,7 @@ module Datamappify
       #
       # @return [Entity, false]
       def save(entity)
-        if exists?(entity)
-          QueryMethod::Update.new(query_options, entity).perform
-        else
-          QueryMethod::Create.new(query_options, entity).perform
-        end
+        exists?(entity) ? update(entity) : create(entity)
       end
 
       # @param (see #save)
@@ -74,15 +80,16 @@ module Datamappify
       #
       # @return [Entity]
       def save!(entity)
-        save(entity) || raise(Data::EntityNotSaved)
+        exists?(entity) ? update!(entity) : create!(entity)
       end
 
-      # @param id_or_entity [Entity]
-      #   an entity or a collection of ids or entities
+      # @param entity [Entity]
       #
       # @return [void, false]
-      def destroy(id_or_entity)
-        QueryMethod::Destroy.new(query_options, id_or_entity).perform
+      def destroy(entity)
+        run_callbacks entity, :destroy do
+          QueryMethod::Destroy.new(query_options, entity).perform
+        end
       end
 
       # @param (see #destroy)
@@ -90,8 +97,8 @@ module Datamappify
       # @raise [Data::EntityNotDestroyed]
       #
       # @return [void]
-      def destroy!(id_or_entity)
-        destroy(id_or_entity) || raise(Data::EntityNotDestroyed)
+      def destroy!(entity)
+        destroy(entity) || raise(Data::EntityNotDestroyed)
       end
 
       # @return [Integer]

@@ -5,6 +5,7 @@
 - Query methods (`find`, `save` and `destroy`) no longer support multiple entities.
   - e.g. `UserRepository.find([1, 2, 3])` is no longer valid.
 - Added `exists?`, `create`, `create!`, `update` and `update!` to repository.
+- Implemented callbacks (e.g. `before_save` and `after_save`, etc).
 
 ## 0.30.0 [2013-04-12]
 

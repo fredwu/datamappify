@@ -1,4 +1,4 @@
-require 'datamappify/repository/query_method/method/source_attributes_walker'
+Dir[Datamappify.root.join('repository/query_method/method/*')].each { |file| require file }
 
 module Datamappify
   module Repository
@@ -14,11 +14,14 @@ module Datamappify
         # @param options [Hash]
         #   a hash containing required items like data_mapper and states
         #
+        # @param entity [Entity]
+        #
         # @param args [any]
-        def initialize(options, *args)
+        def initialize(options, entity = nil, *args)
           @data_mapper = options[:data_mapper]
           @states      = options[:states]
           @lazy_load   = options[:lazy_load?]
+          @entity      = entity
         end
 
         # Should the method be aware of the dirty state?

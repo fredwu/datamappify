@@ -7,6 +7,9 @@ class HeroUser
   attribute :nickname,   String
   attribute :gender,     String
 
+  validates :first_name, :presence => true,
+                         :length   => { :minimum => 2 }
+
   def full_name
     "#{first_name} #{last_name}"
   end

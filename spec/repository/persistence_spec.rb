@@ -14,53 +14,57 @@ shared_examples_for "repository persistence" do |data_provider|
       end
     end
 
-    describe "#save" do
-      it "success" do
-        new_user = nil
+    [:create, :create!, :update, :update!, :save, :save!].each do |query_method|
+      let(:query_method) { query_method }
 
-        expect { new_user = user_repository.save(new_valid_user) }.to change { user_repository.count }.by(1)
+      describe "##{query_method}" do
+        it "success" do
+          new_user = nil
 
-        new_user.should be_kind_of(User)
-        new_user.first_name.should == 'Batman'
-        new_user.driver_license.should == 'ARKHAMCITY'
-      end
+          expect { new_user = user_repository.send(query_method, new_valid_user) }.to change { user_repository.count }.by(1)
 
-      it "failure" do
-        -> { user_repository.save!(new_invalid_user) }.should raise_error(Datamappify::Data::EntityNotSaved)
-      end
+          new_user.should be_kind_of(User)
+          new_user.first_name.should == 'Batman'
+          new_user.driver_license.should == 'ARKHAMCITY'
+        end
 
-      it "updates existing records" do
-        existing_user.first_name = 'Vivian'
-        existing_user.driver_license = 'LOCOMOTE'
+        it "failure" do
+          -> { user_repository.save!(new_invalid_user) }.should raise_error(Datamappify::Data::EntityNotSaved)
+        end
 
-        updated_user = nil
+        it "updates existing records" do
+          existing_user.first_name = 'Vivian'
+          existing_user.driver_license = 'LOCOMOTE'
 
-        expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
+          updated_user = nil
 
-        updated_user.first_name.should == 'Vivian'
-        updated_user.driver_license.should == 'LOCOMOTE'
+          expect { updated_user = user_repository.send(query_method, existing_user) }.to change { user_repository.count }.by(0)
 
-        persisted_user = user_repository.find(updated_user.id)
+          updated_user.first_name.should == 'Vivian'
+          updated_user.driver_license.should == 'LOCOMOTE'
 
-        persisted_user.first_name.should == 'Vivian'
-        persisted_user.driver_license.should == 'LOCOMOTE'
-      end
+          persisted_user = user_repository.find(updated_user.id)
 
-      it "updates existing and new records" do
-        existing_user.first_name = 'Vivian'
-        existing_user.health_care = 'BATMANCAVE'
+          persisted_user.first_name.should == 'Vivian'
+          persisted_user.driver_license.should == 'LOCOMOTE'
+        end
 
-        updated_user = nil
+        it "updates existing and new records" do
+          existing_user.first_name = 'Vivian'
+          existing_user.health_care = 'BATMANCAVE'
 
-        expect { updated_user = user_repository.save(existing_user) }.to change { user_repository.count }.by(0)
+          updated_user = nil
 
-        updated_user.first_name.should == 'Vivian'
-        updated_user.health_care.should == 'BATMANCAVE'
+          expect { updated_user = user_repository.send(query_method, existing_user) }.to change { user_repository.count }.by(0)
 
-        persisted_user = user_repository.find(updated_user.id)
+          updated_user.first_name.should == 'Vivian'
+          updated_user.health_care.should == 'BATMANCAVE'
 
-        persisted_user.first_name.should == 'Vivian'
-        persisted_user.health_care.should == 'BATMANCAVE'
+          persisted_user = user_repository.find(updated_user.id)
+
+          persisted_user.first_name.should == 'Vivian'
+          persisted_user.health_care.should == 'BATMANCAVE'
+        end
       end
     end
 

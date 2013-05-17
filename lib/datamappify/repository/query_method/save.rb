@@ -2,14 +2,6 @@ module Datamappify
   module Repository
     module QueryMethod
       class Save < Method
-        # @param options (see Method#initialize)
-        #
-        # @param entity [Entity]
-        def initialize(options, entity)
-          super
-          @entity = entity
-        end
-
         # @return [Entity, false]
         def perform
           states.update(@entity) do

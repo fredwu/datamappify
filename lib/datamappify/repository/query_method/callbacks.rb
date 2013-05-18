@@ -1,5 +1,25 @@
 require 'hooks'
 
+# Money-patches Hooks
+module Hooks
+  module ClassMethods
+    # Added the ability to ignore callbacks if the previous callback returns `nil` or `false`
+    #
+    # @return [Boolean]
+    def run_hook_for(name, scope, *args)
+      callbacks = callbacks_for_hook(name)
+
+      callbacks.take_while do |callback|
+        if callback.kind_of? Symbol
+          scope.send(callback, *args)
+        else
+          scope.instance_exec(*args, &callback)
+        end
+      end.length == callbacks.length
+    end
+  end
+end
+
 module Datamappify
   module Repository
     module QueryMethod
@@ -25,8 +45,9 @@ module Datamappify
         # @return [void]
         def run_callbacks(entity, *types, &block)
           run_hooks(types, :before, entity) &&
-            block.call &&
-            run_hooks(types.reverse, :after, entity)
+            (yield_value = block.call) &&
+            run_hooks(types.reverse, :after, entity) &&
+            yield_value
         end
 
         private
@@ -41,11 +62,9 @@ module Datamappify
         #
         # @return [void]
         def run_hooks(types, filter, entity)
-          types.each do |type|
-            run_hook hook_for(type, filter), entity
-          end
-
-          entity
+          types.take_while do |type|
+            run_hook(hook_for(type, filter), entity)
+          end.length == types.length
         end
 
         # @param type [Symbol]

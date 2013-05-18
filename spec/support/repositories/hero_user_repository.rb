@@ -9,7 +9,8 @@ class HeroUserRepository
   map_attribute :gender,     'Sequel::HeroUserLastName#gender'
 
   before_create  :action_before_create
-  before_create  :action_before_create2
+  before_create  :action_before_create_2
+  before_create  { |entity| performed(:before_create_block, entity); true }
   before_update  :action_before_update
   before_save    :action_before_save
   before_destroy :action_before_destroy
@@ -21,16 +22,16 @@ class HeroUserRepository
 
   private
 
-  def action_before_create  (entity); performed(:before_create,  entity); end
-  def action_before_create2 (entity); performed(:before_create2, entity); end
-  def action_before_update  (entity); performed(:before_update,  entity); end
-  def action_before_save    (entity); performed(:before_save,    entity); end
-  def action_before_destroy (entity); performed(:before_destroy, entity); end
+  def action_before_create  (entity); performed(:before_create,   entity); true; end
+  def action_before_create_2(entity); performed(:before_create_2, entity); true; end
+  def action_before_update  (entity); performed(:before_update,   entity); true; end
+  def action_before_save    (entity); performed(:before_save,     entity); true; end
+  def action_before_destroy (entity); performed(:before_destroy,  entity); true; end
 
-  def action_after_create   (entity); performed(:after_create,   entity); end
-  def action_after_update   (entity); performed(:after_update,   entity); end
-  def action_after_save     (entity); performed(:after_save,     entity); end
-  def action_after_destroy  (entity); performed(:after_destroy,  entity); end
+  def action_after_create   (entity); performed(:after_create,    entity); true; end
+  def action_after_update   (entity); performed(:after_update,    entity); true; end
+  def action_after_save     (entity); performed(:after_save,      entity); true; end
+  def action_after_destroy  (entity); performed(:after_destroy,   entity); true; end
 
   def performed(*args)
     true

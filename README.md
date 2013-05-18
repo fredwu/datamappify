@@ -179,6 +179,8 @@ class UserRepository
 end
 ```
 
+Note: Returning either `nil` or `false` from the callback will cancel all subsequent callbacks (and the action itself, it it's a `before_` callback).
+
 ## Changelog
 
 Refer to [CHANGELOG](CHANGELOG.md).

@@ -6,6 +6,8 @@ Compose and manage domain logic and data persistence separately and intelligentl
 
 Datamappify is built using [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord and Sequel, etc). The design goal is to utilise the powerfulness of existing ORMs as well as to separate domain logic (model behaviour) from data persistence.
 
+My motivation for creating Datamappify is to hide the complexity of dealing with data in different data sources including the ones from external web services. Features like lazy loading and dirty tracking are designed to enhance the usability of dealing with web services.
+
 Datamappify consists of three components:
 
 - __Entity__ contains models behaviour, think an ActiveRecord model with the persistence specifics removed.
@@ -18,10 +20,10 @@ Note: Datamappify is NOT affiliated with the [Datamapper](https://github.com/dat
 
 ### Built-in ORMs for Persistence
 
+You may implement your own [data provider and criterias](lib/datamappify/data), but Datamappify comes with build-in support for the following ORMS:
+
 - ActiveRecord
 - Sequel
-
-Of course, you may implement your own [data provider and criterias](lib/datamappify/data).
 
 ## Installation
 

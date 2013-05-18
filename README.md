@@ -18,10 +18,12 @@ Datamappify consists of three components:
 
 Note: Datamappify is NOT affiliated with the [Datamapper](https://github.com/datamapper/) project.
 
-### Supported ORMs for Persistence
+### Built-in ORMs for Persistence
 
 - ActiveRecord
 - Sequel
+
+Of course, you may implement your own [data provider and criterias](lib/datamappify/data).
 
 ## Installation
 

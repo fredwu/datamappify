@@ -12,7 +12,7 @@ Datamappify consists of three components:
 
 - __Entity__ contains models behaviour, think an ActiveRecord model with the persistence specifics removed.
 - __Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
-- __Data__ as the name suggests, holds your model data. It is an ORM object (ActiveRecord and Sequel, etc).
+- __Data__ as the name suggests, holds your model data. It contains ORM objects (ActiveRecord and Sequel, etc).
 
 ![](ERD.png)
 

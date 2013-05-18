@@ -60,7 +60,7 @@ module Datamappify
         #
         # @param entity [Entity]
         #
-        # @return [void]
+        # @return [Boolean]
         def run_hooks(types, filter, entity)
           types.take_while do |type|
             run_hook(hook_for(type, filter), entity)

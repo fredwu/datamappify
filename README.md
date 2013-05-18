@@ -1,7 +1,5 @@
 # Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png?branch=master)](http://travis-ci.org/fredwu/datamappify) [![Coverage Status](https://coveralls.io/repos/fredwu/datamappify/badge.png)](https://coveralls.io/r/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
-__Datamappify is current in Proof-of-Concept stage, do NOT use it for anything other than experimentation.__
-
 ## Overview
 
 Compose and manage domain logic and data persistence separately and intelligently, Datamappify is loosely based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html) and [Entity Aggregation](http://msdn.microsoft.com/en-au/library/ff649505.aspx).

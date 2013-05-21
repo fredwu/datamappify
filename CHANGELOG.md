@@ -1,5 +1,7 @@
 ## master
 
+## 0.40.0 [2013-05-21]
+
 - Added dirty attribute tracking.
 - Implemented attribute lazy loading!
 - Query methods (`find`, `save` and `destroy`) no longer support multiple entities.

@@ -100,12 +100,12 @@ class UserRepository
 end
 ```
 
-#### Retrieving entities
+#### Retrieving an entity
 
 Pass in an id.
 
 ```ruby
-user  = UserRepository.find(1)
+user = UserRepository.find(1)
 ```
 
 #### Checking if an entity exists in the repository
@@ -114,6 +114,14 @@ Pass in an entity.
 
 ```ruby
 UserRepository.exists?(user)
+```
+
+#### Retrieving all entities
+
+Returns an array of user entities.
+
+```ruby
+users = UserRepository.all
 ```
 
 #### Saving/updating entities

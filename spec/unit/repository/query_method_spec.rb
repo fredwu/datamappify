@@ -37,6 +37,13 @@ module Datamappify::Repository::QueryMethod
       it { should_not be_a_writer }
     end
 
+    describe FindMultiple do
+      subject { FindMultiple }
+
+      it { should     be_a_reader }
+      it { should_not be_a_writer }
+    end
+
     describe Save do
       subject { Save }
 

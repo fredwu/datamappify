@@ -28,6 +28,13 @@ module Datamappify
         QueryMethod::Find.new(query_options, id).perform
       end
 
+      # Returns a collection of all the entities in the repository
+      #
+      # @return [Array<Entity>]
+      def all
+        QueryMethod::FindMultiple.new(query_options, {}).perform
+      end
+
       # @param entity [Entity]
       #   an entity or a collection of entities
       #

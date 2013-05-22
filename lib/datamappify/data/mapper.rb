@@ -34,6 +34,11 @@ module Datamappify
         @default_source_class ||= default_provider.find_or_build_record_class(entity_class.name)
       end
 
+      # @return [String]
+      def default_source_class_name
+        entity_class.name
+      end
+
       # @return [Set<Attribute>]
       def attributes
         @attributes ||= Set.new(default_attributes + custom_attributes)
@@ -43,6 +48,11 @@ module Datamappify
       #   attribute sets classified by the names of their data provider
       def classified_attributes
         @classified_attributes ||= Set.new(attributes).classify(&:provider_name)
+      end
+
+      # @return [Array<Attribute>]
+      def attributes_from_default_source
+        classified_attributes[default_provider_name].classify(&:source_class_name)[default_source_class_name]
       end
 
       private

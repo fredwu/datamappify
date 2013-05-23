@@ -100,6 +100,8 @@ class UserRepository
 end
 ```
 
+_More repository APIs are being added, below is a list of the currently implemented APIs._
+
 #### Retrieving an entity
 
 Pass in an id.

@@ -9,7 +9,7 @@ module Datamappify
         include Observable
         include Virtus
         include Virtus::Equalizer.new(inspect)
-        include ActiveModel::Validations
+        include ActiveModel::Model
         include LazyChecking
 
         attribute :id, Integer

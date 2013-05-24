@@ -36,5 +36,11 @@ describe Datamappify::Entity do
       user.valid?.should == true
     end
   end
+
+  describe "conversion" do
+    subject { user }
+
+    it { should respond_to(:to_key) }
+  end
 end
 

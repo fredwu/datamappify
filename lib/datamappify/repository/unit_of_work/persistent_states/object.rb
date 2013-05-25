@@ -37,6 +37,7 @@ module Datamappify
           # or for manually trigger attributes update
           #
           # @param attrs [Symbol]
+          #   An array or a hash of which the keys are attribute symbols
           #
           # @return [void]
           def mark_as_dirty(*attributes)

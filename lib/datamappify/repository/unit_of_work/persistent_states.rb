@@ -51,7 +51,7 @@ module Datamappify
 
         # @param entity [Entity]
         #
-        # @param attrs [Symbol]
+        # @param attrs (see Object#mark_as_dirty)
         #
         # @see Object#mark_as_dirty
         #

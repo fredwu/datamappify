@@ -1,5 +1,6 @@
 require 'observer'
 require 'virtus'
+require 'datamappify/entity/active_model/compatibility'
 require 'datamappify/entity/lazy_checking'
 
 module Datamappify
@@ -9,7 +10,8 @@ module Datamappify
         include Observable
         include Virtus
         include Virtus::Equalizer.new(inspect)
-        include ActiveModel::Model
+        include ::ActiveModel::Model
+        include ActiveModel::Compatibility
         include LazyChecking
 
         attribute :id, Integer

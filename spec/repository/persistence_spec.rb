@@ -26,10 +26,12 @@ shared_examples_for "repository persistence" do |data_provider|
           new_user.should be_kind_of(User)
           new_user.first_name.should == 'Batman'
           new_user.driver_license.should == 'ARKHAMCITY'
+          new_user.persisted?.should == true
         end
 
         it "failure" do
           -> { user_repository.save!(new_invalid_user) }.should raise_error(Datamappify::Data::EntityNotSaved)
+          new_invalid_user.persisted?.should == false
         end
 
         it "updates existing records" do
@@ -47,6 +49,7 @@ shared_examples_for "repository persistence" do |data_provider|
 
           persisted_user.first_name.should == 'Vivian'
           persisted_user.driver_license.should == 'LOCOMOTE'
+          persisted_user.persisted?.should == true
         end
 
         it "updates existing and new records" do
@@ -64,6 +67,7 @@ shared_examples_for "repository persistence" do |data_provider|
 
           persisted_user.first_name.should == 'Vivian'
           persisted_user.health_care.should == 'BATMANCAVE'
+          persisted_user.persisted?.should == true
         end
       end
     end

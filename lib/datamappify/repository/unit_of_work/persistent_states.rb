@@ -48,6 +48,17 @@ module Datamappify
 
           attach(entity)
         end
+
+        # @param entity [Entity]
+        #
+        # @param attrs [Symbol]
+        #
+        # @see Object#mark_as_dirty
+        #
+        # @return (see Object#mark_as_dirty)
+        def mark_as_dirty(entity, *attributes)
+          find(entity).mark_as_dirty(*attributes)
+        end
       end
     end
   end

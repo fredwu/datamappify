@@ -1,6 +1,7 @@
 ## master
 
 - Added `all` to repository.
+- Added `PersistentStates#mark_as_dirty`.
 
 ## 0.40.0 [2013-05-21]
 

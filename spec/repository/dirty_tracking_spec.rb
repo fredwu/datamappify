@@ -72,6 +72,24 @@ shared_examples_for "dirty tracking" do |data_provider|
         user_repository.states.find(existing_user).changed?.should == false
       end
     end
+
+    describe "manually mark as dirty" do
+      it "marks an entity as dirty" do
+        user_repository.states.mark_as_dirty(existing_user)
+        user_repository.states.find(existing_user).changed?.should == true
+        user_repository.states.find(existing_user).first_name_changed?.should == true
+        user_repository.states.find(existing_user).last_name_changed?.should == true
+        user_repository.states.find(existing_user).age_changed?.should == true
+      end
+
+      it "marks entity attributes as dirty" do
+        user_repository.states.mark_as_dirty(existing_user, :first_name, :age)
+        user_repository.states.find(existing_user).changed?.should == true
+        user_repository.states.find(existing_user).first_name_changed?.should == true
+        user_repository.states.find(existing_user).last_name_changed?.should == false
+        user_repository.states.find(existing_user).age_changed?.should == true
+      end
+    end
   end
 end
 

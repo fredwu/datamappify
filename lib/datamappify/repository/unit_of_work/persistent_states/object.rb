@@ -33,6 +33,19 @@ module Datamappify
             end
           end
 
+          # Mark selected or all attributes as dirty, useful for a non-persisted object
+          # or for manually trigger attributes update
+          #
+          # @param attrs [Symbol]
+          #
+          # @return [void]
+          def mark_as_dirty(*attributes)
+            attributes = attributes.any? ? attributes : attributes_for(@entity)
+            attributes.each do |name, _|
+              send(:attribute_will_change!, name)
+            end
+          end
+
           # Is the object new (not persisted yet)?
           #
           # @return [Boolean]
@@ -96,15 +109,6 @@ module Datamappify
           # @return [any]
           def set_value(name, value)
             instance_variable_set "@#{name}", Marshal.load(Marshal.dump(value))
-          end
-
-          # Mark all attributes as dirty, useful for a non-persisted object
-          #
-          # @return [void]
-          def mark_as_dirty
-            attributes_for(@entity).each do |name, _|
-              send(:attribute_will_change!, name)
-            end
           end
 
           # Entity attributes, based on whether the entity is lazy loaded

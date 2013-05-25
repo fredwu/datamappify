@@ -1,25 +1,5 @@
 require 'hooks'
 
-# Money-patches Hooks
-module Hooks
-  module ClassMethods
-    # Added the ability to ignore callbacks if the previous callback returns `nil` or `false`
-    #
-    # @return [Boolean]
-    def run_hook_for(name, scope, *args)
-      callbacks = callbacks_for_hook(name)
-
-      callbacks.take_while do |callback|
-        if callback.kind_of? Symbol
-          scope.send(callback, *args)
-        else
-          scope.instance_exec(*args, &callback)
-        end
-      end.length == callbacks.length
-    end
-  end
-end
-
 module Datamappify
   module Repository
     module QueryMethod
@@ -31,7 +11,8 @@ module Datamappify
             define_hooks :before_create,  :after_create,
                          :before_update,  :after_update,
                          :before_save,    :after_save,
-                         :before_destroy, :after_destroy
+                         :before_destroy, :after_destroy,
+                         :halts_on_falsey => true
           end
         end
 
@@ -63,7 +44,7 @@ module Datamappify
         # @return [Boolean]
         def run_hooks(types, filter, entity)
           types.take_while do |type|
-            run_hook(hook_for(type, filter), entity)
+            run_hook(hook_for(type, filter), entity).not_halted?
           end.length == types.length
         end
 
@@ -73,9 +54,9 @@ module Datamappify
         # @param filter [Symbol]
         #   e.g. :before or :after
         #
-        # @return [String]
+        # @return [Symbol]
         def hook_for(type, filter)
-          "#{filter}_#{type}"
+          :"#{filter}_#{type}"
         end
       end
     end

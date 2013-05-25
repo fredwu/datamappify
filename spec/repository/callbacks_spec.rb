@@ -94,6 +94,8 @@ describe Datamappify::Repository do
           subject.should_receive(:performed).with(:before_save_1, entity).ordered
           subject.should_receive(:performed).with(:before_save_2, entity).ordered
           subject.should_receive(:performed).with(:before_save_3, entity).ordered
+          subject.should_receive(:performed).with(:before_create_1, entity).ordered
+          subject.should_receive(:performed).with(:before_create_2, entity).ordered
           subject.should_not_receive(:performed).with(:after_save_1, entity)
           subject.should_not_receive(:performed).with(:after_save_2, entity)
           subject.should_not_receive(:performed).with(:after_save_3, entity)
@@ -108,6 +110,8 @@ describe Datamappify::Repository do
           subject.should_receive(:performed).with(:before_save_1, entity).ordered
           subject.should_receive(:performed).with(:before_save_2, entity).ordered
           subject.should_not_receive(:performed).with(:before_save_3, entity)
+          subject.should_not_receive(:performed).with(:before_create_1, entity)
+          subject.should_not_receive(:performed).with(:before_create_2, entity)
           subject.should_not_receive(:performed).with(:after_save_1, entity)
           subject.should_not_receive(:performed).with(:after_save_2, entity)
           subject.should_not_receive(:performed).with(:after_save_3, entity)
@@ -130,6 +134,8 @@ describe Datamappify::Repository do
           subject.should_receive(:performed).with(:before_save_1, entity).ordered
           subject.should_receive(:performed).with(:before_save_2, entity).ordered
           subject.should_receive(:performed).with(:before_save_3, entity).ordered
+          subject.should_receive(:performed).with(:before_create_1, entity).ordered
+          subject.should_receive(:performed).with(:before_create_2, entity).ordered
           subject.should_receive(:performed).with(:after_save_1, entity).ordered
           subject.should_receive(:performed).with(:after_save_2, entity).ordered
           subject.should_not_receive(:performed).with(:after_save_3, entity)

@@ -138,6 +138,8 @@ UserRepository.save(user)
 
 Datamappify supports attribute dirty tracking - only dirty attributes will be saved.
 
+##### Mark attributes as dirty
+
 Sometimes it's useful to manually mark the whole entity, or some attributes in the entity to be dirty - i.e. when you are submitting a form and only want to update the changed attributes. In this case, you could:
 
 ```ruby

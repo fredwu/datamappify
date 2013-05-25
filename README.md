@@ -223,6 +223,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
+- Entity composition, so you could use Datamappify for forms data (similar to [Reform](https://github.com/apotonick/reform))
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
 - Enforce attribute type casting.
 - Support for configurable primary keys and foreign keys.
@@ -232,6 +233,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 - [Curator](https://github.com/braintree/curator)
 - [Edr](https://github.com/nulogy/edr)
 - [Minimapper](https://github.com/joakimk/minimapper)
+- [Reform](https://github.com/apotonick/reform)
 
 ## Credits
 

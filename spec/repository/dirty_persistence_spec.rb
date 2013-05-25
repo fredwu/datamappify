@@ -33,6 +33,24 @@ shared_examples_for "dirty persistence" do |data_provider|
 
         user_repository.save(new_valid_user)
       end
+
+      context "attributes manually marked as dirty" do
+        let!(:updated_user) { User.new(existing_user.attributes.merge(:first_name => 'Frasier')) }
+
+        it "performs when some attributes are marked as dirty" do
+          Datamappify::Logger.should_receive(:performed).with(update_method).once
+
+          user_repository.states.mark_as_dirty(updated_user, :first_name)
+          user_repository.save(updated_user)
+        end
+
+        it "performs when the entity is marked as dirty" do
+          Datamappify::Logger.should_receive(:performed).with(update_method).at_least(:twice)
+
+          user_repository.states.mark_as_dirty(updated_user)
+          user_repository.save(updated_user)
+        end
+      end
     end
   end
 end

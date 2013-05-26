@@ -16,7 +16,7 @@ Datamappify consists of three components:
 
 Below is a high level and somewhat simplified overview of Datamappify's architecture.
 
-![](ERD.png)
+![](http://i.imgur.com/byt6P3f.png)
 
 Note: Datamappify is NOT affiliated with the [Datamapper](https://github.com/datamapper/) project.
 

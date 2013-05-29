@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 describe Datamappify::Entity do
   let(:user)    { User.new }

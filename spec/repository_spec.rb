@@ -1,4 +1,4 @@
-require_relative 'spec_helper'
+require 'spec_helper'
 
 shared_examples_for "a repository" do |data_provider|
   let(:namespace)       { "Datamappify::Data::Record::#{data_provider}".constantize }

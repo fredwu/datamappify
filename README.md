@@ -249,7 +249,6 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
-- Entity composition, so you could use Datamappify for forms data (similar to [Reform](https://github.com/apotonick/reform))
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
 - Enforce attribute type casting.
 - Support for configurable primary keys and foreign keys.

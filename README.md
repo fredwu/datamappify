@@ -250,8 +250,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 ## Todo
 
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
-- Enforce attribute type casting.
-- Support for configurable primary keys and foreign keys.
+- Support for configurable primary keys and reference (foreign) keys.
 
 ## Similar Projects
 

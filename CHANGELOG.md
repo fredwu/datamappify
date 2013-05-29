@@ -1,5 +1,7 @@
 ## master
 
+## 0.50.0 [2013-05-30]
+
 - Added `all` to repository.
 - Added `PersistentStates#mark_as_dirty`.
 - Added `Entity#references`.

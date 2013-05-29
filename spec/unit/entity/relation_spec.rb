@@ -29,6 +29,7 @@ module Datamappify::Entity
 
         its(:another_entity_id) { should == 42 }
         its(:another_entity)    { should == another_entity }
+        its(:reference_keys)    { should include(:another_entity_id) }
       end
     end
   end

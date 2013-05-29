@@ -50,6 +50,20 @@ class User
   attribute :driver_license, String
   attribute :health_care,    String
 
+  # Entity composition - composing the entity with attributes from other entities
+  attributes_from Job
+
+  # optionally you may prefix the attributes, so that:
+  #
+  #   :programming
+  #
+  # becomes:
+  #
+  #   :hobby_programming
+  attributes_from Hobby, :prefix_with => :hobby
+
+  # Entity reference
+  #
   # `references` is a convenient method for:
   #
   #   attribute :account_id, Integer

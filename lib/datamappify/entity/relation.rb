@@ -2,30 +2,38 @@ module Datamappify
   module Entity
     module Relation
       def self.included(klass)
-        klass.extend DSL
+        klass.class_eval do
+          cattr_accessor :reference_keys
+          extend DSL
+
+          self.reference_keys = []
+        end
       end
 
       module DSL
-        # @param related_entity_name [Symbol, String]
+        # @param entity_name [Symbol, String]
         #
         # @return [void]
-        def references(related_entity_name)
-          create_attribute "#{related_entity_name}_id", Integer
-          create_accessor related_entity_name
+        def references(entity_name)
+          attribute_name = :"#{entity_name}_id"
+
+          create_attribute attribute_name, Integer
+          create_accessor entity_name
+          record_attribute attribute_name
         end
 
         private
 
-        # @param related_entity_name (see #references)
+        # @param entity_name (see #references)
         #
         # @return [void]
-        def create_accessor(related_entity_name)
+        def create_accessor(entity_name)
           class_eval <<-CODE, __FILE__, __LINE__ + 1
-            attr_reader :#{related_entity_name}
+            attr_reader :#{entity_name}
 
-            def #{related_entity_name}=(entity)
-              @#{related_entity_name}        = entity
-              self.#{related_entity_name}_id = entity.id
+            def #{entity_name}=(entity)
+              @#{entity_name}        = entity
+              self.#{entity_name}_id = entity.id
             end
           CODE
         end
@@ -39,6 +47,13 @@ module Datamappify
         # @return [void]
         def create_attribute(name, type, *args)
           attribute name, type, *args
+        end
+
+        # @param attribute_name [Symbol]
+        #
+        # @return [Array]
+        def record_attribute(attribute_name)
+          self.reference_keys << attribute_name
         end
       end
     end

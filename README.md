@@ -50,7 +50,15 @@ class User
   attribute :driver_license, String
   attribute :health_care,    String
 
-  references :account #=> same as `attribute :account_id, Integer`
+  # `references` is a convenient method for:
+  #
+  #   attribute :account_id, Integer
+  #   attr_accessor :account
+  #
+  # and it assigns `account_id` the correct value:
+  #
+  #   user.account = account #=> user.account_id = account.id
+  references :account
 
   validates :first_name, :presence => true,
                          :length   => { :minimum => 2 }

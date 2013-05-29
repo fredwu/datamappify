@@ -2,6 +2,7 @@
 
 - Added `all` to repository.
 - Added `PersistentStates#mark_as_dirty`.
+- Added `Entity#references`.
 
 ## 0.40.0 [2013-05-21]
 

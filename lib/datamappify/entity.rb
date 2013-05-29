@@ -2,6 +2,7 @@ require 'observer'
 require 'virtus'
 require 'datamappify/entity/active_model/compatibility'
 require 'datamappify/entity/lazy_checking'
+require 'datamappify/entity/relation'
 
 module Datamappify
   module Entity
@@ -13,6 +14,7 @@ module Datamappify
         include ::ActiveModel::Model
         include ActiveModel::Compatibility
         include LazyChecking
+        include Relation
 
         attribute :id, Integer
       end

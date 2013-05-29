@@ -50,6 +50,8 @@ class User
   attribute :driver_license, String
   attribute :health_care,    String
 
+  references :account #=> same as `attribute :account_id, Integer`
+
   validates :first_name, :presence => true,
                          :length   => { :minimum => 2 }
   validates :passport,   :presence => true,

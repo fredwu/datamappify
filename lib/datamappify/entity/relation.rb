@@ -32,13 +32,8 @@ module Datamappify
             attr_reader :#{entity_name}
 
             def #{entity_name}=(entity)
-              @#{entity_name} = entity
-
-              if entity.nil?
-                self.#{entity_name}_id = nil
-              else
-                self.#{entity_name}_id = entity.id
-              end
+              @#{entity_name}        = entity
+              self.#{entity_name}_id = entity.nil? ? nil : entity.id
             end
           CODE
         end

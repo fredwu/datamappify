@@ -37,6 +37,21 @@ module Datamappify
               criteria.keys.include?(attribute.key)
             end
           end
+
+          # @param entity [Entity]
+          #
+          # @param record [Class]
+          #
+          # @return [void]
+          def update_entity(entity, record)
+            updated_attributes.each do |attribute|
+              unless attribute.primary_attribute?
+                record = record.send(attribute.source_key)
+              end
+
+              entity.send("#{attribute.name}=", record.send(attribute.source_attribute_name))
+            end
+          end
         end
       end
     end

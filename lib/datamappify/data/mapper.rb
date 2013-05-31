@@ -78,24 +78,24 @@ module Datamappify
       # @return [Array<Attribute>]
       def default_attributes
         @default_attributes ||= default_attribute_names.collect do |attribute|
-          Attribute.new(attribute, default_source_for(attribute))
+          Attribute.new(attribute, default_source_for(attribute), default_source_class)
         end
       end
 
       # @return [Array<Attribute>]
       def custom_attributes
         @custom_attributes ||= custom_mapping.collect do |attribute, source|
-          map_attribute(attribute, source)
+          map_custom_attribute(attribute, source)
         end
       end
 
       # @param (see Data::Mapper::Attribute#initialize)
       #
       # @return [Attribute]
-      def map_attribute(name, source)
+      def map_custom_attribute(name, source)
         @custom_attribute_names << name
 
-        Attribute.new(name, source)
+        Attribute.new(name, source, default_source_class)
       end
 
       # @param attribute [Symbol]

@@ -5,8 +5,22 @@ module Datamappify
         class FindMultiple < Common
           alias_method :entity_class, :entity
 
+          attr_reader :primaries, :secondaries, :structured_criteria
+
+          def initialize(*args)
+            super
+
+            @primaries   = []
+            @secondaries = []
+
+            updated_attributes.each do |attribute|
+              collector = attribute.primary_attribute? ? @primaries : @secondaries
+              collector << attribute
+            end
+          end
+
+          # @return [void]
           def perform
-            records = source_class.where(criteria)
             records.map do |record|
               entity = entity_class.new
               update_entity(entity, record)
@@ -16,9 +30,11 @@ module Datamappify
 
           private
 
-          def update_entity(entity, record)
-            attributes.each do |attribute|
-              entity.send("#{attribute.name}=", record.send(attribute.source_attribute_name))
+          # @return [Array]
+          def updated_attributes
+            @updated_attributes ||= attributes.select do |attribute|
+              attribute.value = criteria[attribute.key]
+              criteria.keys.include?(attribute.key)
             end
           end
         end

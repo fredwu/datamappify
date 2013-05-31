@@ -4,11 +4,24 @@ module Datamappify
       module ActiveRecord
         extend CommonProvider
 
-        # @return [ActiveRecord::Base]
-        def self.build_record_class(source_class_name)
-          Datamappify::Data::Record::ActiveRecord.const_set(
-            source_class_name, Class.new(::ActiveRecord::Base)
-          )
+        class << self
+          # @return [ActiveRecord::Base]
+          def build_record_class(source_class_name)
+            Datamappify::Data::Record::ActiveRecord.const_set(
+              source_class_name, Class.new(::ActiveRecord::Base)
+            )
+          end
+
+          # @return [void]
+          def build_record_association(attribute, default_source_class)
+            default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
+              has_one :#{attribute.source_key}
+            CODE
+
+            attribute.source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
+              belongs_to :#{default_source_class.model_name.element}
+            CODE
+          end
         end
       end
     end

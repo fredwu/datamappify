@@ -73,10 +73,10 @@ module Datamappify
         # @param entity [Entity]
         #
         # @return [void]
-        def dispatch_criteria_to_providers(criteria_name, entity)
+        def dispatch_criteria_to_providers(criteria_name, entity, *args)
           attributes_walker(entity) do |provider_name, source_class, attributes|
             data_mapper.provider(provider_name).build_criteria(
-              criteria_name, source_class, entity, attributes
+              criteria_name, source_class, entity, attributes, *args
             )
           end
         end

@@ -146,11 +146,21 @@ UserRepository.exists?(user)
 
 #### Retrieving all entities
 
-Returns an array of user entities.
+Returns an array of entities.
 
 ```ruby
 users = UserRepository.all
 ```
+
+#### Searching entities
+
+Returns an array of entities.
+
+```ruby
+users = UserRepository.find(:first_name => 'Fred', :driver_license => 'AABBCCDD')
+```
+
+_Note: it does not currently support searching attributes from different data providers._
 
 #### Saving/updating entities
 

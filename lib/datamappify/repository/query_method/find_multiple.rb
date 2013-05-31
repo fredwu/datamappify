@@ -14,19 +14,13 @@ module Datamappify
         # @return [Array<Entity>]
         def perform
           dispatch_criteria_to_default_source(
-            :FindMultiple, data_mapper.entity_class, @criteria, attributes
+            :FindMultiple, data_mapper.entity_class, @criteria, data_mapper.attributes
           )
         end
 
         # @see Method#reader?
         def reader?
           true
-        end
-
-        private
-
-        def attributes
-          data_mapper.attributes_from_default_source
         end
       end
     end

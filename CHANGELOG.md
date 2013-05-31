@@ -1,5 +1,7 @@
 ## master
 
+- Enhanced `find` for searching specific attributes.
+
 ## 0.50.0 [2013-05-30]
 
 - Added `all` to repository.

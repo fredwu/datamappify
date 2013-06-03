@@ -85,7 +85,7 @@ class User
 end
 ```
 
-Inheritance is supported by entities, for example:
+Inheritance is supported for entities, for example:
 
 ```ruby
 class AdminUser < User
@@ -138,7 +138,7 @@ class UserRepository
 end
 ```
 
-Inheritance is supported by repositories when your data structure is based on STI ([Single Table Inheritance](http://en.wikipedia.org/wiki/Single_Table_Inheritance)), for example:
+Inheritance is supported for repositories when your data structure is based on STI ([Single Table Inheritance](http://en.wikipedia.org/wiki/Single_Table_Inheritance)), for example:
 
 ```ruby
 class AdminUserRepository < UserRepository

@@ -85,6 +85,18 @@ class User
 end
 ```
 
+Inheritance is supported by entities, for example:
+
+```ruby
+class AdminUser < User
+  attribute :level, Integer
+end
+
+class GuestUser < User
+  attribute :expiry, DateTime
+end
+```
+
 #### Lazy loading
 
 Datamappify supports attribute lazy loading via the `Lazy` module.
@@ -125,6 +137,24 @@ class UserRepository
   map_attribute :health_care,    'Sequel::UserHealthCare#number'
 end
 ```
+
+Inheritance is supported by repositories when your data structure is based on STI ([Single Table Inheritance](http://en.wikipedia.org/wiki/Single_Table_Inheritance)), for example:
+
+```ruby
+class AdminUserRepository < UserRepository
+  for_entity AdminUser
+end
+
+class GuestUserRepository < UserRepository
+  for_entity GuestUser
+
+  map_attribute :expiry, 'ActiveRecord::User#expiry_date'
+end
+```
+
+In the above example, both repositories deal with the `User` data model.
+
+### Repository APIs
 
 _More repository APIs are being added, below is a list of the currently implemented APIs._
 

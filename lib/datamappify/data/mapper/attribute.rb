@@ -130,7 +130,7 @@ module Datamappify
         #
         # @return [Symbol]
         def primary_reference_key
-          :"#{primary_source_class.to_s.demodulize.underscore}_id"
+          @primary_reference_key ||= :"#{primary_source_class.to_s.demodulize.underscore}_id"
         end
 
         private

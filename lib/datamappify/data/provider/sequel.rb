@@ -5,6 +5,8 @@ module Datamappify
         extend CommonProvider
 
         class << self
+          # @param source_class_name (see CommonProvider::ModuleMethods#find_or_build_record_class)
+          #
           # @return [Sequel::Model]
           def build_record_class(source_class_name)
             Record::Sequel.const_set(
@@ -14,6 +16,10 @@ module Datamappify
             end
           end
 
+          # @param attribute (see Record#build_association)
+          #
+          # @param default_source_class (see Record#build_association)
+          #
           # @return [void]
           def build_record_association(attribute, default_source_class)
             default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1

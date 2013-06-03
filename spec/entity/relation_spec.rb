@@ -1,19 +1,21 @@
 require 'spec_helper'
 
 shared_examples_for "entity relations" do |data_provider|
-  include_context "user repository", data_provider
+  context "#{data_provider}" do
+    include_context "user repository", data_provider
 
-  let!(:comment_repository) { "CommentRepository#{data_provider}".constantize }
-  let(:comment)             { comment_repository.save!(Comment.new) }
+    let!(:comment_repository) { "CommentRepository#{data_provider}".constantize }
+    let(:comment)             { comment_repository.save!(Comment.new) }
 
-  subject { comment }
+    subject { comment }
 
-  before do
-    subject.user = existing_user
+    before do
+      subject.user = existing_user
+    end
+
+    its(:user_id) { should == existing_user.id }
+    its(:user)    { should == existing_user }
   end
-
-  its(:user_id) { should == existing_user.id }
-  its(:user)    { should == existing_user }
 end
 
 describe Datamappify::Entity do

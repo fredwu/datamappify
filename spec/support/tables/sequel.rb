@@ -16,6 +16,7 @@ DB.create_table :users do
   String :first_name, :null => false
   String :surname
   Integer :age
+  Integer :level
   foreign_key :role_id
   DateTime :created_at
   DateTime :updated_at

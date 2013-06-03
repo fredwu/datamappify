@@ -41,11 +41,19 @@ module Datamappify
 
         protected
 
+        # Name of the default source class, e.g. +"User"+,
+        # it is determined from either the PK or the entity
+        #
+        # @return [String]
+        def default_source_class_name
+          @default_source_class_name ||= pk ? pk.source_class_name : entity.class.name.demodulize
+        end
+
         # Key name of either the primary key (e.g. +id+) or foreign key (e.g. +user_id+)
         #
         # @return [Symbol]
         def key_name
-          primary_record? ? :id : "#{entity.class.name.demodulize.underscore}_id".to_sym
+          primary_record? ? :id : any_attribute.primary_reference_key
         end
 
         # The value of {#key_name}
@@ -66,7 +74,7 @@ module Datamappify
         #
         # @return [Boolean]
         def primary_record?
-          source_class.name.demodulize == entity.class.name.demodulize
+          source_class.name.demodulize == default_source_class_name
         end
 
         # Ignores the current Criteria's operation if there is no dirty attributes
@@ -80,15 +88,17 @@ module Datamappify
         #
         # @return [Hash]
         def attributes_and_values
-          hash = {}
+          @attributes_and_values ||= begin
+            hash = {}
 
-          attributes.each do |attribute|
-            unless ignore_attribute?(attribute)
-              hash[attribute.source_attribute_name] = entity.send(attribute.name)
+            attributes.each do |attribute|
+              unless ignore_attribute?(attribute)
+                hash[attribute.source_attribute_name] = entity.send(attribute.name)
+              end
             end
-          end
 
-          hash
+            hash
+          end
         end
 
         # Stores the attribute value in {Mapper::Attribute} for later use
@@ -98,6 +108,16 @@ module Datamappify
           attributes.each do |attribute|
             attribute.value = entity.instance_variable_get("@#{attribute.name}")
           end
+        end
+
+        # @return [Attribute]
+        def any_attribute
+          @any_attribute ||= attributes.first
+        end
+
+        # @return [Attribute]
+        def pk
+          @pk ||= attributes.find { |attribute| attribute.key == :id }
         end
 
         private

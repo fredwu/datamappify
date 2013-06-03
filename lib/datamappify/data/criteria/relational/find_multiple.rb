@@ -57,7 +57,7 @@ module Datamappify
           # @param primary_record [Class]
           #   an ORM model object (ActiveRecord or Sequel, etc)
           #
-          # @return [Class]
+          # @return [Object]
           #   an ORM model object (ActiveRecord or Sequel, etc)
           def data_record_for(attribute, primary_record)
             if attribute.primary_attribute?

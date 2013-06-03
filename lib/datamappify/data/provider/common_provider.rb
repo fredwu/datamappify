@@ -30,6 +30,8 @@ module Datamappify
 
           # Finds or builds a data record class from the data provider
           #
+          # @param source_class_name [String]
+          #
           # @return [Class]
           #   the data record class
           def find_or_build_record_class(source_class_name)

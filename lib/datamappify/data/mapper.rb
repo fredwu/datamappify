@@ -10,6 +10,9 @@ module Datamappify
       # @return [String]
       attr_accessor :default_provider_name
 
+      # @return [String]
+      attr_writer :default_source_class_name
+
       # @return [Hash]
       #   attribute name to source mapping as specified in {Repository::MappingDSL#map_attribute}
       attr_accessor :custom_mapping
@@ -24,6 +27,8 @@ module Datamappify
         @default_provider ||= Provider.const_get(default_provider_name)
       end
 
+      # @param provider_name [String]
+      #
       # @return [Module]
       def provider(provider_name)
         Provider.const_get(provider_name)
@@ -31,12 +36,12 @@ module Datamappify
 
       # @return [Class]
       def default_source_class
-        @default_source_class ||= default_provider.find_or_build_record_class(entity_class.name)
+        @default_source_class ||= default_provider.find_or_build_record_class(default_source_class_name)
       end
 
       # @return [String]
       def default_source_class_name
-        entity_class.name
+        @default_source_class_name ||= entity_class.name
       end
 
       # @return [Set<Attribute>]
@@ -103,7 +108,7 @@ module Datamappify
       #
       # @return [String]
       def default_source_for(attribute)
-        "#{default_provider_name}::#{entity_class.name}##{attribute}"
+        "#{default_provider_name}::#{default_source_class_name}##{attribute}"
       end
     end
   end

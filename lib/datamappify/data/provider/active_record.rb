@@ -5,6 +5,8 @@ module Datamappify
         extend CommonProvider
 
         class << self
+          # @param source_class_name (see CommonProvider::ModuleMethods#find_or_build_record_class)
+          #
           # @return [ActiveRecord::Base]
           def build_record_class(source_class_name)
             Datamappify::Data::Record::ActiveRecord.const_set(

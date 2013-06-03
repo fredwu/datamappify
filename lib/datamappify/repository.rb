@@ -2,6 +2,7 @@ require 'datamappify/repository/lazy_checking'
 require 'datamappify/repository/mapping_dsl'
 require 'datamappify/repository/unit_of_work'
 require 'datamappify/repository/query_methods'
+require 'datamappify/repository/inheritable'
 require 'datamappify/data'
 
 module Datamappify
@@ -22,6 +23,7 @@ module Datamappify
         include LazyChecking
         extend  MappingDSL
         include QueryMethods
+        extend  Inheritable
       end
     end
 

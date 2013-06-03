@@ -17,6 +17,7 @@ ActiveRecord::Migration.suppress_messages do
       t.string :first_name, :null => false
       t.string :surname
       t.integer :age
+      t.integer :level
       t.references :role
       t.timestamps
     end

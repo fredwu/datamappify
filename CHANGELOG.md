@@ -1,6 +1,7 @@
 ## master
 
 - Enhanced `find` for searching specific attributes.
+- Added support for repository inheritance.
 
 ## 0.50.0 [2013-05-30]
 

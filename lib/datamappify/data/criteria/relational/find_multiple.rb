@@ -46,7 +46,7 @@ module Datamappify
           def update_entity(entity, primary_record)
             attributes.each do |attribute|
               record = data_record_for(attribute, primary_record)
-              value  = record.nil? ? nil : record.send(attribute.source_attribute_name)
+              value  = record_value_for(attribute, record)
 
               entity.send("#{attribute.name}=", value)
             end
@@ -65,6 +65,16 @@ module Datamappify
             else
               primary_record.send(attribute.source_key)
             end
+          end
+
+          # @param attribute [Attribute]
+          #
+          # @param record [Class]
+          #   an ORM model object (ActiveRecord or Sequel, etc)
+          #
+          # @return [any]
+          def record_value_for(attribute, record)
+            record.nil? ? nil : record.send(attribute.source_attribute_name)
           end
         end
       end

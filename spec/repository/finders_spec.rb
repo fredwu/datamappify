@@ -34,7 +34,8 @@ shared_examples_for "finders" do |data_provider|
           describe "record" do
             subject { records.first }
 
-            its(:first_name) { should == 'Bob' }
+            its(:first_name)     { should == 'Bob' }
+            its(:driver_license) { should == 'IDONTCARE' }
           end
         end
 
@@ -47,6 +48,7 @@ shared_examples_for "finders" do |data_provider|
           describe "record" do
             subject { records.first }
 
+            its(:first_name)     { should == 'Jane' }
             its(:driver_license) { should == 'NO_LICENSE' }
           end
         end
@@ -96,12 +98,19 @@ shared_examples_for "finders" do |data_provider|
     end
 
     describe "#all" do
-      subject { user_repository.all }
+      let(:records) { user_repository.all }
+      subject       { records }
 
       it { should have(3).users }
 
       its(:first) { should == existing_user }
       its(:last)  { should == existing_user_2 }
+
+      describe "record" do
+        subject { records.first }
+
+        its(:first_name) { should == existing_user.first_name }
+      end
     end
   end
 end

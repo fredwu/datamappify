@@ -55,11 +55,6 @@ module Datamappify
         @classified_attributes ||= Set.new(attributes).classify(&:provider_name)
       end
 
-      # @return [Array<Attribute>]
-      def attributes_from_default_source
-        classified_attributes[default_provider_name].classify(&:source_class_name)[default_source_class_name]
-      end
-
       private
 
       # @return [Array<Symbol>]

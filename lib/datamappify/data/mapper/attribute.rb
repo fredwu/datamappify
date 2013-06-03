@@ -91,15 +91,6 @@ module Datamappify
           @source_table ||= source_class_name.pluralize.underscore.to_sym
         end
 
-        # @example
-        #
-        #   :user_comment_id
-        #
-        # @return [Symbol]
-        def source_reference_key
-          @source_reference_key ||= :"#{source_name}_id"
-        end
-
         # @return [Boolean]
         def primary_key?
           source_attribute_name == 'id'

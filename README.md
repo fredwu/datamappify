@@ -50,7 +50,7 @@ class User
   attribute :driver_license, String
   attribute :health_care,    String
 
-  # Nested entity composition - composing the entity with attributes and validation rules from other entities
+  # Nested entity composition - composing the entity with attributes and validations from other entities
   #
   #   class Job
   #     include Datamappify::Entity
@@ -68,7 +68,6 @@ class User
   #
   #   class User
   #     # ...
-  #
   #     attributes :title, String
   #     validates  :title, :presence => true
   #   end
@@ -92,7 +91,6 @@ class User
   #
   #   class User
   #     # ...
-  #
   #     attributes :hobby_name, String
   #     validates  :hobby_name, :presence => true
   #   end

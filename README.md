@@ -50,16 +50,52 @@ class User
   attribute :driver_license, String
   attribute :health_care,    String
 
-  # Nested entity composition - composing the entity with attributes from other entities
+  # Nested entity composition - composing the entity with attributes and validation rules from other entities
+  #
+  #   class Job
+  #     include Datamappify::Entity
+  #
+  #     attributes :title, String
+  #     validates  :title, :presence => true
+  #   end
+  #
+  #   class User
+  #     # ...
+  #     attributes_from Job
+  #   end
+  #
+  # essentially equals:
+  #
+  #   class User
+  #     # ...
+  #
+  #     attributes :title, String
+  #     validates  :title, :presence => true
+  #   end
   attributes_from Job
 
   # optionally you may prefix the attributes, so that:
   #
-  #   :programming
+  #   class Hobby
+  #     include Datamappify::Entity
+  #
+  #     attributes :name, String
+  #     validates  :name, :presence => true
+  #   end
+  #
+  #   class User
+  #     # ...
+  #     attributes_from Hobby, :prefix_with => :hobby
+  #   end
   #
   # becomes:
   #
-  #   :hobby_programming
+  #   class User
+  #     # ...
+  #
+  #     attributes :hobby_name, String
+  #     validates  :hobby_name, :presence => true
+  #   end
   attributes_from Hobby, :prefix_with => :hobby
 
   # Entity reference

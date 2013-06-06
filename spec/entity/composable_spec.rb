@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe Datamappify::Entity do
-  subject { Computer.new }
-
-  before do
-    subject.cpu                 = '286'
-    subject.ram                 = 8192
-    subject.hdd                 = 65536
-    subject.gfx                 = 'Voodoo'
-    subject.software_os         = 'OS X'
-    subject.software_osx_id     = 1
-    subject.software_windows_id = 2
-    subject.software_linux_id   = 3
+  subject do
+    Computer.new({
+      :brand               => 'Fruit',
+      :cpu                 => '286',
+      :ram                 => 8192,
+      :hdd                 => 65536,
+      :gfx                 => 'Voodoo',
+      :software_os         => 'OS X',
+      :software_osx_id     => 1,
+      :software_windows_id => 2,
+      :software_linux_id   => 3
+    })
   end
 
   its(:cpu)                 { should == '286' }
@@ -22,4 +23,22 @@ describe Datamappify::Entity do
   its(:software_osx_id)     { should == 1 }
   its(:software_windows_id) { should == 2 }
   its(:software_linux_id)   { should == 3 }
+
+  describe "validation" do
+    context "valid" do
+      it { should be_valid }
+    end
+
+    context "invalid" do
+      after do
+        subject.should be_invalid
+      end
+
+      it('brand')       { subject.brand       = nil }
+      it('ram')         { subject.ram         = 42 }
+      it('hdd')         { subject.hdd         = 42 }
+      it('hdd')         { subject.hdd         = 65537 }
+      it('software_os') { subject.software_os = nil }
+    end
+  end
 end

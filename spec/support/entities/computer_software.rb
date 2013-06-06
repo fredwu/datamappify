@@ -6,4 +6,6 @@ class ComputerSoftware
   references :osx
   references :windows
   references :linux
+
+  validates_presence_of :os
 end

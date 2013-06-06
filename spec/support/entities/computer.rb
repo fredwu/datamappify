@@ -8,4 +8,6 @@ class Computer
 
   attributes_from ComputerHardware
   attributes_from ComputerSoftware, :prefix_with => :software
+
+  validates :brand, :presence => true
 end

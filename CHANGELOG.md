@@ -2,6 +2,7 @@
 
 - Enhanced `find` for searching specific attributes.
 - Added support for repository inheritance.
+- `attributes_from` now copies validations as well!
 
 ## 0.50.0 [2013-05-30]
 

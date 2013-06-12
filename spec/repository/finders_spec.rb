@@ -25,6 +25,12 @@ shared_examples_for "finders" do |data_provider|
           user_repository.save!(User.new(:first_name => 'John', :driver_license => 'IDONTCARE'))
         end
 
+        describe "by attribute that does not exist" do
+          let(:records) { user_repository.find(:blah => 'Bob') }
+
+          it { expect { records }.to raise_exception(Datamappify::Data::EntityAttributeInvalid) }
+        end
+
         describe "by primary attribute" do
           let(:records) { user_repository.find(:first_name => 'Bob') }
           subject       { records }

@@ -3,6 +3,7 @@
 - Enhanced `find` for searching specific attributes.
 - Added support for repository inheritance.
 - `attributes_from` now copies validations as well!
+- `find` now raises an exception if the arguments contain an unknown attribute key.
 
 ## 0.50.0 [2013-05-30]
 

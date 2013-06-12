@@ -32,6 +32,10 @@ module Datamappify
 
           # @return [Array]
           def updated_attributes
+            unless criteria.keys & attributes.map(&:key) == criteria.keys
+              raise EntityAttributeInvalid
+            end
+
             @updated_attributes ||= attributes.select do |attribute|
               attribute.value = criteria[attribute.key]
               criteria.keys.include?(attribute.key)

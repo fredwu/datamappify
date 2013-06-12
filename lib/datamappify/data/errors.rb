@@ -18,5 +18,8 @@ module Datamappify
 
     class EntityNotDestroyed < Error
     end
+
+    class EntityAttributeInvalid < Error
+    end
   end
 end

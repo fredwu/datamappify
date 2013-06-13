@@ -8,10 +8,12 @@ describe Datamappify::Entity do
       :ram                 => 8192,
       :hdd                 => 65536,
       :gfx                 => 'Voodoo',
+      :vendor              => 'Compaq',
       :software_os         => 'OS X',
       :software_osx_id     => 1,
       :software_windows_id => 2,
-      :software_linux_id   => 3
+      :software_linux_id   => 3,
+      :software_vendor     => 'Lotus'
     })
   end
 
@@ -19,10 +21,12 @@ describe Datamappify::Entity do
   its(:ram)                 { should == 8192 }
   its(:hdd)                 { should == 65536 }
   its(:gfx)                 { should == 'Voodoo' }
+  its(:vendor)              { should == 'Compaq' }
   its(:software_os)         { should == 'OS X' }
   its(:software_osx_id)     { should == 1 }
   its(:software_windows_id) { should == 2 }
   its(:software_linux_id)   { should == 3 }
+  its(:software_vendor)     { should == 'Lotus' }
 
   describe "validation" do
     context "valid" do

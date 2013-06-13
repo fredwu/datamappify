@@ -100,7 +100,8 @@ module Datamappify
         #
         # @return [void]
         def prefix_attribute_name(attribute, prefix)
-          attribute.instance_variable_set :@name, :"#{prefix}_#{attribute.name}"
+          name = attribute.instance_variable_set :@name, :"#{prefix}_#{attribute.name}"
+          attribute.instance_variable_set :@instance_variable_name, "@#{name}".to_sym
         end
       end
     end

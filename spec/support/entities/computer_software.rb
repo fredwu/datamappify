@@ -2,6 +2,7 @@ class ComputerSoftware
   include Datamappify::Entity
 
   attribute :os, String
+  attribute :vendor, String
 
   references :osx
   references :windows

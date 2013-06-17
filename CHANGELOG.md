@@ -1,5 +1,7 @@
 ## master
 
+## 0.51.0 [2013-06-17]
+
 - Enhanced `find` for searching specific attributes.
 - Added support for repository inheritance.
 - `attributes_from` now copies validations as well!

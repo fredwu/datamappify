@@ -1,5 +1,7 @@
 ## master
 
+## 0.51.1 [2013-06-17]
+
 - Fixed an issue with attribute name and validation conflicts.
 
 ## 0.51.0 [2013-06-17]

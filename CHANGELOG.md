@@ -1,5 +1,7 @@
 ## master
 
+- Fixed an issue with attribute name and validation conflicts.
+
 ## 0.51.0 [2013-06-17]
 
 - Enhanced `find` for searching specific attributes.

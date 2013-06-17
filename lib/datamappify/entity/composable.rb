@@ -23,9 +23,9 @@ module Datamappify
         #
         # @return (see #attributes_from)
         def setup_attributes(entity_class, options)
-          entity_class.attribute_set.dup.each do |attribute|
+          entity_class.attribute_set.each do |attribute|
             unless excluded_attributes(entity_class).include?(attribute.name)
-              self.attribute_set << tweak_attribute(attribute, options)
+              self.attribute_set << tweak_attribute(attribute.dup, options)
             end
           end
         end
@@ -57,13 +57,9 @@ module Datamappify
         # @return [void]
         def rename_validators(entity_class, prefix)
           entity_class._validators.each do |attribute_name, validators|
-            dup_validators = validators.dup
-
-            dup_validators.each do |validator|
-              rename_validator_attributes(validator, prefix)
+            self._validators[:"#{prefix}_#{attribute_name}"] = validators.map do |validator|
+              rename_validator_attributes(validator.dup, prefix)
             end
-
-            self._validators[:"#{prefix}_#{attribute_name}"] = dup_validators
           end
         end
 
@@ -74,6 +70,7 @@ module Datamappify
         # @return [void]
         def rename_validator_attributes(validator, prefix)
           validator.instance_variable_set :@attributes, validator.attributes.map { |name| :"#{prefix}_#{name}" }
+          validator
         end
 
         # @param entity_class [Entity]

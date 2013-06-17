@@ -13,7 +13,12 @@ describe Datamappify::Entity do
       :software_osx_id     => 1,
       :software_windows_id => 2,
       :software_linux_id   => 3,
-      :software_vendor     => 'Lotus'
+      :software_vendor     => 'Lotus',
+      :game_os             => 'OS X',
+      :game_osx_id         => 1,
+      :game_windows_id     => 2,
+      :game_linux_id       => 3,
+      :game_vendor         => 'Lotus'
     })
   end
 
@@ -27,6 +32,11 @@ describe Datamappify::Entity do
   its(:software_windows_id) { should == 2 }
   its(:software_linux_id)   { should == 3 }
   its(:software_vendor)     { should == 'Lotus' }
+  its(:game_os)             { should == 'OS X' }
+  its(:game_osx_id)         { should == 1 }
+  its(:game_windows_id)     { should == 2 }
+  its(:game_linux_id)       { should == 3 }
+  its(:game_vendor)         { should == 'Lotus' }
 
   describe "validation" do
     context "valid" do

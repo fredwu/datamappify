@@ -2,8 +2,8 @@ class ComputerHardware
   include Datamappify::Entity
 
   attribute :cpu, String
-  attribute :ram, Integer
-  attribute :hdd, Integer
+  attribute :ram, Integer, :default => 8192
+  attribute :hdd, Integer, :default => 65536
   attribute :gfx, String
   attribute :vendor, String
 

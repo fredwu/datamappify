@@ -5,7 +5,7 @@ module Datamappify::Entity
     class FarDistantEntity
       include Datamappify::Entity
 
-      attribute :far_distant_attribute_one
+      attribute :far_distant_attribute_one, String
     end
 
     class DistantEntity
@@ -47,6 +47,8 @@ module Datamappify::Entity
       its(:attributes) { should have_key(:other_distant_attribute_one) }
       its(:attributes) { should have_key(:other_distant_attribute_two) }
       its(:attributes) { should have_key(:other_far_far_distant_attribute_one) }
+      its(:attributes) { should have_key(:other_distant_entity_id) }
+      its(:attributes) { should have_key(:other_far_distant_entity_id) }
 
       its(:attributes) { should_not have_key(:attribute_one) }
       its(:attributes) { should_not have_key(:attribute_two) }
@@ -54,9 +56,7 @@ module Datamappify::Entity
       its(:attributes) { should_not have_key(:distant_attribute_two) }
 
       its(:attributes) { should_not have_key(:distant_entity_id) }
-      its(:attributes) { should_not have_key(:other_distant_entity_id) }
       its(:attributes) { should_not have_key(:far_distant_entity_id) }
-      its(:attributes) { should_not have_key(:other_far_distant_entity_id) }
       its(:attributes) { should_not have_key(:far_far_distant_entity_id) }
 
       its(:other_attribute_one)   { should == 'Hello' }

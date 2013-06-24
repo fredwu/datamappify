@@ -5,8 +5,7 @@ describe Datamappify::Entity do
     Computer.new({
       :brand               => 'Fruit',
       :cpu                 => '286',
-      :ram                 => 8192,
-      :hdd                 => 65536,
+      :ram                 => 4242,
       :gfx                 => 'Voodoo',
       :vendor              => 'Compaq',
       :software_os         => 'OS X',
@@ -22,8 +21,9 @@ describe Datamappify::Entity do
     })
   end
 
+  its(:brand)               { should == 'Fruit' }
   its(:cpu)                 { should == '286' }
-  its(:ram)                 { should == 8192 }
+  its(:ram)                 { should == 4242 }
   its(:hdd)                 { should == 65536 }
   its(:gfx)                 { should == 'Voodoo' }
   its(:vendor)              { should == 'Compaq' }

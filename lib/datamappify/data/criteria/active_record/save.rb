@@ -1,10 +1,13 @@
 require 'datamappify/data/criteria/relational/save'
+require 'datamappify/data/criteria/concerns/update_primary_record'
 
 module Datamappify
   module Data
     module Criteria
       module ActiveRecord
         class Save < Relational::Save
+          include Concerns::UpdatePrimaryRecord
+
           private
 
           def save_record
@@ -14,7 +17,8 @@ module Datamappify
 
           def save(record)
             record.update_attributes attributes_and_values
-            record
+
+            super
           end
         end
       end

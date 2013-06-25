@@ -1,5 +1,7 @@
 ## master
 
+- Added support for reverse mapping attributes.
+
 ## 0.51.1 [2013-06-17]
 
 - Fixed an issue with attribute name and validation conflicts.

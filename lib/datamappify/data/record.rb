@@ -20,6 +20,10 @@ module Datamappify
         def build_association(attribute, default_source_class)
           Provider.const_get(attribute.provider_name).build_record_association(attribute, default_source_class)
         end
+
+        def build_reversed_association(attribute, default_source_class)
+          Provider.const_get(attribute.provider_name).build_record_reversed_association(attribute, default_source_class)
+        end
       end
     end
   end

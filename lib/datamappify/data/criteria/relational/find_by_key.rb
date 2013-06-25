@@ -1,14 +1,15 @@
 require 'datamappify/data/criteria/relational/find'
+require 'datamappify/data/criteria/relational/concerns/set_criteria'
 
 module Datamappify
   module Data
     module Criteria
       module Relational
         class FindByKey < Find
-          def initialize(source_class, entity, attributes, &block)
-            super(source_class, entity, nil, attributes, &block)
+          include Concerns::SetCriteria
 
-            @criteria = { key_name => entity.id }
+          def initialize(source_class, entity, attributes, options = {}, &block)
+            super(source_class, entity, nil, attributes, options, &block)
           end
         end
       end

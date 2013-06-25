@@ -73,11 +73,22 @@ module Datamappify
         # @param entity [Entity]
         #
         # @return [void]
-        def dispatch_criteria_to_providers(criteria_name, entity, *args)
+        def dispatch_criteria_to_providers(criteria_name, entity)
+          _primary_record = nil
+
           attributes_walker(entity) do |provider_name, source_class, attributes|
-            data_mapper.provider(provider_name).build_criteria(
-              criteria_name, source_class, entity, attributes, *args
-            )
+            attributes.classify { |attr| attr.options[:via] }.each do |via, attrs|
+              record = data_mapper.provider(provider_name).build_criteria(
+                criteria_name,
+                source_class,
+                entity,
+                attrs,
+                :via            => via,
+                :primary_record => _primary_record
+              )
+
+              _primary_record ||= record
+            end
           end
         end
 

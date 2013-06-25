@@ -76,3 +76,20 @@ DB.create_table :user_health_cares do
   DateTime :created_at
   DateTime :updated_at
 end
+
+DB.create_table :posts do |t|
+  primary_key :id
+  String :title
+  foreign_key :author_id
+  DateTime :created_at
+  DateTime :updated_at
+end
+
+DB.create_table :authors do |t|
+  primary_key :id
+  String :name
+  String :bio
+  String :post_id
+  DateTime :created_at
+  DateTime :updated_at
+end

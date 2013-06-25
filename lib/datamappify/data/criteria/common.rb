@@ -11,10 +11,16 @@ module Datamappify
         attr_reader :entity
 
         # @return [void]
-        attr_reader :criteria
+        attr_accessor :criteria
 
         # @return [Set<Mapper::Attribute>]
         attr_reader :attributes
+
+        # @return [Hash]
+        attr_accessor :attributes_and_values
+
+        # @return [Hash]
+        attr_reader :options
 
         # @param source_class [Class]
         #
@@ -24,7 +30,7 @@ module Datamappify
         #   an optional block
         def initialize(source_class, *args, &block)
           @source_class = source_class
-          @entity, @criteria, @attributes = *args
+          @entity, @criteria, @attributes, @options = *args
           @block = block
         end
 
@@ -37,6 +43,23 @@ module Datamappify
           store_attribute_value if attributes
 
           result
+        end
+
+        # Attributes with their corresponding values
+        #
+        # @return [Hash]
+        def attributes_and_values
+          @attributes_and_values ||= begin
+            hash = {}
+
+            attributes.each do |attribute|
+              unless ignore_attribute?(attribute)
+                hash[attribute.source_attribute_name] = entity.send(attribute.name)
+              end
+            end
+
+            hash
+          end
         end
 
         protected
@@ -84,23 +107,6 @@ module Datamappify
           attributes_and_values.empty?
         end
 
-        # Attributes with their corresponding values
-        #
-        # @return [Hash]
-        def attributes_and_values
-          @attributes_and_values ||= begin
-            hash = {}
-
-            attributes.each do |attribute|
-              unless ignore_attribute?(attribute)
-                hash[attribute.source_attribute_name] = entity.send(attribute.name)
-              end
-            end
-
-            hash
-          end
-        end
-
         # Stores the attribute value in {Mapper::Attribute} for later use
         #
         # @return [void]
@@ -117,7 +123,7 @@ module Datamappify
 
         # @return [Attribute]
         def pk
-          @pk ||= attributes.find { |attribute| attribute.key == :id }
+          @pk ||= attributes.find(&:primary_key?)
         end
 
         private

@@ -14,6 +14,8 @@ module Datamappify
             saved_record = save(record)
 
             update_entity_with(saved_record) if primary_record?
+
+            record
           end
 
           def update_entity_with(record)

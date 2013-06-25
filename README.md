@@ -160,6 +160,8 @@ class UserRepository
 
   # specify any attributes that need to be mapped
   #
+  # for attributes mapped from a different source class, a foreign key on the source class is required
+  #
   # for example:
   #   - 'last_name' is mapped to the 'User' ActiveRecord class and its 'surname' attribute
   #   - 'driver_license' is mapped to the 'UserDriverLicense' ActiveRecord class and its 'number' attribute
@@ -169,6 +171,14 @@ class UserRepository
   map_attribute :driver_license, 'ActiveRecord::UserDriverLicense#number'
   map_attribute :passport,       'Sequel::UserPassport#number'
   map_attribute :health_care,    'Sequel::UserHealthCare#number'
+
+  # attributes can also be reverse mapped by specifying the `via` option
+  #
+  # for example, the below attribute will look for `bio_id` on the user object,
+  # and map `bio` from the `text` attribute of `ActiveRecord::Bio`
+  #
+  # this is useful for mapping form fields (similar to ActiveRecord's nested attributes)
+  map_attribute :bio,            'ActiveRecord::Bio#text', :via => :bio_id
 end
 ```
 

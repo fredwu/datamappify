@@ -63,5 +63,18 @@ ActiveRecord::Migration.suppress_messages do
       t.belongs_to :user
       t.timestamps
     end
+
+    create_table :posts do |t|
+      t.string :title
+      t.references :author
+      t.timestamps
+    end
+
+    create_table :authors do |t|
+      t.string :name
+      t.string :bio
+      t.references :post
+      t.timestamps
+    end
   end
 end

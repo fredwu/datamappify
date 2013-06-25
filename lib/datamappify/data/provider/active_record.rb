@@ -24,6 +24,13 @@ module Datamappify
               belongs_to :#{default_source_class.model_name.element}
             CODE
           end
+
+          # @return [void]
+          def build_record_reversed_association(attribute, default_source_class)
+            default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
+              belongs_to :#{attribute.source_key}
+            CODE
+          end
         end
       end
     end

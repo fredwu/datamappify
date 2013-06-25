@@ -7,6 +7,8 @@ module Datamappify
             record = source_class.where(criteria).first
 
             update_entity_with(record) if record
+
+            record
           end
 
           private

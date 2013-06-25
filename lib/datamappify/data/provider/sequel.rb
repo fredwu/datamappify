@@ -27,7 +27,14 @@ module Datamappify
             CODE
 
             attribute.source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
-              one_to_one :#{default_source_class.table_name.to_s.singularize}
+              many_to_one :#{default_source_class.table_name.to_s.singularize}
+            CODE
+          end
+
+          # @return [void]
+          def build_record_reversed_association(attribute, default_source_class)
+            default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
+              many_to_one :#{attribute.source_key}
             CODE
           end
         end

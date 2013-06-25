@@ -23,6 +23,9 @@ module Datamappify
         # @return [Class]
         attr_reader :primary_source_class
 
+        # @return [Hash]
+        attr_reader :options
+
         # @return [any]
         attr_accessor :value
 
@@ -33,16 +36,21 @@ module Datamappify
         #   data provider, class and attribute,
         #   e.g. "ActiveRecord::User#surname"
         #
-        # @param primary_source_class [Class]
-        def initialize(name, source, primary_source_class)
+        # @param options [Hash]
+        def initialize(name, source, options)
           @key                  = name
           @name                 = name.to_s
-          @primary_source_class = primary_source_class
+          @options              = options
+          @primary_source_class = options[:primary_source_class]
 
           @provider_name, @source_class_name, @source_attribute_name = parse_source(source)
 
-          unless primary_attribute? || external_attribute?
-            Record.build_association(self, primary_source_class)
+          if secondary_attribute?
+            if reverse_mapped?
+              Record.build_reversed_association(self, primary_source_class)
+            else
+              Record.build_association(self, primary_source_class)
+            end
           end
         end
 
@@ -96,18 +104,6 @@ module Datamappify
           source_attribute_name == 'id'
         end
 
-        # @return [Boolean]
-        def primary_attribute?
-          provider_name == primary_provider_name && primary_source_class == source_class
-        end
-
-        # External attribute is from a different data provider than the primary data provider
-        #
-        # @return [Boolean]
-        def external_attribute?
-          provider_name != primary_provider_name
-        end
-
         # @return [String]
         def primary_provider_name
           @primary_provider_name ||= primary_source_class.parent.to_s.demodulize
@@ -122,6 +118,31 @@ module Datamappify
         # @return [Symbol]
         def primary_reference_key
           @primary_reference_key ||= :"#{primary_source_class.to_s.demodulize.underscore}_id"
+        end
+
+        # Primary attribute is from the same data provider and the same source class
+        #
+        # @return [Boolean]
+        def primary_attribute?
+          provider_name == primary_provider_name && primary_source_class == source_class
+        end
+
+        # Secondary attribute is from the same data provider but a different source class
+        #
+        # @return [Boolean]
+        def secondary_attribute?
+          provider_name == primary_provider_name && primary_source_class != source_class
+        end
+
+        # External attribute is from a different data provider than the primary data provider
+        #
+        # @return [Boolean]
+        def external_attribute?
+          provider_name != primary_provider_name
+        end
+
+        def reverse_mapped?
+          @options[:via]
         end
 
         private

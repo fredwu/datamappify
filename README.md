@@ -278,7 +278,7 @@ Pass in an entity.
 
 There is also `destroy!` that raises `Datamappify::Data::EntityNotDestroyed`.
 
-Note that due to the attributes mapping, any data found in mapped ActiveRecord objects are not touched.
+Note that due to the attributes mapping, any data found in mapped records are not touched.
 
 ```ruby
 UserRepository.destroy(user)

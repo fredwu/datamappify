@@ -1,3 +1,5 @@
+require_relative 'author'
+
 class Post
   include Datamappify::Entity
 

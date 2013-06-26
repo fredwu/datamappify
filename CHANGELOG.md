@@ -1,5 +1,7 @@
 ## master
 
+## 0.52.0 [2013-06-26]
+
 - Added support for reverse mapping attributes.
 
 ## 0.51.1 [2013-06-17]

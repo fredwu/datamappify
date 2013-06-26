@@ -1,18 +1,29 @@
 # Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png?branch=master)](http://travis-ci.org/fredwu/datamappify) [![Coverage Status](https://coveralls.io/repos/fredwu/datamappify/badge.png)](https://coveralls.io/r/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
+#### Compose, decouple and manage domain logic and data persistence separately. Works great with forms!
+
 ## Overview
 
-Compose and manage domain logic and data persistence separately and intelligently, Datamappify is loosely based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html) and [Entity Aggregation](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
+The typical Rails (and ActiveRecord) way of building applications is great for small to medium sized projects, but when projects grow larger and more complex, your models too become larger and more complex - it is not uncommon to have god classes such as a User model.
 
-Datamappify is built using [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord and Sequel, etc). The design goal is to utilise the powerfulness of existing ORMs as well as to separate domain logic (model behaviour) from data persistence.
+Datamappify tries to solve two common problems in web applications:
 
-My motivation for creating Datamappify is to hide the complexity of dealing with data in different data sources including the ones from external web services. Features like lazy loading and dirty tracking are designed to enhance the usability of dealing with web services.
+1. The coupling between domain logic and data persistence.
+2. The coupling between forms and models.
+
+Datamappify is loosely based on the [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html) and [Entity Aggregation](http://msdn.microsoft.com/en-au/library/ff649505.aspx), and is built on top of [Virtus](https://github.com/solnic/virtus) and existing ORMs (ActiveRecord and Sequel, etc).
+
+There are three main design goals:
+
+1. To utilise the powerfulness of existing ORMs so that using Datamappify doesn't interrupt too much of your current workflow. For example, [Devise](https://github.com/plataformatec/devise) would still work if you use it with a `UserAccount` ActiveRecord model that is attached to a `User` entity managed by Datamappify.
+2. To have a flexible entity model that works great with dealing with form data. For example, [SimpleForm](https://github.com/plataformatec/simple_form) would still work with nested attributes from different ORM models if you map entity attributes smartly in your repositories managed by Datamappify.
+3. To have a set of data providers to encapsulate the handling of how the data is persisted. This is especially useful for dealing with external data sources such as a web service. For example, by calling `UserRepository.save(user)`, certain attributes of the user entity are now persisted on a remote web service. Better yet, dirty tracking and lazy loading are supported out of the box!
 
 Datamappify consists of three components:
 
 - __Entity__ contains models behaviour, think an ActiveRecord model with the persistence specifics removed.
 - __Repository__ is responsible for data retrieval and persistence, e.g. `find`, `save` and `destroy`, etc.
-- __Data__ as the name suggests, holds your model data. It contains ORM objects (ActiveRecord and Sequel, etc).
+- __Data__ as the name suggests, holds your model data. It contains ORM objects (e.g. ActiveRecord models).
 
 Below is a high level and somewhat simplified overview of Datamappify's architecture.
 
@@ -38,6 +49,10 @@ Add this line to your application's Gemfile:
 ### Entity
 
 Entity uses [Virtus](https://github.com/solnic/virtus) DSL for defining attributes and [ActiveModel::Validations](http://api.rubyonrails.org/classes/ActiveModel/Validations.html) DSL for validations.
+
+The cool thing about Virtus is that all your attributes get [coercion](https://github.com/solnic/virtus#collection-member-coercions) for free!
+
+Below is an example of a User entity, with inline comments on how some of the DSLs work.
 
 ```ruby
 class User
@@ -142,11 +157,13 @@ class User
 end
 ```
 
-When an entity is lazy loaded, only attributes from the default source will be loaded. Other attributes will only be loaded once they are called. This is especially useful if some of your data sources are external services.
+When an entity is lazy loaded, only attributes from the primary source (e.g. `User` entity's primary source would be `ActiveRecord::User` as specified in the corresponding repository) will be loaded. Other attributes will only be loaded once they are called. This is especially useful if some of your data sources are external web services.
 
 ### Repository
 
-Map entity attributes to DB columns - better yet, you can even map attributes to __different ORMs__!
+Repository maps entity attributes to DB columns - better yet, you can even map attributes to __different ORMs__!
+
+Below is an example of a repository for the User entity, you can have more than one repositories for the same entity.
 
 ```ruby
 class UserRepository
@@ -174,11 +191,11 @@ class UserRepository
 
   # attributes can also be reverse mapped by specifying the `via` option
   #
-  # for example, the below attribute will look for `bio_id` on the user object,
-  # and map `bio` from the `text` attribute of `ActiveRecord::Bio`
+  # for example, the below attribute will look for `hobby_id` on the user object,
+  # and map `hobby_name` from the `name` attribute of `ActiveRecord::Hobby`
   #
   # this is useful for mapping form fields (similar to ActiveRecord's nested attributes)
-  map_attribute :bio,            'ActiveRecord::Bio#text', :via => :bio_id
+  map_attribute :hobby_name,     'ActiveRecord::Hobby#name', :via => :hobby_id
 end
 ```
 
@@ -196,7 +213,7 @@ class GuestUserRepository < UserRepository
 end
 ```
 
-In the above example, both repositories deal with the `User` data model.
+In the above example, both repositories deal with the `ActiveRecord::User` data model.
 
 ### Repository APIs
 
@@ -204,7 +221,7 @@ _More repository APIs are being added, below is a list of the currently implemen
 
 #### Retrieving an entity
 
-Pass in an id.
+Accepts an id.
 
 ```ruby
 user = UserRepository.find(1)
@@ -212,7 +229,7 @@ user = UserRepository.find(1)
 
 #### Checking if an entity exists in the repository
 
-Pass in an entity.
+Accepts an entity.
 
 ```ruby
 UserRepository.exists?(user)
@@ -238,7 +255,7 @@ _Note: it does not currently support searching attributes from different data pr
 
 #### Saving/updating entities
 
-Pass in an entity.
+Accepts an entity.
 
 There is also `save!` that raises `Datamappify::Data::EntityNotSaved`.
 
@@ -250,10 +267,10 @@ Datamappify supports attribute dirty tracking - only dirty attributes will be sa
 
 ##### Mark attributes as dirty
 
-Sometimes it's useful to manually mark the whole entity, or some attributes in the entity to be dirty - i.e. when you are submitting a form and only want to update the changed attributes. In this case, you could:
+Sometimes it's useful to manually mark the whole entity, or some attributes in the entity to be dirty. In this case, you could:
 
 ```ruby
-UserRepository.states.mark_as_dirty(user)
+UserRepository.states.mark_as_dirty(user) # marks the whole entity as dirty
 
 UserRepository.states.find(user).changed?            #=> true
 UserRepository.states.find(user).first_name_changed? #=> true
@@ -264,7 +281,7 @@ UserRepository.states.find(user).age_changed?        #=> true
 Or:
 
 ```ruby
-UserRepository.states.mark_as_dirty(user, :first_name, :last_name)
+UserRepository.states.mark_as_dirty(user, :first_name, :last_name) # marks only first_name and last_name as dirty
 
 UserRepository.states.find(user).changed?            #=> true
 UserRepository.states.find(user).first_name_changed? #=> true
@@ -274,11 +291,11 @@ UserRepository.states.find(user).age_changed?        #=> false
 
 #### Destroying an entity
 
-Pass in an entity.
+Accepts an entity.
 
 There is also `destroy!` that raises `Datamappify::Data::EntityNotDestroyed`.
 
-Note that due to the attributes mapping, any data found in mapped records are not touched.
+Note that due to the attributes mapping, any data found in mapped records are not touched. For example the corresponding `ActiveRecord::User` record will be destroyed, but `ActiveRecord::Hobby` that is associated will not.
 
 ```ruby
 UserRepository.destroy(user)
@@ -297,7 +314,7 @@ Datamappify supports the following callbacks via [Hooks](https://github.com/apot
 - after_save
 - after_destroy
 
-Callbacks are defined in repositories, and they have access to the entity. Example:
+Callbacks are defined in repositories, and they have access to the entity. For example:
 
 ```ruby
 class UserRepository
@@ -325,7 +342,7 @@ class UserRepository
 end
 ```
 
-Note: Returning either `nil` or `false` from the callback will cancel all subsequent callbacks (and the action itself, it it's a `before_` callback).
+Note: Returning either `nil` or `false` from the callback will cancel all subsequent callbacks (and the action itself, if it's a `before_` callback).
 
 ## Changelog
 

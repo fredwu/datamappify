@@ -1,6 +1,6 @@
 # Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png?branch=master)](http://travis-ci.org/fredwu/datamappify) [![Coverage Status](https://coveralls.io/repos/fredwu/datamappify/badge.png)](https://coveralls.io/r/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
-#### Compose, decouple and manage domain logic and data persistence separately. Works great with forms!
+#### Compose, decouple and manage domain logic and data persistence separately. Works particularly great for composing form objects!
 
 ## Overview
 

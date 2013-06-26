@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Datamappify::VERSION
   spec.authors       = ["Fred Wu"]
   spec.email         = ["ifredwu@gmail.com"]
-  spec.description   = %q{Compose, decouple and manage domain logic and data persistence separately. Works great with forms!}
+  spec.description   = %q{Compose, decouple and manage domain logic and data persistence separately. Works particularly great for composing form objects!}
   spec.summary       = spec.description
   spec.homepage      = "https://github.com/fredwu/datamappify"
   spec.license       = "MIT"

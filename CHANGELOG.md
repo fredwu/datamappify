@@ -1,5 +1,9 @@
 ## master
 
+## 0.53.1 [2013-06-27]
+
+- Fixed ruby 1.9 compatibility.
+
 ## 0.53.0 [2013-06-27]
 
 - Added support for mapping to namespaced data models.

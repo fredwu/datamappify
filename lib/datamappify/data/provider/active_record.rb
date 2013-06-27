@@ -17,7 +17,7 @@ module Datamappify
               end
             CODE
 
-            Datamappify::Data::Record::ActiveRecord.const_get(source_class_name)
+            "Datamappify::Data::Record::ActiveRecord::#{source_class_name}".constantize
           end
 
           # @return [void]

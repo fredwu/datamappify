@@ -17,7 +17,7 @@ module Datamappify
               end
             CODE
 
-            Datamappify::Data::Record::Sequel.const_get(source_class_name)
+            "Datamappify::Data::Record::Sequel::#{source_class_name}".constantize
           end
 
           # @param attribute (see Record#build_association)

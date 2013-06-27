@@ -134,6 +134,8 @@ class User
 end
 ```
 
+#### Entity inheritance
+
 Inheritance is supported for entities, for example:
 
 ```ruby
@@ -199,6 +201,8 @@ class UserRepository
 end
 ```
 
+#### Repository inheritance
+
 Inheritance is supported for repositories when your data structure is based on STI ([Single Table Inheritance](http://en.wikipedia.org/wiki/Single_Table_Inheritance)), for example:
 
 ```ruby
@@ -214,6 +218,32 @@ end
 ```
 
 In the above example, both repositories deal with the `ActiveRecord::User` data model.
+
+#### Override mapped data models
+
+Datamappify repository by default creates the underlying data model classes for you. For example:
+
+```ruby
+map_attribute :driver_license, 'ActiveRecord::UserData::DriverLicense#number'
+```
+
+In the above example, a `Datamppify::Data::Record::ActiveRecord::UserDriverLicense` ActiveRecord model will be created. If you would like to customise the data model class, you may do so by creating one either under the default namespace or under the `Datamappify::Data::Record::NameOfDataProvider` namespace:
+
+```ruby
+module UserData
+  class DriverLicense < ActiveRecord::Base
+    # your customisation...
+  end
+end
+```
+
+```ruby
+module Datamappify::Data::Record::ActiveRecord::UserData
+  class DriverLicense < ::ActiveRecord::Base
+    # your customisation...
+  end
+end
+```
 
 ### Repository APIs
 

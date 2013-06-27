@@ -9,11 +9,15 @@ module Datamappify
           #
           # @return [Sequel::Model]
           def build_record_class(source_class_name)
-            Record::Sequel.const_set(
-              source_class_name, Class.new(::Sequel::Model(source_class_name.pluralize.underscore.to_sym))
-            ).tap do |klass|
-              klass.raise_on_save_failure = true
-            end
+            class_eval <<-CODE, __FILE__, __LINE__ + 1
+              module Datamappify::Data::Record::Sequel
+                class #{source_class_name} < ::Sequel::Model(:#{source_class_name.pluralize.gsub('::', '_').underscore})
+                  raise_on_save_failure = true
+                end
+              end
+            CODE
+
+            Datamappify::Data::Record::Sequel.const_get(source_class_name)
           end
 
           # @param attribute (see Record#build_association)

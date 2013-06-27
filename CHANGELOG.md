@@ -1,5 +1,7 @@
 ## master
 
+- Added support for mapping to namespaced data models.
+
 ## 0.52.0 [2013-06-26]
 
 - Added support for reverse mapping attributes.

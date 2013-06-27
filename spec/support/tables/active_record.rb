@@ -76,5 +76,32 @@ ActiveRecord::Migration.suppress_messages do
       t.references :post
       t.timestamps
     end
+
+    create_table :computers do |t|
+      t.string :brand
+      t.references :game
+      t.timestamps
+    end
+
+    create_table :computer_component_hardwares do |t|
+      t.string :brand
+      t.string :cpu
+      t.integer :ram
+      t.integer :hdd
+      t.string :gfx
+      t.string :vendor
+      t.references :computer
+      t.timestamps
+    end
+
+    create_table :computer_component_softwares do |t|
+      t.string :os
+      t.string :vendor
+      t.references :osx
+      t.references :windows
+      t.references :linux
+      t.references :computer
+      t.timestamps
+    end
   end
 end

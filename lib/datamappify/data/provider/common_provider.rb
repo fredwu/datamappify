@@ -35,14 +35,44 @@ module Datamappify
           # @return [Class]
           #   the data record class
           def find_or_build_record_class(source_class_name)
-            if records_namespace.const_defined?(source_class_name, false)
-              records_namespace.const_get(source_class_name)
+            namespace    = build_or_return_namespace(source_class_name)
+            record_class = source_class_name.safe_constantize
+
+            # check for existing record class
+            if record_class && !entity_class?(source_class_name)
+              record_class
+
+            # check for existing record class in the Datamappify::Data::Record::Provider namespace
+            elsif namespace.const_defined?(source_class_name.demodulize, false)
+              namespace.const_get(source_class_name.demodulize)
+
+            # no existing record class is found, let's build it
             else
               build_record_class(source_class_name)
             end
           end
 
           private
+
+          # @return [Boolean]
+          def entity_class?(source_class_name)
+            source_class_name.constantize.ancestors.include?(Datamappify::Entity)
+          end
+
+          # Builds or returns the namespace for the source class
+          #
+          # @param source_class_name [String]
+          #
+          # @return [Module]
+          def build_or_return_namespace(source_class_name)
+            source_class_name.deconstantize.split('::').inject(records_namespace) do |namespaces, namespace|
+              if namespaces.const_defined?(namespace, false)
+                namespaces.const_get(namespace)
+              else
+                namespaces.const_set(namespace, Module.new)
+              end
+            end
+          end
 
           # The namespace for the data records, e.g. +Datamappify::Data::Record::ActiveRecord+
           #

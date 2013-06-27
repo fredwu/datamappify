@@ -350,7 +350,6 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
-- Support for namespaced ORM models.
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
 - Support for configurable primary keys and reference (foreign) keys.
 

@@ -89,7 +89,40 @@ DB.create_table :authors do |t|
   primary_key :id
   String :name
   String :bio
-  String :post_id
+  foreign_key :post_id
+  DateTime :created_at
+  DateTime :updated_at
+end
+
+DB.create_table :computers do |t|
+  primary_key :id
+  String :brand
+  foreign_key :game_id
+  DateTime :created_at
+  DateTime :updated_at
+end
+
+DB.create_table :computer_component_hardwares do |t|
+  primary_key :id
+  String :brand
+  String :cpu
+  Integer :ram
+  Integer :hdd
+  String :gfx
+  String :vendor
+  foreign_key :computer_id
+  DateTime :created_at
+  DateTime :updated_at
+end
+
+DB.create_table :computer_component_softwares do |t|
+  primary_key :id
+  String :os
+  String :vendor
+  foreign_key :computer_id
+  foreign_key :osx_id
+  foreign_key :windows_id
+  foreign_key :linux_id
   DateTime :created_at
   DateTime :updated_at
 end

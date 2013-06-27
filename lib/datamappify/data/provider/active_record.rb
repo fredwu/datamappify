@@ -9,9 +9,15 @@ module Datamappify
           #
           # @return [ActiveRecord::Base]
           def build_record_class(source_class_name)
-            Datamappify::Data::Record::ActiveRecord.const_set(
-              source_class_name, Class.new(::ActiveRecord::Base)
-            )
+            class_eval <<-CODE, __FILE__, __LINE__ + 1
+              module Datamappify::Data::Record::ActiveRecord
+                class #{source_class_name} < ::ActiveRecord::Base
+                  self.table_name = '#{source_class_name.pluralize.gsub('::', '_').underscore}'
+                end
+              end
+            CODE
+
+            Datamappify::Data::Record::ActiveRecord.const_get(source_class_name)
           end
 
           # @return [void]

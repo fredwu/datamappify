@@ -56,7 +56,7 @@ module Datamappify
 
         # @example
         #
-        #   UserComment
+        #   Namespaced::UserComment
         #
         # @return [Class]
         def source_class
@@ -69,7 +69,7 @@ module Datamappify
         #
         # @return [String]
         def source_name
-          @source_name ||= source_class_name.underscore
+          @source_name ||= source_class_name.demodulize.underscore
         end
 
         # @example
@@ -141,8 +141,9 @@ module Datamappify
           provider_name != primary_provider_name
         end
 
+        # @return [Boolean]
         def reverse_mapped?
-          @options[:via]
+          !!@options[:via]
         end
 
         private
@@ -150,7 +151,7 @@ module Datamappify
         # @return [Array<String>]
         #   an array with provider name, source class name and source attribute name
         def parse_source(source)
-          provider_name, source_class_and_attribute = source.split('::')
+          provider_name, source_class_and_attribute = source.split('::', 2)
 
           [provider_name, *source_class_and_attribute.split('#')]
         end

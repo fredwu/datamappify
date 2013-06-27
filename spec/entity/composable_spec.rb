@@ -9,34 +9,22 @@ describe Datamappify::Entity do
       :gfx                 => 'Voodoo',
       :vendor              => 'Compaq',
       :software_os         => 'OS X',
-      :software_osx_id     => 1,
-      :software_windows_id => 2,
-      :software_linux_id   => 3,
-      :software_vendor     => 'Lotus',
-      :game_os             => 'OS X',
-      :game_osx_id         => 1,
-      :game_windows_id     => 2,
-      :game_linux_id       => 3,
-      :game_vendor         => 'Lotus'
+      :software_vendor     => 'Apple',
+      :game_os             => 'Orbit OS',
+      :game_vendor         => 'SONY'
     })
   end
 
-  its(:brand)               { should == 'Fruit' }
-  its(:cpu)                 { should == '286' }
-  its(:ram)                 { should == 4242 }
-  its(:hdd)                 { should == 65536 }
-  its(:gfx)                 { should == 'Voodoo' }
-  its(:vendor)              { should == 'Compaq' }
-  its(:software_os)         { should == 'OS X' }
-  its(:software_osx_id)     { should == 1 }
-  its(:software_windows_id) { should == 2 }
-  its(:software_linux_id)   { should == 3 }
-  its(:software_vendor)     { should == 'Lotus' }
-  its(:game_os)             { should == 'OS X' }
-  its(:game_osx_id)         { should == 1 }
-  its(:game_windows_id)     { should == 2 }
-  its(:game_linux_id)       { should == 3 }
-  its(:game_vendor)         { should == 'Lotus' }
+  its(:brand)           { should == 'Fruit' }
+  its(:cpu)             { should == '286' }
+  its(:ram)             { should == 4242 }
+  its(:hdd)             { should == 65536 }
+  its(:gfx)             { should == 'Voodoo' }
+  its(:vendor)          { should == 'Compaq' }
+  its(:software_os)     { should == 'OS X' }
+  its(:software_vendor) { should == 'Apple' }
+  its(:game_os)         { should == 'Orbit OS' }
+  its(:game_vendor)     { should == 'SONY' }
 
   describe "validation" do
     context "valid" do

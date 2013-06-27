@@ -1,5 +1,7 @@
 ## master
 
+## 0.53.0 [2013-06-27]
+
 - Added support for mapping to namespaced data models.
 
 ## 0.52.0 [2013-06-26]

@@ -1,1 +1,1 @@
---colour --order random
+--colour --order random --require "./spec/spec_helper.rb"

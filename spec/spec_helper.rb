@@ -1,3 +1,5 @@
+$:.unshift File.dirname(__FILE__)
+
 require 'coveralls'
 require 'simplecov'
 require 'pry'

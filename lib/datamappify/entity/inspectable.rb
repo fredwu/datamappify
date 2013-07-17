@@ -6,14 +6,18 @@ module Datamappify
       end
 
       def inspect
-        inspectable = self.attributes.map { |name, value| "#{name}: #{value.inspect}" }.join(", ")
+        inspectable = self.attributes.map do |name, value|
+          "#{name}: #{value.inspect}"
+        end.join(", ")
 
         "#<#{self.class} #{inspectable}>"
       end
 
       module ClassMethods
         def inspect
-          inspectable = self.attribute_set.map { |attribute| "#{attribute.name}: #{attribute.class.primitive}" }.join(", ")
+          inspectable = self.attribute_set.map do |attribute|
+            "#{attribute.name}: #{attribute.class.primitive}"
+          end.join(", ")
 
           "#<#{name} #{inspectable}>"
         end

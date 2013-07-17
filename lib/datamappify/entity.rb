@@ -4,6 +4,7 @@ require 'datamappify/entity/active_model/compatibility'
 require 'datamappify/entity/lazy_checking'
 require 'datamappify/entity/composable'
 require 'datamappify/entity/relation'
+require 'datamappify/entity/inspectable'
 
 module Datamappify
   module Entity
@@ -17,6 +18,7 @@ module Datamappify
         include LazyChecking
         include Composable
         include Relation
+        include Inspectable
 
         attribute :id, Integer
       end

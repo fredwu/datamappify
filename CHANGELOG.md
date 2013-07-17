@@ -1,5 +1,7 @@
 ## master
 
+- Better attributes inspect. Thanks @jamesmoriarty!
+
 ## 0.53.1 [2013-06-27]
 
 - Fixed ruby 1.9 compatibility.

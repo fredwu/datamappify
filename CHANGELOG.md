@@ -1,5 +1,7 @@
 ## master
 
+## 0.53.2 [2013-07-18]
+
 - Better attributes inspect. Thanks @jamesmoriarty!
 - Added support of `:create` and `:update` contexts for validations.
 - Fixed the persistence when `:via` is specified in the repository.

@@ -11,13 +11,6 @@ module Datamappify
           def initialize(source_class, entity, attributes, options = {}, &block)
             super(source_class, entity, nil, attributes, options, &block)
           end
-
-          private
-
-          def criteria_for_reverse_mapping
-            reverse_id = options[:primary_record].send(options[:via])
-            reverse_id ? { :id => reverse_id } : {}
-          end
         end
       end
     end

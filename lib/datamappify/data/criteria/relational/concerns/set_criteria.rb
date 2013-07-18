@@ -7,21 +7,34 @@ module Datamappify
             def initialize(*args)
               super
 
-              set_criteria if entity.id
+              if entity.id
+                self.criteria = build_criteria
+              end
             end
 
             private
 
-            def set_criteria
-              self.criteria = if options[:via]
+            def build_criteria
+              if options[:via].nil?
+                criteria_for_normal_mapping
+              elsif finder?
                 criteria_for_reverse_mapping
               else
-                criteria_for_normal_mapping
+                {}
               end
+            end
+
+            def criteria_for_reverse_mapping
+              reverse_id = options[:primary_record].send(options[:via])
+              reverse_id ? { :id => reverse_id } : {}
             end
 
             def criteria_for_normal_mapping
               { key_name => entity.id }
+            end
+
+            def finder?
+              self.class.name =~ /Find/
             end
           end
         end

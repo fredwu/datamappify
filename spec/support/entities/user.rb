@@ -10,6 +10,8 @@ class User
 
   validates :first_name,     :presence => true,
                              :length   => { :minimum => 2 }
+  validates :first_name,     :length   => { :minimum => 3 },
+                             :on       => :update
   validates :driver_license, :presence => true,
                              :length   => { :minimum => 8 }
 

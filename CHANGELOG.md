@@ -1,6 +1,7 @@
 ## master
 
 - Better attributes inspect. Thanks @jamesmoriarty!
+- Added support of `:create` and `:update` contexts for validations.
 
 ## 0.53.1 [2013-06-27]
 

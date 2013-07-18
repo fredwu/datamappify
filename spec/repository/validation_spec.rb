@@ -32,6 +32,18 @@ shared_examples_for "repository (in)validation" do |data_provider|
         valid_user.id.should be_kind_of(Integer)
       end
     end
+
+    describe "within context" do
+      let(:invalid_user) { User.new(:first_name => 'Fr', :driver_license => 'MOSDEVOPS') }
+
+      it "is valid within :create" do
+        invalid_user.valid?(:create).should == true
+      end
+
+      it "is invalid within :update" do
+        invalid_user.valid?(:update).should == false
+      end
+    end
   end
 end
 

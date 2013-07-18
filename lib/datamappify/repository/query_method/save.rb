@@ -31,11 +31,15 @@ module Datamappify
         #
         # @return [Entity]
         def create_or_update(entity)
-          raise Data::EntityInvalid.new(entity) if entity.invalid?
+          raise Data::EntityInvalid.new(entity) if entity.invalid?(context)
 
           dispatch_criteria_to_providers(:SaveByKey, entity)
 
           entity
+        end
+
+        def context
+          self.class.name.demodulize.underscore.to_sym
         end
       end
     end

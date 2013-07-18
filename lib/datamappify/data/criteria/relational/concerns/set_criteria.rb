@@ -20,11 +20,6 @@ module Datamappify
               end
             end
 
-            def criteria_for_reverse_mapping
-              reverse_id = options[:primary_record].send(options[:via])
-              reverse_id ? { :id => reverse_id } : {}
-            end
-
             def criteria_for_normal_mapping
               { key_name => entity.id }
             end

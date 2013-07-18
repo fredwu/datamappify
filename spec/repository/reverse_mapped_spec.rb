@@ -44,6 +44,32 @@ shared_examples_for "reverse mapped" do |data_provider|
           its(:author_name) { should == 'Sheldon Cooper' }
           its(:author_bio)  { should == 'y' }
         end
+
+        describe "update record" do
+          context "example 1" do
+            let(:record) { post_repository.find(saved_post.id) }
+            subject      { post_repository.save!(record) }
+
+            its(:title)       { should == 'Hello world' }
+            its(:author_name) { should == 'Fred Wu' }
+            its(:author_bio)  { should == 'x' }
+          end
+
+          context "example 2" do
+            let(:record) { post_repository.find(saved_post.id) }
+            subject      { post_repository.find(record.id) }
+
+            before do
+              record.title = 'Hello mars'
+              record.author_name = 'JK Rowling'
+              post_repository.save!(record)
+            end
+
+            its(:title)       { should == 'Hello mars' }
+            its(:author_name) { should == 'JK Rowling' }
+            its(:author_bio)  { should == 'x' }
+          end
+        end
       end
     end
   end

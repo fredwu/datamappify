@@ -10,6 +10,12 @@ module Datamappify
           def initialize(source_class, entity, attributes, options = {}, &block)
             super(source_class, entity, {}, attributes, options, &block)
           end
+
+          private
+
+          def criteria_for_reverse_mapping
+            {}
+          end
         end
       end
     end

@@ -2,6 +2,7 @@
 
 - Better attributes inspect. Thanks @jamesmoriarty!
 - Added support of `:create` and `:update` contexts for validations.
+- Fixed the persistence when `:via` is specified in the repository.
 
 ## 0.53.1 [2013-06-27]
 

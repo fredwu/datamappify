@@ -35,6 +35,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sequel"
   spec.add_development_dependency "activerecord",     ">= 4.0.0.rc1", "< 5"
   spec.add_development_dependency "database_cleaner", "~> 1.0.1"
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-rspec"
 end

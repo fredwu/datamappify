@@ -27,7 +27,7 @@ module Datamappify
       #
       # @return [void]
       def map_attribute(name, source, options = {})
-        data_mapper.custom_mapping[name] = [source, options]
+        data_mapper.custom_mapping[name.to_sym] = [source, options]
       end
     end
   end

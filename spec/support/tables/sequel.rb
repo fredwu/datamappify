@@ -89,7 +89,6 @@ DB.create_table :authors do |t|
   primary_key :id
   String :name
   String :bio
-  foreign_key :post_id
   DateTime :created_at
   DateTime :updated_at
 end

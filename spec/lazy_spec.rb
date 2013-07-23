@@ -70,4 +70,3 @@ describe Datamappify::Lazy do
     end
   end
 end
-

@@ -15,4 +15,3 @@ module Datamappify
     end
   end
 end
-

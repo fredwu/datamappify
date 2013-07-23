@@ -4,9 +4,9 @@ class HeroUserRepository
   for_entity HeroUser
   default_provider :ActiveRecord
 
-  map_attribute :first_name, 'ActiveRecord::HeroUser#first_name'
-  map_attribute :last_name,  'Sequel::HeroUserLastName#last_name'
-  map_attribute :gender,     'Sequel::HeroUserLastName#gender'
+  map_attribute :first_name, :to => 'HeroUser#first_name'
+  map_attribute :last_name,  :to => 'HeroUserLastName#last_name', :provider => :Sequel
+  map_attribute :gender,     :to => 'HeroUserLastName#gender',    :provider => :Sequel
 
   before_create  :action_before_create
   before_create  :action_before_create_2

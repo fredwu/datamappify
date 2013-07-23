@@ -32,18 +32,15 @@ module Datamappify
         # @param name [Symbol]
         #   name of the attribute
         #
-        # @param source [String]
-        #   data provider, class and attribute,
-        #   e.g. "ActiveRecord::User#surname"
-        #
         # @param options [Hash]
-        def initialize(name, source, options)
+        def initialize(name, options)
           @key                  = name
           @name                 = name.to_s
           @options              = options
+          @provider_name        = options[:provider]
           @primary_source_class = options[:primary_source_class]
 
-          @provider_name, @source_class_name, @source_attribute_name = parse_source(source)
+          @source_class_name, @source_attribute_name = parse_source(options[:to])
 
           if secondary_attribute?
             if reverse_mapped?
@@ -151,9 +148,7 @@ module Datamappify
         # @return [Array<String>]
         #   an array with provider name, source class name and source attribute name
         def parse_source(source)
-          provider_name, source_class_and_attribute = source.split('::', 2)
-
-          [provider_name, *source_class_and_attribute.split('#')]
+          source.split('#')
         end
       end
     end

@@ -1,7 +1,8 @@
 ## master
 
-- New API: `where` now replaces `find` for multiple items.
+- API change: `where` now replaces `find` for multiple items.
 - Introduced `Datamappify.config` for configuring default behaviours.
+- API change: `map_attribute` now takes `:to` and `:provider` instead of a string for specifying data source.
 
 ## 0.53.2 [2013-07-18]
 

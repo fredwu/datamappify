@@ -26,8 +26,8 @@ module Datamappify
       # @param (see Data::Mapper::Attribute#initialize)
       #
       # @return [void]
-      def map_attribute(name, source, options = {})
-        data_mapper.custom_mapping[name.to_sym] = [source, options]
+      def map_attribute(name, options = {})
+        data_mapper.custom_mapping[name.to_sym] = options
       end
     end
   end

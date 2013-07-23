@@ -80,26 +80,32 @@ module Datamappify
       # @return [Array<Attribute>]
       def default_attributes
         @default_attributes ||= default_attribute_names.collect do |attribute|
-          Attribute.new(attribute, default_source_for(attribute), :primary_source_class => default_source_class)
+          Attribute.new(
+            attribute,
+            :to                   => default_source_for(attribute),
+            :provider             => default_provider_name,
+            :primary_source_class => default_source_class
+          )
         end
       end
 
       # @return [Array<Attribute>]
       def custom_attributes
-        @custom_attributes ||= custom_mapping.collect do |attribute, source_and_options|
-          map_custom_attribute(attribute, *source_and_options)
+        @custom_attributes ||= custom_mapping.collect do |attribute, options|
+          map_custom_attribute(attribute, options)
         end
       end
 
       # @param (see Data::Mapper::Attribute#initialize)
       #
       # @return [Attribute]
-      def map_custom_attribute(name, source, options)
+      def map_custom_attribute(name, options)
         @custom_attribute_names << name
 
+        options.reverse_merge!(:provider => default_provider_name)
         options.merge!(:primary_source_class => default_source_class)
 
-        Attribute.new(name, source, options)
+        Attribute.new(name, options)
       end
 
       # @param attribute [Symbol]
@@ -107,7 +113,7 @@ module Datamappify
       #
       # @return [String]
       def default_source_for(attribute)
-        "#{default_provider_name}::#{default_source_class_name}##{attribute}"
+        "#{default_source_class_name}##{attribute}"
       end
     end
   end

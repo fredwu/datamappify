@@ -175,6 +175,7 @@ class UserRepository
   for_entity User
 
   # specify the default data provider for unmapped attributes
+  # optionally you may use `Datamappify.config` to config this globally
   default_provider :ActiveRecord
 
   # specify any attributes that need to be mapped
@@ -185,11 +186,11 @@ class UserRepository
   #   - 'last_name' is mapped to the 'User' ActiveRecord class and its 'surname' attribute
   #   - 'driver_license' is mapped to the 'UserDriverLicense' ActiveRecord class and its 'number' attribute
   #   - 'passport' is mapped to the 'UserPassport' Sequel class and its 'number' attribute
-  #   - attributes not specified here are mapped automatically to 'ActiveRecord::User'
-  map_attribute :last_name,      'ActiveRecord::User#surname'
-  map_attribute :driver_license, 'ActiveRecord::UserDriverLicense#number'
-  map_attribute :passport,       'Sequel::UserPassport#number'
-  map_attribute :health_care,    'Sequel::UserHealthCare#number'
+  #   - attributes not specified here are mapped automatically to 'User' with provider 'ActiveRecord'
+  map_attribute :last_name,      :to => 'User#surname'
+  map_attribute :driver_license, :to => 'UserDriverLicense#number'
+  map_attribute :passport,       :to => 'UserPassport#number',   :provider => :Sequel
+  map_attribute :health_care,    :to => 'UserHealthCare#number', :provider => :Sequel
 
   # attributes can also be reverse mapped by specifying the `via` option
   #
@@ -197,7 +198,7 @@ class UserRepository
   # and map `hobby_name` from the `name` attribute of `ActiveRecord::Hobby`
   #
   # this is useful for mapping form fields (similar to ActiveRecord's nested attributes)
-  map_attribute :hobby_name,     'ActiveRecord::Hobby#name', :via => :hobby_id
+  map_attribute :hobby_name,     :to => 'Hobby#name', :via => :hobby_id
 end
 ```
 
@@ -213,7 +214,7 @@ end
 class GuestUserRepository < UserRepository
   for_entity GuestUser
 
-  map_attribute :expiry, 'ActiveRecord::User#expiry_date'
+  map_attribute :expiry, :to => 'User#expiry_date'
 end
 ```
 
@@ -224,7 +225,7 @@ In the above example, both repositories deal with the `ActiveRecord::User` data 
 Datamappify repository by default creates the underlying data model classes for you. For example:
 
 ```ruby
-map_attribute :driver_license, 'ActiveRecord::UserData::DriverLicense#number'
+map_attribute :driver_license, :to => 'UserData::DriverLicense#number'
 ```
 
 In the above example, a `Datamppify::Data::Record::ActiveRecord::UserDriverLicense` ActiveRecord model will be created. If you would like to customise the data model class, you may do so by creating one either under the default namespace or under the `Datamappify::Data::Record::NameOfDataProvider` namespace:

@@ -37,7 +37,7 @@ module Datamappify
           @key                  = name
           @name                 = name.to_s
           @options              = options
-          @provider_name        = options[:provider]
+          @provider_name        = options[:provider].to_s
           @primary_source_class = options[:primary_source_class]
 
           @source_class_name, @source_attribute_name = parse_source(options[:to])

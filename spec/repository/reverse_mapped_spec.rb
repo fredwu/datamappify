@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 shared_examples_for "reverse mapped" do |data_provider|
-  let!(:author_repository) { "AuthorRepository#{data_provider}".constantize }
-  let!(:post_repository)   { "PostRepository#{data_provider}".constantize }
-  let(:new_author)         { Author.new(:name => 'George R. R. Martin', :bio => 'GoT') }
-  let(:new_post)           { Post.new(:title => 'Hello world', :author_name => 'Fred Wu', :author_bio => 'x')}
-  let(:new_post_2)         { Post.new(:title => 'Hello earth', :author_name => 'Sheldon Cooper', :author_bio => 'y')}
+  let!(:author_repository) { "Reversed::AuthorRepository#{data_provider}".constantize }
+  let!(:post_repository)   { "Reversed::PostRepository#{data_provider}".constantize }
+  let(:new_author)         { Reversed::Author.new(:name => 'George R. R. Martin', :bio => 'GoT') }
+  let(:new_post)           { Reversed::Post.new(:title => 'Hello world', :author_name => 'Fred Wu', :author_bio => 'x')}
+  let(:new_post_2)         { Reversed::Post.new(:title => 'Hello earth', :author_name => 'Sheldon Cooper', :author_bio => 'y')}
 
   context "#{data_provider}" do
     before do

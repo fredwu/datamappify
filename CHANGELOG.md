@@ -4,6 +4,7 @@
 - API change: `where` now replaces `find` for multiple items.
 - API change: `map_attribute` now takes `:to` and `:provider` instead of a string for specifying data source.
 - New API: Introduced `group` for grouping `map_attribute`.
+- Added support for entity namespaces (closes #4).
 
 ## 0.53.2 [2013-07-18]
 

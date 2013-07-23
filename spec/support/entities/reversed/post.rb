@@ -1,9 +1,9 @@
 require_relative 'author'
 
-class Post
+class Reversed::Post
   include Datamappify::Entity
 
   attribute :title, String
 
-  attributes_from Author, :prefix_with => :author
+  attributes_from Reversed::Author, :prefix_with => :author
 end

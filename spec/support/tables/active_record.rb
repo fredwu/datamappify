@@ -64,13 +64,13 @@ ActiveRecord::Migration.suppress_messages do
       t.timestamps
     end
 
-    create_table :posts do |t|
+    create_table :reversed_posts do |t|
       t.string :title
       t.references :author
       t.timestamps
     end
 
-    create_table :authors do |t|
+    create_table :reversed_authors do |t|
       t.string :name
       t.string :bio
       t.timestamps

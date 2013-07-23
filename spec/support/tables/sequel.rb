@@ -77,7 +77,7 @@ DB.create_table :user_health_cares do
   DateTime :updated_at
 end
 
-DB.create_table :posts do |t|
+DB.create_table :reversed_posts do |t|
   primary_key :id
   String :title
   foreign_key :author_id
@@ -85,7 +85,7 @@ DB.create_table :posts do |t|
   DateTime :updated_at
 end
 
-DB.create_table :authors do |t|
+DB.create_table :reversed_authors do |t|
   primary_key :id
   String :name
   String :bio

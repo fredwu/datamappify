@@ -97,7 +97,14 @@ module Datamappify
         #
         # @return [Boolean]
         def primary_record?
-          source_class.name.demodulize == default_source_class_name
+          source_class_name == default_source_class_name
+        end
+
+        # Source class name with its namespace but without Data::Record::Provider
+        #
+        # @return [String]
+        def source_class_name
+          source_class.name.split('Datamappify::Data::Record::')[-1].split('::', 2)[-1]
         end
 
         # Ignores the current Criteria's operation if there is no dirty attributes

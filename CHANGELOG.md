@@ -1,5 +1,7 @@
 ## master
 
+- New API: `where` now replaces `find` for multiple items.
+
 ## 0.53.2 [2013-07-18]
 
 - Better attributes inspect. Thanks @jamesmoriarty!

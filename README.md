@@ -278,7 +278,7 @@ users = UserRepository.all
 Returns an array of entities.
 
 ```ruby
-users = UserRepository.find(:first_name => 'Fred', :driver_license => 'AABBCCDD')
+users = UserRepository.where(:first_name => 'Fred', :driver_license => 'AABBCCDD')
 ```
 
 _Note: it does not currently support searching attributes from different data providers._

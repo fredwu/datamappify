@@ -399,6 +399,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 - [Fred Wu](http://fredwu.me/) - author.
 - [James Ladd](http://jamesladdcode.com/) for reviewing the code and giving advice on architectural decisions.
 - [Locomote](http://www.locomote.com.au/) - where Datamappify is built and being tested in product development.
+- And with these [awesome contributors](graphs/contributors)!
 
 ## License
 

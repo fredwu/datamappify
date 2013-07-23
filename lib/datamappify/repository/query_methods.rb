@@ -20,16 +20,20 @@ module Datamappify
         QueryMethod::Exists.new(query_options, entity).perform
       end
 
-      # @param criteria [Integer, Hash]
+      # @param criteria [Integer, String]
       #   an entity id or a hash containing criteria
       #
       # @return [Entity, nil]
       def find(criteria)
-        if criteria.is_a?(Integer)
-          QueryMethod::Find.new(query_options, criteria).perform
-        else
-          QueryMethod::FindMultiple.new(query_options, criteria).perform
-        end
+        QueryMethod::Find.new(query_options, criteria).perform
+      end
+
+      # @param criteria [Hash]
+      #   a hash containing criteria
+      #
+      # @return [Entity]
+      def where(criteria)
+        QueryMethod::FindMultiple.new(query_options, criteria).perform
       end
 
       # Returns a collection of all the entities in the repository

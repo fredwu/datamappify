@@ -14,6 +14,9 @@ shared_examples_for "finders" do |data_provider|
         its(:id) { should == existing_user.id }
       end
 
+    end
+
+    describe "#where" do
       describe "by criteria" do
         before do
           user_repository.save!(User.new(:first_name => 'Mary', :driver_license => 'IDONTCARE'))
@@ -26,13 +29,13 @@ shared_examples_for "finders" do |data_provider|
         end
 
         describe "by attribute that does not exist" do
-          let(:records) { user_repository.find(:blah => 'Bob') }
+          let(:records) { user_repository.where(:blah => 'Bob') }
 
           it { expect { records }.to raise_exception(Datamappify::Data::EntityAttributeInvalid) }
         end
 
         describe "by primary attribute" do
-          let(:records) { user_repository.find(:first_name => 'Bob') }
+          let(:records) { user_repository.where(:first_name => 'Bob') }
           subject       { records }
 
           it { should have(3).users }
@@ -46,7 +49,7 @@ shared_examples_for "finders" do |data_provider|
         end
 
         describe "by secondary attribute" do
-          let(:records) { user_repository.find(:driver_license => 'NO_LICENSE') }
+          let(:records) { user_repository.where(:driver_license => 'NO_LICENSE') }
           subject       { records }
 
           it { should have(2).user }
@@ -61,7 +64,7 @@ shared_examples_for "finders" do |data_provider|
 
         describe "by primary and secondary attributes" do
           context "example 1" do
-            let(:records) { user_repository.find(:first_name => 'Bob', :driver_license => 'NO_LICENSE') }
+            let(:records) { user_repository.where(:first_name => 'Bob', :driver_license => 'NO_LICENSE') }
             subject       { records }
 
             it { should have(1).user }
@@ -75,7 +78,7 @@ shared_examples_for "finders" do |data_provider|
           end
 
           context "example 2" do
-            let(:records) { user_repository.find(:first_name => 'Bob', :driver_license => 'IDONTCARE') }
+            let(:records) { user_repository.where(:first_name => 'Bob', :driver_license => 'IDONTCARE') }
             subject       { records }
 
             it { should have(2).users }
@@ -89,13 +92,13 @@ shared_examples_for "finders" do |data_provider|
           end
 
           context "example 3" do
-            subject { user_repository.find(:first_name => 'Nope', :driver_license => 'IDONTCARE') }
+            subject { user_repository.where(:first_name => 'Nope', :driver_license => 'IDONTCARE') }
 
             it { should be_empty }
           end
 
           context "example 4" do
-            subject { user_repository.find(:first_name => 'Bob', :driver_license => 'NOPE') }
+            subject { user_repository.where(:first_name => 'Bob', :driver_license => 'NOPE') }
 
             it { should be_empty }
           end

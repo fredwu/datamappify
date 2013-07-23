@@ -192,13 +192,19 @@ class UserRepository
   map_attribute :passport,       :to => 'UserPassport#number',   :provider => :Sequel
   map_attribute :health_care,    :to => 'UserHealthCare#number', :provider => :Sequel
 
+  # alternatively, you may group attribute mappings if they share certain options:
+  group :provider => :Sequel do
+    map_attribute :passport,    :to => 'UserPassport#number'
+    map_attribute :health_care, :to => 'UserHealthCare#number'
+  end
+
   # attributes can also be reverse mapped by specifying the `via` option
   #
   # for example, the below attribute will look for `hobby_id` on the user object,
   # and map `hobby_name` from the `name` attribute of `ActiveRecord::Hobby`
   #
   # this is useful for mapping form fields (similar to ActiveRecord's nested attributes)
-  map_attribute :hobby_name,     :to => 'Hobby#name', :via => :hobby_id
+  map_attribute :hobby_name, :to => 'Hobby#name', :via => :hobby_id
 end
 ```
 

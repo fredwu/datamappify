@@ -5,8 +5,11 @@ class HeroUserRepository
   default_provider :ActiveRecord
 
   map_attribute :first_name, :to => 'HeroUser#first_name'
-  map_attribute :last_name,  :to => 'HeroUserLastName#last_name', :provider => :Sequel
-  map_attribute :gender,     :to => 'HeroUserLastName#gender',    :provider => :Sequel
+
+  group :provider => :Sequel do
+    map_attribute :last_name, :to => 'HeroUserLastName#last_name'
+    map_attribute :gender,    :to => 'HeroUserLastName#gender'
+  end
 
   before_create  :action_before_create
   before_create  :action_before_create_2

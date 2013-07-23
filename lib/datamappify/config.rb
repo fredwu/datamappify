@@ -1,6 +1,4 @@
 module Datamappify
-  attr_accessor :defaults
-
   Config = Struct.new(:default_provider)
 
   # A Struct containing default configuration values

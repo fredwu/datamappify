@@ -27,7 +27,21 @@ module Datamappify
       #
       # @return [void]
       def map_attribute(name, options = {})
-        data_mapper.custom_mapping[name.to_sym] = options
+        data_mapper.custom_mapping[name.to_sym] = self.current_group_options.merge(options)
+      end
+
+      # @param options [Hash]
+      #
+      # @yield
+      #   a block containing `map_attribute` DSLs
+      #
+      # @return [void]
+      def group(options = {}, &block)
+        self.current_group_options = options
+
+        block.call
+
+        self.current_group_options = {}
       end
     end
   end

@@ -18,6 +18,9 @@ module Datamappify
         include Singleton
         extend  SingletonWrapper
 
+        class_attribute :current_group_options
+        self.current_group_options = {}
+
         self.data_mapper = Data::Mapper.new
 
         include LazyChecking

@@ -1,6 +1,7 @@
 ## master
 
 - New API: `where` now replaces `find` for multiple items.
+- Introduced `Datamappify.config` for configuring default behaviours.
 
 ## 0.53.2 [2013-07-18]
 

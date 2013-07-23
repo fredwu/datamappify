@@ -374,6 +374,16 @@ end
 
 Note: Returning either `nil` or `false` from the callback will cancel all subsequent callbacks (and the action itself, if it's a `before_` callback).
 
+### Default configuration
+
+You may configure Datamappify's default behaviour. In Rails you would put it in an initializer file.
+
+```ruby
+Datamappify.config do |c|
+  c.default_provider = :ActiveRecord
+end
+```
+
 ## More Reading
 
 You may check out this [article](http://fredwu.me/post/54009567748/) for more examples.

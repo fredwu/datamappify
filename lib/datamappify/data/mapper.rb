@@ -20,6 +20,8 @@ module Datamappify
       def initialize
         @custom_mapping         = {}
         @custom_attribute_names = []
+
+        @default_provider_name  = Datamappify.defaults.default_provider
       end
 
       # @return [Module]

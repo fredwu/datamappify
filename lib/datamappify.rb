@@ -8,6 +8,7 @@ module Datamappify
   end
 end
 
+require 'datamappify/config'
 require 'datamappify/logger'
 require 'datamappify/entity'
 require 'datamappify/data'

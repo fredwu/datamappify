@@ -33,7 +33,7 @@ Note: Datamappify is NOT affiliated with the [Datamapper](https://github.com/dat
 
 ### Built-in ORMs for Persistence
 
-You may implement your own [data provider and criterias](lib/datamappify/data), but Datamappify comes with build-in support for the following ORMS:
+You may implement your own [data provider and criteria](lib/datamappify/data), but Datamappify comes with build-in support for the following ORMS:
 
 - ActiveRecord
 - Sequel

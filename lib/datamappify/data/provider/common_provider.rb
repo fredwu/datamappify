@@ -5,14 +5,14 @@ module Datamappify
         def self.extended(klass)
           klass.extend ModuleMethods
 
-          klass.load_criterias
+          klass.load_criteria
         end
 
         module ModuleMethods
           # Loads all the criteria files from the data provider
           #
           # @return [void]
-          def load_criterias
+          def load_criteria
             Dir[Datamappify.root.join("data/criteria/#{path_name}/*.rb")].each { |file| require file }
           end
 

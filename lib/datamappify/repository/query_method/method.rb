@@ -11,17 +11,24 @@ module Datamappify
         # @return [UnitOfWork::PersistentStates]
         attr_reader :states
 
+        # @return [Entity, Hash, nil]
+        attr_reader :entity
+
+        # @return [Entity, Hash, nil]
+        attr_reader :criteria
+
         # @param options [Hash]
         #   a hash containing required items like data_mapper and states
         #
-        # @param entity [Entity]
+        # @param entity_or_criteria [Entity, Hash]
         #
         # @param args [any]
-        def initialize(options, entity = nil, *args)
+        def initialize(options, entity_or_criteria = nil, *args)
           @data_mapper = options[:data_mapper]
           @states      = options[:states]
           @lazy_load   = options[:lazy_load?]
-          @entity      = entity
+
+          @entity = @criteria = entity_or_criteria
         end
 
         # Should the method be aware of the dirty state?

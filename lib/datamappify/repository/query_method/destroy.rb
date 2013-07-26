@@ -4,7 +4,7 @@ module Datamappify
       class Destroy < Method
         # @return [void, false]
         def perform
-          dispatch_criteria_to_default_source(:Destroy, @entity.id)
+          dispatch_criteria_to_default_source(:Destroy, entity.id)
         end
 
         # @see Method#writer?

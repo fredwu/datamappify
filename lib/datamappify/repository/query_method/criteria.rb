@@ -1,10 +1,10 @@
 module Datamappify
   module Repository
     module QueryMethod
-      class Exists < Method
-        # @return [Boolean]
+      class Criteria < Method
+        # @return [Array<Entity>]
         def perform
-          dispatch_criteria_to_default_source(:Exists, entity)
+          dispatch_criteria_to_default_source(:Criteria, @entity)
         end
 
         # @see Method#reader?

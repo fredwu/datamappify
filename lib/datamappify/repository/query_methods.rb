@@ -33,14 +33,14 @@ module Datamappify
       #
       # @return [Entity]
       def where(criteria)
-        QueryMethod::FindMultiple.new(query_options, criteria).perform
+        QueryMethod::Where.new(query_options, criteria).perform
       end
 
       # Returns a collection of all the entities in the repository
       #
       # @return [Array<Entity>]
       def all
-        QueryMethod::FindMultiple.new(query_options, {}).perform
+        QueryMethod::Where.new(query_options, {}).perform
       end
 
       # @param entity [Entity]

@@ -4,11 +4,11 @@ module Datamappify
       class Save < Method
         # @return [Entity, false]
         def perform
-          states.update(@entity) do
-            create_or_update(@entity)
+          states.update(entity) do
+            create_or_update(entity)
           end
 
-          @entity
+          entity
         rescue Data::EntityInvalid
           false
         end

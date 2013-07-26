@@ -2,7 +2,7 @@ module Datamappify
   module Data
     module Criteria
       module Relational
-        class FindMultiple < Common
+        class Where < Common
           alias_method :entity_class, :entity
 
           attr_reader :primaries, :secondaries, :structured_criteria

@@ -1,10 +1,10 @@
-require 'datamappify/data/criteria/relational/find_multiple'
+require 'datamappify/data/criteria/relational/where'
 
 module Datamappify
   module Data
     module Criteria
       module Sequel
-        class FindMultiple < Relational::FindMultiple
+        class Where < Relational::Where
           private
 
           # @return [Array]

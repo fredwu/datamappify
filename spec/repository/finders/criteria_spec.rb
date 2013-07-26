@@ -16,7 +16,7 @@ shared_examples_for "finders" do |data_provider|
       { :where => { :first_name => 'Superman' }, :limit => 2 },
       { :limit => 2, :where => { :first_name => 'Superman' } },
     ].each_with_index do |criteria, index|
-      describe "#criteria example #{index}" do
+      describe "#criteria example #{index+1}" do
         let(:records) { user_repository.criteria(criteria) }
         subject       { records }
 

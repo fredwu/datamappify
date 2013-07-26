@@ -295,12 +295,12 @@ users = UserRepository.where(:first_name => 'Fred', :driver_license => 'AABBCCDD
 You may compose search criteria via the `criteria` method.
 
 ```ruby
-users = UserRepository.criteria({
+users = UserRepository.criteria(
   :where => {
-    :first_name => 'Fred', :driver_license => 'AABBCCDD'
+    :first_name => 'Fred'
   },
   :limit => 10
-})
+)
 ```
 
 Currently implemented criteria options:

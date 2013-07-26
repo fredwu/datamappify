@@ -3,8 +3,8 @@ module Datamappify
     module Criteria
       module Relational
         class Limit < Common
-          def records(scope)
-            scope.limit(criteria)
+          def records(scope = nil)
+            (scope || source_class).limit(criteria)
           end
         end
       end

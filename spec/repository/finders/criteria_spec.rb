@@ -12,11 +12,16 @@ shared_examples_for "finders" do |data_provider|
       user_repository.save(User.new(:first_name => 'Superman', :driver_license => 'NEWYORKCITY'))
     end
 
-    describe "#criteria" do
-      let(:records) { user_repository.criteria(:where => { :first_name => 'Superman' }, :limit => 2) }
-      subject       { records }
+    [
+      { :where => { :first_name => 'Superman' }, :limit => 2 },
+      { :limit => 2, :where => { :first_name => 'Superman' } },
+    ].each_with_index do |criteria, index|
+      describe "#criteria example #{index}" do
+        let(:records) { user_repository.criteria(criteria) }
+        subject       { records }
 
-      it { should have(2).user }
+        it { should have(2).user }
+      end
     end
   end
 end

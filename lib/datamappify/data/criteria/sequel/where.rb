@@ -1,22 +1,26 @@
-require 'datamappify/data/criteria/relational/where'
-
 module Datamappify
   module Data
     module Criteria
       module Sequel
         class Where < Relational::Where
-          private
+          # @param scope [Sequel::DataSet]
+          #
+          # @return [Sequel::DataSet]
+          def records(scope = nil)
+            if scope
+              query_builder = scope
+            else
+              query_builder = source_class
 
-          # @return [Array]
-          def records
-            query_builder = source_class
-
-            secondaries.each do |secondary|
-              query_builder = query_builder.join(secondary.source_table, secondary.primary_reference_key => :id)
+              secondaries.each do |secondary|
+                query_builder = query_builder.join(secondary.source_table, secondary.primary_reference_key => :id)
+              end
             end
 
             query_builder.where(structured_criteria(primaries, secondaries))
           end
+
+          private
 
           # @param primaries [Array<Attribute>]
           #

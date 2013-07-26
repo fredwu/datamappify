@@ -1,4 +1,3 @@
-require 'datamappify/data/criteria/relational/save'
 require 'datamappify/data/criteria/concerns/update_primary_record'
 
 module Datamappify

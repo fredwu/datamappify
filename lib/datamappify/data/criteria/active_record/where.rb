@@ -1,18 +1,18 @@
-require 'datamappify/data/criteria/relational/where'
-
 module Datamappify
   module Data
     module Criteria
       module ActiveRecord
         class Where < Relational::Where
-          private
-
-          # @return [Array]
-          def records
-            source_class.joins(@secondaries.map(&:source_key)).where(
+          # @param scope [ActiveRecord::Relation]
+          #
+          # @return [ActiveRecord::Relation]
+          def records(scope = nil)
+            (scope || source_class.joins(secondaries.map(&:source_key))).where(
               structured_criteria(primaries, secondaries)
             )
           end
+
+          private
 
           # @param primaries [Array<Attribute>]
           #

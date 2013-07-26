@@ -284,9 +284,29 @@ users = UserRepository.all
 
 Returns an array of entities.
 
+##### Simple
+
 ```ruby
 users = UserRepository.where(:first_name => 'Fred', :driver_license => 'AABBCCDD')
 ```
+
+##### Advanced
+
+You may compose search criteria via the `criteria` method.
+
+```ruby
+users = UserRepository.criteria({
+  :where => {
+    :first_name => 'Fred', :driver_license => 'AABBCCDD'
+  },
+  :limit => 10
+})
+```
+
+Currently implemented criteria options:
+
+- where(Hash)
+- limit(Integer)
 
 _Note: it does not currently support searching attributes from different data providers._
 

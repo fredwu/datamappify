@@ -1,3 +1,5 @@
+Dir[Datamappify.root.join("data/criteria/relational/*.rb")].each { |file| require file }
+
 module Datamappify
   module Data
     module Provider

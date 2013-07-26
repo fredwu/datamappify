@@ -1,5 +1,7 @@
 ## master
 
+- Added preliminary support for composed search criteria.
+
 ## 0.60.0 [2013-07-23]
 
 - New API: Introduced `Datamappify.config` for configuring default behaviours.

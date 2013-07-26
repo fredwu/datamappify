@@ -43,6 +43,14 @@ module Datamappify
         QueryMethod::Where.new(query_options, {}).perform
       end
 
+      # @param criteria [Hash]
+      #   a hash containing composed criteria
+      #
+      # @return [Array<Entity>]
+      def criteria(criteria)
+        QueryMethod::Criteria.new(query_options, criteria).perform
+      end
+
       # @param entity [Entity]
       #   an entity or a collection of entities
       #

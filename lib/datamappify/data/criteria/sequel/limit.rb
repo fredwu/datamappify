@@ -2,7 +2,7 @@ module Datamappify
   module Data
     module Criteria
       module Sequel
-        class Find < Relational::Find
+        class Limit < Relational::Limit
         end
       end
     end

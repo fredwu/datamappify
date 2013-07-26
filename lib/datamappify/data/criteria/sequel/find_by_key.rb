@@ -1,5 +1,3 @@
-require 'datamappify/data/criteria/relational/find_by_key'
-
 module Datamappify
   module Data
     module Criteria

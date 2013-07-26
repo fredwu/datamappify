@@ -8,3 +8,10 @@ shared_context "user repository" do |data_provider|
   let(:data_passports)       { "Datamappify::Data::Record::#{data_provider}::UserPassport".constantize }
   let(:data_driver_licenses) { "Datamappify::Data::Record::#{data_provider}::UserDriverLicense".constantize }
 end
+
+shared_context "user repository for finders" do |data_provider|
+  include_context "user repository", data_provider
+
+  let!(:existing_user_1) { user_repository.save(new_valid_user.dup) }
+  let!(:existing_user_2) { user_repository.save(new_valid_user.dup) }
+end

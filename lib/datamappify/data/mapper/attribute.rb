@@ -131,13 +131,6 @@ module Datamappify
           provider_name == primary_provider_name && primary_source_class != source_class
         end
 
-        # External attribute is from a different data provider than the primary data provider
-        #
-        # @return [Boolean]
-        def external_attribute?
-          provider_name != primary_provider_name
-        end
-
         # @return [Boolean]
         def reverse_mapped?
           !!@options[:via]

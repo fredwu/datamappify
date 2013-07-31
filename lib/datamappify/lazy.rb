@@ -1,5 +1,4 @@
 require 'datamappify/lazy/source_attributes_walker'
-require 'datamappify/lazy/source_attributes_walker'
 require 'datamappify/lazy/attributes_handler'
 
 module Datamappify

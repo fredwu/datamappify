@@ -90,6 +90,19 @@ shared_examples_for "dirty tracking" do |data_provider|
         user_repository.states.find(existing_user).age_changed?.should == true
       end
     end
+
+    describe "default source operations" do
+      let(:user) { user_repository.all.first }
+
+      it "clean slate" do
+        user_repository.states.find(user).first_name_changed?.should == false
+      end
+
+      it "changed" do
+        user.first_name = 'Nexus'
+        user_repository.states.find(user).first_name_changed?.should == true
+      end
+    end
   end
 end
 

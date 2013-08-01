@@ -1,3 +1,5 @@
+require_relative 'user'
+
 class Group
   include Datamappify::Entity
 

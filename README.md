@@ -401,6 +401,60 @@ end
 
 Note: Returning either `nil` or `false` from the callback will cancel all subsequent callbacks (and the action itself, if it's a `before_` callback).
 
+### Association
+
+Datamappify also supports entity association. It is experimental and it currently supports the following association types:
+
+- belongs_to
+- has_many
+
+Set up your entities and repositories:
+
+```ruby
+# entities
+
+class User
+  include Datamappify::Entity
+
+  has_many :posts, :via => Post
+end
+
+class Post
+  include Datamappify::Entity
+
+  belongs_to :user
+end
+
+# repositories
+
+class UserRepository
+  include Datamappify::Repository
+
+  for_entity User
+
+  references :posts, :via => PostRepository
+end
+
+class PostRepository
+  include Datamappify::Repository
+
+  for_entity Post
+end
+```
+
+Usage examples:
+
+```ruby
+new_post         = Post.new(post_attributes)
+another_new_post = Post.new(post_attributes)
+user             = UserRepository.find(1)
+user.posts       = [new_post, another_new_post]
+
+persisted_user   = UserRepository.save!(user)
+
+persisted_user.posts #=> an array of associated posts
+```
+
 ### Default configuration
 
 You may configure Datamappify's default behaviour. In Rails you would put it in an initializer file.

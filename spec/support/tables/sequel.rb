@@ -18,6 +18,7 @@ DB.create_table :users do
   Integer :age
   Integer :level
   foreign_key :role_id
+  foreign_key :group_id
   DateTime :created_at
   DateTime :updated_at
 end
@@ -42,12 +43,6 @@ DB.create_table :groups do
   String :name
   DateTime :created_at
   DateTime :updated_at
-end
-
-DB.create_table :groups_users do
-  primary_key :id
-  foreign_key :user_id
-  foreign_key :group_id
 end
 
 DB.create_table :user_driver_licenses do

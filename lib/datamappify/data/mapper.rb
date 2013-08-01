@@ -17,9 +17,13 @@ module Datamappify
       #   attribute name to source mapping as specified in {Repository::MappingDSL#map_attribute}
       attr_accessor :custom_mapping
 
+      # @return [Hash]
+      attr_accessor :references
+
       def initialize
         @custom_mapping         = {}
         @custom_attribute_names = []
+        @references             = {}
 
         @default_provider_name  = Datamappify.defaults.default_provider
       end
@@ -66,7 +70,7 @@ module Datamappify
 
       # @return [Array<Symbol>]
       def default_attribute_names
-        all_attribute_names - custom_attribute_names
+        all_attribute_names - custom_attribute_names - reference_names
       end
 
       # @return [Array<Symbol>]
@@ -75,6 +79,11 @@ module Datamappify
         custom_attributes
 
         @custom_attribute_names
+      end
+
+      # @return [Array<Symbol>]
+      def reference_names
+        references.keys
       end
 
       # @return [Array<Attribute>]

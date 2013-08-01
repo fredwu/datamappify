@@ -1,21 +1,21 @@
 require 'spec_helper'
 
 module Datamappify::Entity
-  describe Datamappify::Entity::Relation do
-    class DummyEntity
+  describe Datamappify::Entity::Association::Reference do
+    class DummyEntityA
       include Datamappify::Entity
 
       references :another_entity
     end
 
-    class AnotherEntity
+    class DummyEntityB
       include Datamappify::Entity
     end
 
-    subject { DummyEntity.new }
+    subject { DummyEntityA.new }
 
     describe "#references" do
-      let(:another_entity) { AnotherEntity.new.tap { |e| e.id = 42 } }
+      let(:another_entity) { DummyEntityB.new.tap { |e| e.id = 42 } }
 
       it { should respond_to(:another_entity_id) }
       it { should respond_to(:another_entity_id=) }

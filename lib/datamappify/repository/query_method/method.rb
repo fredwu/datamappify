@@ -59,8 +59,6 @@ module Datamappify
           false
         end
 
-        private
-
         # Dispatches a {Criteria} according to
         # the {Data::Mapper data mapper}'s default provider and default source class
         #
@@ -97,7 +95,11 @@ module Datamappify
               _primary_record ||= record
             end
           end
+
+          references_walker(criteria_name, entity)
         end
+
+        private
 
         # Walks through the attributes and performs actions on them
         #
@@ -127,6 +129,22 @@ module Datamappify
           end
         end
 
+        # Walks through the references and performs actions on them
+        #
+        # @param (see #dispatch_criteria_to_providers)
+        def references_walker(criteria_name, entity)
+          data_mapper.references.each do |reference_name, options|
+            ReferenceHandler.new({
+              :entity            => entity,
+              :criteria_name     => criteria_name,
+              :reference_name    => reference_name,
+              :reference_options => options,
+              :query_method      => self
+            }).execute
+          end
+        end
+
+        # return [Class]
         def source_attributes_walker
           if @lazy_load
             Lazy::SourceAttributesWalker

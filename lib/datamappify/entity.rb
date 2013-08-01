@@ -3,7 +3,7 @@ require 'virtus'
 require 'datamappify/entity/active_model/compatibility'
 require 'datamappify/entity/lazy_checking'
 require 'datamappify/entity/composable'
-require 'datamappify/entity/relation'
+require 'datamappify/entity/association'
 require 'datamappify/entity/inspectable'
 
 module Datamappify
@@ -17,7 +17,7 @@ module Datamappify
         include Virtus::Equalizer.new(inspect)
         include LazyChecking
         include Composable
-        include Relation
+        include Association
         include Inspectable
 
         attribute :id, Integer

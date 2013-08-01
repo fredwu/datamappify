@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_examples_for "entity relations" do |data_provider|
+shared_examples_for "entity association reference" do |data_provider|
   context "#{data_provider}" do
     include_context "user repository", data_provider
 
@@ -20,6 +20,6 @@ end
 
 describe Datamappify::Entity do
   DATA_PROVIDERS.each do |data_provider|
-    it_behaves_like "entity relations", data_provider
+    it_behaves_like "entity association reference", data_provider
   end
 end

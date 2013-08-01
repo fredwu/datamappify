@@ -3,4 +3,6 @@ class GroupRepositoryActiveRecord
 
   for_entity Group
   default_provider :ActiveRecord
+
+  references :users, :via => UserRepositoryActiveRecord
 end

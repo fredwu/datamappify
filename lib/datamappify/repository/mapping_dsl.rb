@@ -43,6 +43,15 @@ module Datamappify
 
         self.current_group_options = {}
       end
+
+      # @param name [Symbol, String]
+      #
+      # @param options [Hash]
+      #
+      # @return [void]
+      def references(name, options = {})
+        data_mapper.references[name.to_sym] = options
+      end
     end
   end
 end

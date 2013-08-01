@@ -3,4 +3,6 @@ class GroupRepositorySequel
 
   for_entity Group
   default_provider :Sequel
+
+  references :users, :via => UserRepositorySequel
 end

@@ -19,12 +19,13 @@ ActiveRecord::Migration.suppress_messages do
       t.integer :age
       t.integer :level
       t.references :role
+      t.references :group
       t.timestamps
     end
 
     create_table :comments do |t|
       t.string :content
-      t.belongs_to :user
+      t.references :user
       t.timestamps
     end
 
@@ -38,29 +39,24 @@ ActiveRecord::Migration.suppress_messages do
       t.timestamps
     end
 
-    create_table :groups_users do |t|
-      t.belongs_to :user
-      t.belongs_to :group
-    end
-
     create_table :user_driver_licenses do |t|
       t.string :number
       t.string :expiry
-      t.belongs_to :user
+      t.references :user
       t.timestamps
     end
 
     create_table :user_passports do |t|
       t.string :number
       t.string :expiry, :null => false
-      t.belongs_to :user
+      t.references :user
       t.timestamps
     end
 
     create_table :user_health_cares do |t|
       t.string :number
       t.string :expiry
-      t.belongs_to :user
+      t.references :user
       t.timestamps
     end
 

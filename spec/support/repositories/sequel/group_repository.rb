@@ -1,3 +1,5 @@
+require_relative 'user_repository'
+
 class GroupRepositorySequel
   include Datamappify::Repository
 

@@ -1,3 +1,5 @@
+require_relative 'user_repository'
+
 class GroupRepositoryActiveRecord
   include Datamappify::Repository
 

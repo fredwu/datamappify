@@ -6,14 +6,6 @@ module Datamappify
     module Criteria
       module ActiveRecord
         class Criteria < Relational::Criteria
-          private
-
-          def criteria_classes
-            {
-              :where => Where,
-              :limit => Limit,
-            }
-          end
         end
       end
     end

@@ -4,12 +4,17 @@ module Datamappify
   module Data
     module Criteria
       module Sequel
-        class Where < CriteriaMethod
+        class Order < CriteriaMethod
           # @param scope [Sequel::DataSet]
           #
           # @return [Sequel::DataSet]
           def records(scope = nil)
-            records_scope(scope).where(structured_criteria)
+            structured_criteria.inject(records_scope(scope)) do |scope, (attr, value)|
+              case value
+              when :asc  then scope.order(attr)
+              when :desc then scope.reverse_order(attr)
+              end
+            end
           end
         end
       end

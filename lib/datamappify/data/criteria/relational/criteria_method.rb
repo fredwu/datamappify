@@ -1,58 +1,37 @@
+require 'datamappify/data/criteria/relational/criteria_base_method'
+
 module Datamappify
   module Data
     module Criteria
       module Relational
-        class CriteriaMethod < Common
-          alias_method :entity_class, :entity
+        class CriteriaMethod < CriteriaBaseMethod
+          attr_reader :primaries, :secondaries, :structured_criteria
 
-          # @return [void]
-          def perform
-            records.map do |record|
-              entity = entity_class.new
-              update_entity(entity, record)
-              entity
+          def initialize(*args)
+            super
+
+            @primaries   = []
+            @secondaries = []
+
+            updated_attributes.each do |attribute|
+              collector = attribute.primary_attribute? ? @primaries : @secondaries
+              collector << attribute
             end
           end
 
           private
 
-          # @param entity [Entity]
-          #
-          # @param record [Class]
-          #
-          # @return [void]
-          def update_entity(entity, primary_record)
-            attributes.each do |attribute|
-              record = data_record_for(attribute, primary_record)
-              value  = record_value_for(attribute, record)
-
-              entity.send("#{attribute.name}=", value)
+          # @return [Array<Attribute>]
+          def updated_attributes
+            unless criteria.keys & attributes.map(&:key) == criteria.keys
+              raise EntityAttributeInvalid
             end
-          end
 
-          # @param attribute [Attribute]
-          #
-          # @param primary_record [Class]
-          #   an ORM model object (ActiveRecord or Sequel, etc)
-          #
-          # @return [Object]
-          #   an ORM model object (ActiveRecord or Sequel, etc)
-          def data_record_for(attribute, primary_record)
-            if attribute.primary_attribute?
-              primary_record
-            else
-              primary_record.send(attribute.source_key)
+            @updated_attributes ||= criteria.map do |attr_key, value|
+              attribute = attributes.detect { |attr| attr.key == attr_key }
+              attribute.value = value
+              attribute
             end
-          end
-
-          # @param attribute [Attribute]
-          #
-          # @param record [Class]
-          #   an ORM model object (ActiveRecord or Sequel, etc)
-          #
-          # @return [any]
-          def record_value_for(attribute, record)
-            record.nil? ? nil : record.send(attribute.source_attribute_name)
           end
         end
       end

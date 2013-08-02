@@ -3,6 +3,7 @@
 - Fixed dirty tracking for entities returned from `where` and `all`.
 - Added preliminary support for composed search criteria.
 - Added experimental support for associations.
+- Added `order` as a composable criteria.
 
 ## 0.60.0 [2013-07-23]
 

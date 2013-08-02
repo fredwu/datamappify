@@ -1,10 +1,10 @@
-require 'datamappify/data/criteria/relational/criteria_method'
+require 'datamappify/data/criteria/relational/criteria_base_method'
 
 module Datamappify
   module Data
     module Criteria
       module Relational
-        class Criteria < CriteriaMethod
+        class Criteria < CriteriaBaseMethod
           # @return
           #   a collection represents the records, e.g. `ActiveRecord::Relation` or `Sequel::DataSet`
           def records

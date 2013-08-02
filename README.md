@@ -299,6 +299,9 @@ users = UserRepository.criteria(
   :where => {
     :first_name => 'Fred'
   },
+  :order => {
+    :last_name => :asc
+  },
   :limit => 10
 )
 ```
@@ -306,6 +309,7 @@ users = UserRepository.criteria(
 Currently implemented criteria options:
 
 - where(Hash)
+- order(Hash)
 - limit(Integer)
 
 _Note: it does not currently support searching attributes from different data providers._

@@ -23,7 +23,7 @@ module Datamappify
 
           # @return [Array<Attribute>]
           def updated_attributes
-            unless criteria.keys.map(&:to_sym) & attributes.map(&:key) == criteria.keys.map(&:to_sym)
+            unless criteria_keys & attributes.map(&:key) == criteria_keys
               raise EntityAttributeInvalid
             end
 
@@ -32,6 +32,10 @@ module Datamappify
               attribute.value = value
               attribute
             end
+          end
+
+          def criteria_keys
+            criteria.keys.map(&:to_sym)
           end
         end
       end

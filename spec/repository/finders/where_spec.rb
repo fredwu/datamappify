@@ -90,6 +90,20 @@ shared_examples_for "finder where" do |data_provider|
 
             it { should be_empty }
           end
+
+          context "example 5 (string keys)" do
+            let(:records) { user_repository.where('first_name' => 'Bob', 'driver_license' => 'IDONTCARE') }
+            subject       { records }
+
+            it { should have(2).users }
+
+            describe "record" do
+              subject { records.first }
+
+              its(:first_name)     { should == 'Bob' }
+              its(:driver_license) { should == 'IDONTCARE' }
+            end
+          end
         end
       end
     end

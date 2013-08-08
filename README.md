@@ -290,6 +290,12 @@ Returns an array of entities.
 users = UserRepository.where(:first_name => 'Fred', :driver_license => 'AABBCCDD')
 ```
 
+##### Match
+
+```ruby
+users = UserRepository.match(:first_name => 'Fre%', :driver_license => '%bbcc%')
+```
+
 ##### Advanced
 
 You may compose search criteria via the `criteria` method.
@@ -309,6 +315,7 @@ users = UserRepository.criteria(
 Currently implemented criteria options:
 
 - where(Hash)
+- match(Hash)
 - order(Hash)
 - limit(Integer)
 

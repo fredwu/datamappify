@@ -4,6 +4,7 @@
 - Added preliminary support for composed search criteria.
 - Added experimental support for associations.
 - Added `order` as a composable criteria.
+- New API: Added `match` for repository.
 
 ## 0.60.0 [2013-07-23]
 

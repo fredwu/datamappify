@@ -36,6 +36,14 @@ module Datamappify
         QueryMethod::Where.new(query_options, criteria).perform
       end
 
+      # @param criteria [Hash]
+      #   a hash containing criteria
+      #
+      # @return [Entity]
+      def match(criteria)
+        QueryMethod::Match.new(query_options, criteria).perform
+      end
+
       # Returns a collection of all the entities in the repository
       #
       # @return [Array<Entity>]

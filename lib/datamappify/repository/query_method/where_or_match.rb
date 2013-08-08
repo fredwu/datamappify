@@ -1,11 +1,11 @@
 module Datamappify
   module Repository
     module QueryMethod
-      class Where < Method
+      class WhereOrMatch < Method
         # @return [Array<Entity>]
         def perform
           results = dispatch_criteria_to_default_source(
-            :Where, data_mapper.entity_class, criteria, data_mapper.attributes
+            self.class.name.demodulize, data_mapper.entity_class, criteria, data_mapper.attributes
           )
 
           results.each do |entity|
@@ -20,6 +20,9 @@ module Datamappify
           true
         end
       end
+
+      class Where < WhereOrMatch; end
+      class Match < WhereOrMatch; end
     end
   end
 end

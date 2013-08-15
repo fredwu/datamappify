@@ -27,7 +27,7 @@ module Datamappify
         @custom_mapping         = {}
         @custom_attribute_names = []
         @references             = {}
-        @automap                = true
+        @automap                = Datamappify.defaults.automap
 
         @default_provider_name  = Datamappify.defaults.default_provider
       end

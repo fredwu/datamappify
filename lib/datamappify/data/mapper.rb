@@ -17,6 +17,9 @@ module Datamappify
       #   attribute name to source mapping as specified in {Repository::MappingDSL#map_attribute}
       attr_accessor :custom_mapping
 
+      # @return [Boolean]
+      attr_accessor :automap
+
       # @return [Hash]
       attr_accessor :references
 
@@ -24,6 +27,7 @@ module Datamappify
         @custom_mapping         = {}
         @custom_attribute_names = []
         @references             = {}
+        @automap                = true
 
         @default_provider_name  = Datamappify.defaults.default_provider
       end
@@ -52,7 +56,11 @@ module Datamappify
 
       # @return [Set<Attribute>]
       def attributes
-        @attributes ||= Set.new(default_attributes + custom_attributes)
+        @attributes ||= if automap
+                          Set.new(default_attributes + custom_attributes)
+                        else
+                          Set.new([primary_key_attribute] + custom_attributes)
+                        end
       end
 
       # @return [Hash<Set>]
@@ -89,13 +97,23 @@ module Datamappify
       # @return [Array<Attribute>]
       def default_attributes
         @default_attributes ||= default_attribute_names.collect do |attribute|
-          Attribute.new(
-            attribute,
-            :to                   => default_source_for(attribute),
-            :provider             => default_provider_name,
-            :primary_source_class => default_source_class
-          )
+          default_attribute(attribute)
         end
+      end
+
+      # @return [Attribute]
+      def primary_key_attribute
+        default_attribute('id')
+      end
+
+      # @return [Attribute]
+      def default_attribute(attribute)
+        Attribute.new(
+          attribute,
+          :to                   => default_source_for(attribute),
+          :provider             => default_provider_name,
+          :primary_source_class => default_source_class
+        )
       end
 
       # @return [Array<Attribute>]

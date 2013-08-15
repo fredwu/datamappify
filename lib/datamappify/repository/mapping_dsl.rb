@@ -3,6 +3,16 @@ module Datamappify
     module MappingDSL
       include LazyChecking
 
+      # @param automap [Boolean]
+      #   tells the repository whether or not to automatically
+      #   map all entity attributes to the underlying data
+      #   source
+      #
+      # @return [void]
+      def automap(automap)
+        data_mapper.automap = automap
+      end
+
       # If the entity is lazy loaded then it assigns
       # the repository itself back to the entity
       #

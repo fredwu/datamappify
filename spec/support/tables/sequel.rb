@@ -11,14 +11,20 @@ DB.create_table :hero_user_last_names do
   DateTime :updated_at
 end
 
+DB.create_table :super_users do
+  primary_key :id
+  foreign_key :base_user_id
+  foreign_key :group_id
+  DateTime :created_at
+  DateTime :updated_at
+end
+
 DB.create_table :users do
   primary_key :id
   String :first_name, :null => false
   String :surname
   Integer :age
   Integer :level
-  foreign_key :role_id
-  foreign_key :group_id
   DateTime :created_at
   DateTime :updated_at
 end

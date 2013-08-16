@@ -15,8 +15,6 @@ class User
   validates :driver_license, :presence => true,
                              :length   => { :minimum => 8 }
 
-  belongs_to :group
-
   def full_name
     "#{first_name} #{last_name}"
   end

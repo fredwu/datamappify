@@ -29,7 +29,8 @@ module Datamappify
           # @return [void]
           def build_record_association(attribute, default_source_class)
             default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
-              one_to_one :#{attribute.source_key}
+              one_to_one :#{attribute.source_key},
+                         :key => :#{attribute.primary_reference_key}
             CODE
 
             attribute.source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
@@ -40,7 +41,8 @@ module Datamappify
           # @return [void]
           def build_record_reversed_association(attribute, default_source_class)
             default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
-              many_to_one :#{attribute.source_key}
+              many_to_one :#{attribute.source_key},
+                          :key => :#{attribute.options[:via]}
             CODE
           end
         end

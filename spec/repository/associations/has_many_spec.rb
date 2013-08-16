@@ -24,10 +24,10 @@ shared_examples_for "has_many records" do
 end
 
 shared_examples_for "has_many" do |data_provider|
-  let(:user_repository)  { "UserRepository#{data_provider}".constantize }
+  let(:user_repository)  { "SuperUserRepository#{data_provider}".constantize }
   let(:group_repository) { "GroupRepository#{data_provider}".constantize }
-  let(:new_user)      { User.new(:first_name => 'Fred', :driver_license => 'MOSDEVOPS') }
-  let(:existing_user) { user_repository.save! User.new(:first_name => 'Steve', :driver_license => 'APPLECOMPUTER') }
+  let(:new_user)         { SuperUser.new(:first_name => 'Fred', :driver_license => 'MOSDEVOPS') }
+  let(:existing_user)    { user_repository.save! SuperUser.new(:first_name => 'Steve', :driver_license => 'APPLECOMPUTER') }
   let(:group) do
     Group.new(
       :name  => 'People',

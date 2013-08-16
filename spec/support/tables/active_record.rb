@@ -13,13 +13,17 @@ ActiveRecord::Migration.suppress_messages do
       t.timestamps
     end
 
+    create_table :super_users do |t|
+      t.references :base_user
+      t.references :group
+      t.timestamps
+    end
+
     create_table :users do |t|
       t.string :first_name, :null => false
       t.string :surname
       t.integer :age
       t.integer :level
-      t.references :role
-      t.references :group
       t.timestamps
     end
 

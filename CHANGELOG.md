@@ -3,6 +3,7 @@
 - Fixed dirty tracking for entities returned from `where` and `all`.
 - Added preliminary support for composed search criteria.
 - Added experimental support for associations.
+  - Added `reference_key` option to `map_attribute`.
 - Added `order` as a composable criteria.
 - New API: Added `match` for repository.
 

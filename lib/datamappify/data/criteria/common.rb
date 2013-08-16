@@ -76,7 +76,7 @@ module Datamappify
         #
         # @return [Symbol]
         def key_name
-          primary_record? ? :id : any_attribute.primary_reference_key
+          primary_record? ? :id : any_attribute.reference_key
         end
 
         # The value of {#key_name}

@@ -206,8 +206,8 @@ class UserRepository
   # this is useful for mapping form fields (similar to ActiveRecord's nested attributes)
   map_attribute :hobby_name, :to => 'Hobby#name', :via => :hobby_id
 
-  # by default, Datamappify maps attributes using an inferred reference key,
-  # for example, the first mapping below will look for the `user_id` (foreign) key in `Bio`,
+  # by default, Datamappify maps attributes using an inferred reference (foreign) key,
+  # for example, the first mapping below will look for the `user_id` key in `Bio`,
   # the second mapping below will look for the `person_id` key in `Bio` instead
   map_attribute :bio, :to => 'Bio#body'
   map_attribute :bio, :to => 'Bio#body', :reference_key => :person_id

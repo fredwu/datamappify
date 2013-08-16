@@ -42,9 +42,9 @@ module Datamappify
             @entity.send(@reference_name)
           end
 
-          # @return (see Data::Mapper::Attribute#primary_reference_key)
+          # @return (see Data::Mapper::Attribute#reference_key)
           def reference_key
-            @query_method.data_mapper.attributes.first.primary_reference_key
+            @query_method.data_mapper.attributes.first.reference_key
           end
         end
       end

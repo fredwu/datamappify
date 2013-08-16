@@ -26,7 +26,7 @@ module Datamappify
           def build_record_association(attribute, default_source_class)
             default_source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
               has_one :#{attribute.source_key},
-                      :foreign_key => :#{attribute.primary_reference_key}
+                      :foreign_key => :#{attribute.reference_key}
             CODE
           end
 

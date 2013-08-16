@@ -113,8 +113,8 @@ module Datamappify
         #   :user_id
         #
         # @return [Symbol]
-        def primary_reference_key
-          @primary_reference_key ||= options[:reference_key] || :"#{primary_source_class.to_s.demodulize.underscore}_id"
+        def reference_key
+          @reference_key ||= options[:reference_key] || :"#{primary_source_class.to_s.demodulize.underscore}_id"
         end
 
         # Primary attribute is from the same data provider and the same source class

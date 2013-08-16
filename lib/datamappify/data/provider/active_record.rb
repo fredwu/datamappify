@@ -28,10 +28,6 @@ module Datamappify
               has_one :#{attribute.source_key},
                       :foreign_key => :#{attribute.primary_reference_key}
             CODE
-
-            attribute.source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
-              belongs_to :#{default_source_class.model_name.element}
-            CODE
           end
 
           # @return [void]

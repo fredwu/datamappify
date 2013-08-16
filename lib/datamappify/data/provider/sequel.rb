@@ -32,10 +32,6 @@ module Datamappify
               one_to_one :#{attribute.source_key},
                          :key => :#{attribute.primary_reference_key}
             CODE
-
-            attribute.source_class.class_eval <<-CODE, __FILE__, __LINE__ + 1
-              many_to_one :#{default_source_class.table_name.to_s.singularize}
-            CODE
           end
 
           # @return [void]

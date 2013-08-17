@@ -482,6 +482,11 @@ Datamappify.config do |c|
 end
 ```
 
+## API Documentation
+
+- [Rubygem release version](http://rubydoc.info/gems/datamappify/frames)
+- [Github master version](http://rubydoc.info/github/fredwu/datamappify/master/frames)
+
 ## More Reading
 
 You may check out this [article](http://fredwu.me/post/54009567748/) for more examples.

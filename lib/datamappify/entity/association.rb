@@ -1,3 +1,4 @@
+require 'datamappify/entity/association/compatibility'
 require 'datamappify/entity/association/reference'
 
 module Datamappify
@@ -11,6 +12,8 @@ module Datamappify
       end
 
       module DSL
+        prepend Compatibility
+
         # @param name [Symbol, String]
         #
         # @param options [Hash]

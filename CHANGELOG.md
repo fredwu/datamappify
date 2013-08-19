@@ -4,6 +4,7 @@
 - Added preliminary support for composed search criteria.
 - Added experimental support for associations.
   - Added `reference_key` option to `map_attribute`.
+  - Added support for ActiveRecord-style attribute-nesting, e.g. `form.fields_for`.
 - Added `order` as a composable criteria.
 - New API: Added `match` for repository.
 

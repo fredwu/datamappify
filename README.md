@@ -38,6 +38,11 @@ You may implement your own [data provider and criteria](lib/datamappify/data), b
 - ActiveRecord
 - Sequel
 
+## Requirements
+
+- ruby 2.0+
+- ActiveModel 4.0+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -470,6 +475,22 @@ user.posts       = [new_post, another_new_post]
 persisted_user   = UserRepository.save!(user)
 
 persisted_user.posts #=> an array of associated posts
+```
+
+### Nested attributes in forms
+
+Like ActiveRecord and ActionView, Datamappify also supports nested attributes via `fields_for` or `simple_fields_for`.
+
+```ruby
+# slim template
+
+= simple_form_for @post do |f|
+  = f.input :title
+  = f.input :body
+
+  = f.simple_fields_for :comment do |fp|
+    = fp.input :author_name
+    = fp.input :comment_body
 ```
 
 ### Default configuration

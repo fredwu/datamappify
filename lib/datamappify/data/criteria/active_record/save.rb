@@ -5,7 +5,7 @@ module Datamappify
     module Criteria
       module ActiveRecord
         class Save < Relational::Save
-          include Concerns::UpdatePrimaryRecord
+          prepend Concerns::UpdatePrimaryRecord
 
           private
 
@@ -16,8 +16,6 @@ module Datamappify
 
           def save(record)
             record.update_attributes attributes_and_values
-
-            super
           end
         end
       end

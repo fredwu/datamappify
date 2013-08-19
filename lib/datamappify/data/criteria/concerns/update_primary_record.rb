@@ -6,6 +6,8 @@ module Datamappify
           private
 
           def save(record)
+            super
+
             if options && options[:via] && options[:primary_record]
               update_primary_record_with(record)
             end

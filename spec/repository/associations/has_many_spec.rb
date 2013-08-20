@@ -62,6 +62,10 @@ shared_examples_for "has_many" do |data_provider|
     )
   end
 
+  it "existing_user" do
+    existing_user.id.should_not be_nil
+  end
+
   describe "group entity" do
     subject { group }
 

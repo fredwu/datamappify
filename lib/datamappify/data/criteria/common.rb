@@ -111,7 +111,7 @@ module Datamappify
         #
         # @return [Boolean]
         def ignore?
-          attributes_and_values.empty?
+          attributes_and_values.empty? && !primary_record?
         end
 
         # Stores the attribute value in {Mapper::Attribute} for later use

@@ -8,7 +8,7 @@ module Datamappify
         #
         # @param (see DSL#has_many)
         def has_many(name, options = {})
-          super(name, options)
+          super
 
           self.class_eval <<-CODE, __FILE__, __LINE__ + 1
             def #{name}_attributes=(params = {})

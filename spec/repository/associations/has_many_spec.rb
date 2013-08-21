@@ -31,21 +31,41 @@ shared_examples_for "has_many records created from nested form attributes" do
       :name             => 'People',
       :users            => [existing_user],
       :users_attributes => {
-        '0' => { 'first_name' => 'Bill', 'driver_license' => 'NEXTCOMPUTER' }
+        '0' => { 'first_name' => 'Bill', 'driver_license' => 'NEXTCOMPUTER' },
+        '1' => { 'first_name' => 'Alan', 'driver_license' => 'MICROCOMPUTER', 'id' => existing_user.id.to_s },
+        '2' => { 'first_name' => 'Jeff', 'driver_license' => 'JEFFCOMPUTER' },
       }
     )
   end
 
   subject { saved_group }
 
-  its(:users) { should have(2).items }
+  its(:users) { should have(3).items }
 
-  context "created user" do
-    subject { saved_group.users.last }
+  context "replaced user" do
+    subject { saved_group.users.first }
+
+    its(:id)             { should_not be_nil }
+    its(:first_name)     { should == 'Alan' }
+    its(:driver_license) { should == 'MICROCOMPUTER' }
+    its(:group_id)       { should == saved_group.id }
+  end
+
+  context "created user 1" do
+    subject { saved_group.users[1] }
 
     its(:id)             { should_not be_nil }
     its(:first_name)     { should == 'Bill' }
     its(:driver_license) { should == 'NEXTCOMPUTER' }
+    its(:group_id)       { should == saved_group.id }
+  end
+
+  context "created user 2" do
+    subject { saved_group.users[2] }
+
+    its(:id)             { should_not be_nil }
+    its(:first_name)     { should == 'Jeff' }
+    its(:driver_license) { should == 'JEFFCOMPUTER' }
     its(:group_id)       { should == saved_group.id }
   end
 end

@@ -12,7 +12,8 @@ module Datamappify
           # @return [Sequel::DataSet]
           def records_scope(scope)
             scope || secondaries.inject(source_class) do |scope, secondary|
-              scope.join(secondary.source_table, secondary.reference_key => :id)
+              columns = scope.columns.map { |key| :"#{scope.table_name}__#{key}" }
+              scope.join(secondary.source_table, secondary.reference_key => :id).select(*columns)
             end
           end
 

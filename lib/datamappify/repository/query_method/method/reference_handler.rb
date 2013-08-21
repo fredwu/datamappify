@@ -28,6 +28,7 @@ module Datamappify
           def perform_write
             referenced_entities.each do |entity|
               entity.send("#{reference_key}=", @entity.id)
+              @repository.states.mark_as_dirty(entity)
               @repository.save!(entity)
             end
           end

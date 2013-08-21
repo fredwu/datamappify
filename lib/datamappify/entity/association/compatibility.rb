@@ -12,8 +12,20 @@ module Datamappify
 
           self.class_eval <<-CODE, __FILE__, __LINE__ + 1
             def #{name}_attributes=(params = {})
-              params.each do |index, attributes|
-                self.#{name} << #{options[:via]}.new(attributes)
+              new_entites = params.map do |index, attributes|
+                #{options[:via]}.new(attributes)
+              end
+
+              self.#{name} = self.#{name}.map do |entity|
+                new_entites.detect { |e| e.id == entity.id } || entity
+              end
+
+              new_entites.each do |entity|
+                entity_is_already_added = entity.id && self.#{name}.map(&:id).include?(entity.id)
+
+                unless entity_is_already_added
+                  self.#{name} << entity
+                end
               end
             end
           CODE

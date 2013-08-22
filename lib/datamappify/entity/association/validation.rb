@@ -33,10 +33,17 @@ module Datamappify
         def aggregate_validation_errors(context)
           self.associations.each do |association|
             self.send(association).each do |entity|
-              entity.invalid?(context) && entity.errors.messages.each do |attr, msgs|
-                self.referenced_errors["#{entity.class.model_name.element}__#{attr}"] = msgs
-              end
+              entity.invalid?(context) && referenced_entity_validation_errors(entity)
             end
+          end
+        end
+
+        # @param (see #valid?)
+        #
+        # @return [void]
+        def referenced_entity_validation_errors(entity)
+          entity.errors.messages.each do |attr, msgs|
+            self.referenced_errors["#{entity.class.model_name.element}__#{attr}"] = msgs
           end
         end
 

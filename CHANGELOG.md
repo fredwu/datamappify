@@ -1,13 +1,16 @@
 ## master
 
 - Fixed dirty tracking for entities returned from `where` and `all`.
+- New API: Added `match` for repository.
 - Added preliminary support for composed search criteria.
+  - Added `where` as a composable criteria.
+  - Added `match` as a composable criteria.
+  - Added `limit` as a composable criteria.
+  - Added `order` as a composable criteria.
 - Added experimental support for associations.
   - Added `reference_key` option to `map_attribute`.
   - Added support for ActiveRecord-style attribute-nesting, e.g. `form.fields_for`.
   - Added validation aggregation for associated entities.
-- Added `order` as a composable criteria.
-- New API: Added `match` for repository.
 
 ## 0.60.0 [2013-07-23]
 

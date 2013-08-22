@@ -75,7 +75,7 @@ module Datamappify
       #
       # @return [Entity]
       def create!(entity)
-        create(entity) || raise(Data::EntityNotSaved)
+        create(entity) || raise(Data::EntityNotSaved.new(entity.errors))
       end
 
       # @param entity [Entity]
@@ -94,7 +94,7 @@ module Datamappify
       #
       # @return [Entity]
       def update!(entity)
-        update(entity) || raise(Data::EntityNotSaved)
+        update(entity) || raise(Data::EntityNotSaved.new(entity.errors))
       end
 
       # @param entity [Entity]
@@ -129,7 +129,7 @@ module Datamappify
       #
       # @return [void]
       def destroy!(entity)
-        destroy(entity) || raise(Data::EntityNotDestroyed)
+        destroy(entity) || raise(Data::EntityNotDestroyed.new(entity.errors))
       end
 
       # @return [Integer]

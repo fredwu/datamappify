@@ -1,19 +1,18 @@
 module Datamappify
   module Data
     class Error < StandardError
-    end
+      attr_reader :errors
+      attr_reader :entity
 
-    class MethodNotImplemented < NoMethodError
+      def initialize(errors = nil)
+        super
+
+        @errors = errors
+        @entity = errors.instance_variable_get(:@base)
+      end
     end
 
     class EntityInvalid < Error
-      attr_reader :entity
-
-      # @param entity [Entity]
-      def initialize(entity)
-        @entity = entity
-        super entity.errors.full_messages.join(', ')
-      end
     end
 
     class EntityNotSaved < Error

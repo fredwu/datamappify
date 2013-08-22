@@ -31,7 +31,7 @@ module Datamappify
         #
         # @return [Entity]
         def create_or_update(entity)
-          raise Data::EntityInvalid.new(entity) if entity.invalid?(context)
+          raise Data::EntityInvalid.new(entity.errors) if entity.invalid?(context)
 
           dispatch_criteria_to_providers(:SaveByKey, entity)
 

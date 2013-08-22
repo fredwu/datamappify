@@ -79,6 +79,20 @@ module Datamappify
         #
         # @return [void]
         def dispatch_criteria_to_providers(criteria_name, entity)
+          UnitOfWork::Transaction.new(data_mapper) do
+            walk_attributes(criteria_name, entity)
+            walk_references(criteria_name, entity)
+          end
+        end
+
+        private
+
+        # Walks through the references and performs actions on them
+        #
+        # @param (see #dispatch_criteria_to_providers)
+        #
+        # @return [void]
+        def walk_attributes(criteria_name, entity)
           _primary_record = nil
 
           attributes_walker(entity) do |provider_name, source_class, attributes|
@@ -95,11 +109,7 @@ module Datamappify
               _primary_record ||= record
             end
           end
-
-          references_walker(criteria_name, entity)
         end
-
-        private
 
         # Walks through the attributes and performs actions on them
         #
@@ -115,24 +125,24 @@ module Datamappify
         #
         # @see SourceAttributesWalker#execute
         def attributes_walker(entity, &block)
-          UnitOfWork::Transaction.new(data_mapper) do
-            data_mapper.classified_attributes.each do |provider_name, attributes|
-              source_attributes_walker.new({
-                :entity           => entity,
-                :provider_name    => provider_name,
-                :attributes       => attributes,
-                :dirty_aware?     => dirty_aware?,
-                :dirty_attributes => states.find(entity).changed,
-                :query_method     => self
-              }).execute(&block)
-            end
+          data_mapper.classified_attributes.each do |provider_name, attributes|
+            source_attributes_walker.new({
+              :entity           => entity,
+              :provider_name    => provider_name,
+              :attributes       => attributes,
+              :dirty_aware?     => dirty_aware?,
+              :dirty_attributes => states.find(entity).changed,
+              :query_method     => self
+            }).execute(&block)
           end
         end
 
         # Walks through the references and performs actions on them
         #
         # @param (see #dispatch_criteria_to_providers)
-        def references_walker(criteria_name, entity)
+        #
+        # @return [void]
+        def walk_references(criteria_name, entity)
           data_mapper.references.each do |reference_name, options|
             ReferenceHandler.new({
               :entity            => entity,

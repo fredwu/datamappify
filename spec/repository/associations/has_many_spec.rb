@@ -70,6 +70,64 @@ shared_examples_for "has_many records created from nested form attributes" do
   end
 end
 
+shared_examples_for "has_many records from nested form attributes with invalid data" do
+  let(:group) do
+    Group.new(
+      :name  => 'People',
+      :users => [existing_user]
+    )
+  end
+
+  let(:new_group) do
+    Group.new(
+      :id               => saved_group.id,
+      :name             => 'New People',
+      :users            => [existing_user],
+      :users_attributes => {
+        '0' => { 'first_name' => 'Bill', 'driver_license' => 'NEXTCOMPUTER' },
+        '1' => { 'first_name' => 'Alan', 'driver_license' => 'MICRO', 'id' => existing_user.id.to_s },
+        '2' => { 'first_name' => 'Jeff', 'driver_license' => 'JEFF' },
+      }
+    )
+  end
+
+  context "before saving" do
+    subject { new_group }
+
+    its(:name)   { should == 'New People' }
+    its(:users)  { should have(3).items }
+    its(:valid?) { should be_false }
+
+    it "does not save" do
+      -> { group_repository.save!(new_group) }.should raise_error(Datamappify::Data::EntityNotSaved)
+    end
+  end
+
+  context "non-saved dirty new group" do
+    before do
+      group_repository.save(new_group)
+    end
+
+    subject { new_group }
+
+    its(:name)   { should == 'New People' }
+    its(:users)  { should have(3).items }
+    its(:valid?) { should be_false }
+  end
+
+  context "fresh copy of the non-saved new group" do
+    before do
+      group_repository.save(new_group)
+    end
+
+    subject { group_repository.find(new_group.id) }
+
+    its(:name)   { should == 'People' }
+    its(:users)  { should have(1).item }
+    its(:valid?) { should be_true }
+  end
+end
+
 shared_examples_for "has_many" do |data_provider|
   let(:user_repository)  { "SuperUserRepository#{data_provider}".constantize }
   let(:group_repository) { "GroupRepository#{data_provider}".constantize }
@@ -98,6 +156,7 @@ shared_examples_for "has_many" do |data_provider|
 
       it_behaves_like "has_many records"
       it_behaves_like "has_many records created from nested form attributes"
+      it_behaves_like "has_many records from nested form attributes with invalid data"
     end
 
     context "reloaded return" do
@@ -105,6 +164,7 @@ shared_examples_for "has_many" do |data_provider|
 
       it_behaves_like "has_many records"
       it_behaves_like "has_many records created from nested form attributes"
+      it_behaves_like "has_many records from nested form attributes with invalid data"
     end
   end
 end

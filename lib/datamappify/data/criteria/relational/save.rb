@@ -4,6 +4,8 @@ module Datamappify
       module Relational
         class Save < Common
           def perform
+            update_criteria_for_existing_record
+
             new_record? ? create_record : save_record unless ignore?
           end
 
@@ -20,6 +22,16 @@ module Datamappify
 
           def update_entity_with(record)
             entity.id = record.send(key_name)
+          end
+
+          def update_criteria_for_existing_record
+            criteria[:id] = existing_pk_value if existing_pk_value
+          end
+
+          def existing_pk_value
+            @existing_pk_value ||= options[:via].present? &&
+              options[:primary_record].present? &&
+              options[:primary_record].send(options[:via])
           end
         end
       end

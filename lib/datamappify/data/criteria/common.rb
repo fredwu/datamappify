@@ -32,6 +32,9 @@ module Datamappify
           @source_class = source_class
           @entity, @criteria, @attributes, @options = *args
           @block = block
+
+          @criteria ||= {}
+          @options  ||= {}
         end
 
         # Performs the action (defined by child method classes) with callbacks
@@ -76,7 +79,7 @@ module Datamappify
         #
         # @return [Symbol]
         def key_name
-          primary_record? ? :id : any_attribute.reference_key
+          primary_record? || options[:via] ? :id : any_attribute.reference_key
         end
 
         # The value of {#key_name}

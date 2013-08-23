@@ -15,6 +15,7 @@ module Datamappify
               module Datamappify::Data::Record::Sequel
                 class #{source_class_name} < ::Sequel::Model(:#{source_class_name.pluralize.gsub('::', '_').underscore})
                   raise_on_save_failure = true
+                  unrestrict_primary_key
                 end
               end
             CODE

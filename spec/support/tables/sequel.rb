@@ -13,6 +13,8 @@ end
 
 DB.create_table :super_users do
   primary_key :id
+  foreign_key :personal_info_id
+  foreign_key :business_info_id
   foreign_key :base_user_id
   foreign_key :group_id
   DateTime :created_at
@@ -25,6 +27,16 @@ DB.create_table :users do
   String :surname
   Integer :age
   Integer :level
+  foreign_key :personal_info_id
+  foreign_key :business_info_id
+  DateTime :created_at
+  DateTime :updated_at
+end
+
+DB.create_table :user_infos do
+  primary_key :id
+  String :info
+  foreign_key :user_id
   DateTime :created_at
   DateTime :updated_at
 end

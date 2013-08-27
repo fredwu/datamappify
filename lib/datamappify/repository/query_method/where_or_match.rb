@@ -5,7 +5,7 @@ module Datamappify
         # @return [Array<Entity>]
         def perform
           results = dispatch_criteria_to_default_source(
-            self.class.name.demodulize, data_mapper.entity_class, criteria, data_mapper.attributes
+            self.class.name.demodulize.to_sym, data_mapper.entity_class, criteria, data_mapper.attributes
           )
 
           results.each do |entity|

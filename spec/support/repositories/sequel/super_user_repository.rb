@@ -17,4 +17,7 @@ class SuperUserRepositorySequel
     map_attribute :passport,       :to => 'UserPassport#number'
     map_attribute :health_care,    :to => 'UserHealthCare#number'
   end
+
+  map_attribute :personal_info, :to => 'UserInfo#info', :via => :personal_info_id
+  map_attribute :business_info, :to => 'UserInfo#info', :via => :business_info_id
 end

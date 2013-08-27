@@ -1,3 +1,5 @@
+require_relative 'user_info'
+
 class User
   include Datamappify::Entity
 
@@ -14,6 +16,9 @@ class User
                              :on       => :update
   validates :driver_license, :presence => true,
                              :length   => { :minimum => 8 }
+
+  attributes_from UserInfo, :prefix_with => :personal
+  attributes_from UserInfo, :prefix_with => :business
 
   def full_name
     "#{first_name} #{last_name}"

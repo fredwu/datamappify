@@ -2,6 +2,7 @@
 
 - Fixed dirty tracking for entities returned from `where` and `all`.
 - Fixed a bug where in certain situations duplicated data records are created upon updating an entity.
+- Fixed a bug where reversed mapping option `:via` generates wrong join queries.
 - New API: Added `match` for repository.
 - Added preliminary support for composed search criteria.
   - Added `where` as a composable criteria.

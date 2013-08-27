@@ -14,6 +14,8 @@ ActiveRecord::Migration.suppress_messages do
     end
 
     create_table :super_users do |t|
+      t.references :personal_info
+      t.references :business_info
       t.references :base_user
       t.references :group
       t.timestamps
@@ -24,6 +26,14 @@ ActiveRecord::Migration.suppress_messages do
       t.string :surname
       t.integer :age
       t.integer :level
+      t.references :personal_info
+      t.references :business_info
+      t.timestamps
+    end
+
+    create_table :user_infos do |t|
+      t.string :info
+      t.references :user
       t.timestamps
     end
 

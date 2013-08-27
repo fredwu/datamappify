@@ -12,7 +12,13 @@ module Datamappify
           # @return [Sequel::DataSet]
           def records_scope(scope)
             scope || secondaries.inject(source_class) do |scope, secondary|
-              scope.join(secondary.source_table, secondary.reference_key => :id).select_all(scope.table_name)
+              join_condition = if secondary.options[:via]
+                { :id => secondary.options[:via] }
+              else
+                { secondary.reference_key => :id }
+              end
+
+              scope.join(secondary.source_table, join_condition).select_all(scope.table_name)
             end
           end
 

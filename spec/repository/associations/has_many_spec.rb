@@ -196,6 +196,14 @@ shared_examples_for "has_many" do |data_provider|
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
     end
+
+    context "collection return" do
+      let(:saved_group) { group_repository.save!(group); group_repository.all.detect { |g| g.id == group.id } }
+
+      it_behaves_like "has_many records"
+      it_behaves_like "has_many records created from nested form attributes"
+      it_behaves_like "has_many records from nested form attributes with invalid data"
+    end
   end
 end
 

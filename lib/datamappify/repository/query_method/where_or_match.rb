@@ -10,6 +10,7 @@ module Datamappify
 
           results.each do |entity|
             states.find(entity)
+            walk_references(:Find, entity)
           end
 
           results

@@ -11,7 +11,7 @@ module Datamappify
           #
           # @return [ActiveRecord::Relation]
           def records_scope(scope)
-            scope || source_class.joins(secondaries.map(&:key))
+            scope || source_class.joins(secondaries.map(&:association_key))
           end
 
           # @param primaries [Array<Attribute>]

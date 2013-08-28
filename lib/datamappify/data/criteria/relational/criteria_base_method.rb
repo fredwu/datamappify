@@ -41,7 +41,7 @@ module Datamappify
             if attribute.primary_attribute?
               primary_record
             else
-              primary_record.send(attribute.key)
+              primary_record.send(attribute.association_key)
             end
           end
 

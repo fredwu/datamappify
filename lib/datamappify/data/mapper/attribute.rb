@@ -117,6 +117,13 @@ module Datamappify
           @reference_key ||= options[:reference_key] || :"#{primary_source_class.to_s.demodulize.underscore}_id"
         end
 
+        # Key used for association
+        #
+        # @return [Symbol]
+        def association_key
+          @association_key ||= options[:via] ? options[:via].to_s.chomp('_id').to_sym : key
+        end
+
         # Primary attribute is from the same data provider and the same source class
         #
         # @return [Boolean]

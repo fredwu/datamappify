@@ -7,7 +7,7 @@ shared_examples_for "finder match" do |data_provider|
     describe "#match" do
       context "case sensitive" do
         include_context "where or match context"
-        it_behaves_like "where or match finder", :match
+        it_behaves_like "where or match finder", :match, data_provider
       end
 
       context "case insensitive" do
@@ -15,7 +15,7 @@ shared_examples_for "finder match" do |data_provider|
         let(:license)    { 'yeslicense' }
         let(:no_license) { 'No_License' }
 
-        it_behaves_like "where or match finder", :match
+        it_behaves_like "where or match finder", :match, data_provider
       end
     end
   end

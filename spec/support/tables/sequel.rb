@@ -35,7 +35,7 @@ end
 
 DB.create_table :user_infos do
   primary_key :id
-  String :info
+  String :content
   foreign_key :user_id
   DateTime :created_at
   DateTime :updated_at

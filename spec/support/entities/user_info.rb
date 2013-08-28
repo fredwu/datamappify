@@ -1,5 +1,5 @@
 class UserInfo
   include Datamappify::Entity
 
-  attribute :info, String
+  attribute :content, String
 end

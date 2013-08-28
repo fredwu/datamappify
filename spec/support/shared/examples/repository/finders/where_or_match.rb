@@ -4,15 +4,15 @@ shared_context "where or match context" do
   let(:no_license) { 'NO_LICENSE' }
 end
 
-shared_examples_for "where or match finder" do |finder|
+shared_examples_for "where or match finder" do |finder, data_provider|
   subject { records }
 
   before do
     user_repository.save!(User.new(:first_name => 'Mary', :driver_license => 'YESLICENSE'))
-    user_repository.save!(User.new(:first_name => 'Bob',  :driver_license => 'YESLICENSE', :personal_info => 'Ok'))
-    user_repository.save!(User.new(:first_name => 'Jane', :driver_license => 'NO_LICENSE', :business_info => 'Ok'))
+    user_repository.save!(User.new(:first_name => 'Bob',  :driver_license => 'YESLICENSE', :personal_content => 'Ok'))
+    user_repository.save!(User.new(:first_name => 'Jane', :driver_license => 'NO_LICENSE', :business_content => 'Ok'))
     user_repository.save!(User.new(:first_name => 'Bob',  :driver_license => 'NO_LICENSE'))
-    user_repository.save!(User.new(:first_name => 'Bob',  :driver_license => 'YESLICENSE', :business_info => 'No'))
+    user_repository.save!(User.new(:first_name => 'Bob',  :driver_license => 'YESLICENSE', :business_content => 'No'))
     user_repository.save!(User.new(:first_name => 'Bobb', :driver_license => 'YESLICENSE'))
     user_repository.save!(User.new(:first_name => 'John', :driver_license => 'YESLICENSE'))
   end
@@ -105,14 +105,26 @@ shared_examples_for "where or match finder" do |finder|
   end
 
   describe "by reverse mapped attribute" do
-    let(:records) { user_repository.send(finder, :business_info => 'Ok') }
+    let(:records) { user_repository.send(finder, :business_content => 'Ok') }
 
     it { should have(1).user }
 
     context "record" do
       subject { records.first }
 
-      its(:personal_info) { should be_nil }
+      its(:personal_content) { should be_nil }
+    end
+
+    context "data record" do
+      subject { "Datamappify::Data::Record::#{data_provider}::User".constantize.last }
+
+      it "has proper personal_info association" do
+        -> { subject.personal_info }.should_not raise_error
+      end
+
+      it "has proper business_info association" do
+        -> { subject.business_info }.should_not raise_error
+      end
     end
   end
 end

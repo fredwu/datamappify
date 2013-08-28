@@ -32,7 +32,7 @@ ActiveRecord::Migration.suppress_messages do
     end
 
     create_table :user_infos do |t|
-      t.string :info
+      t.string :content
       t.references :user
       t.timestamps
     end

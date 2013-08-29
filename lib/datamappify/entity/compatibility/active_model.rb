@@ -1,8 +1,8 @@
 module Datamappify
   module Entity
-    module ActiveModel
+    module Compatibility
       # Add non-entity related stuff so that an entity can be used in say, forms
-      module Compatibility
+      module ActiveModel
         # @return [Boolean]
         def persisted?
           !id.blank?

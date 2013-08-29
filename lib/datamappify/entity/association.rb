@@ -1,4 +1,4 @@
-require 'datamappify/entity/association/compatibility'
+require 'datamappify/entity/compatibility/association/active_record'
 require 'datamappify/entity/association/reference'
 require 'datamappify/entity/association/validation'
 
@@ -17,7 +17,7 @@ module Datamappify
       end
 
       module DSL
-        prepend Compatibility
+        prepend Compatibility::Association::ActiveRecord
 
         # @param name [Symbol, String]
         #

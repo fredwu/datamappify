@@ -132,16 +132,17 @@ shared_examples_for "has_many records destroy from nested form attributes" do
   let(:group) do
     Group.new(
       :name             => 'People',
-      :users            => [existing_user],
+      :users            => [existing_user, existing_user_2],
       :users_attributes => {
-        '0' => { 'id' => existing_user.id.to_s, '_destroy' => '1' }
+        '0' => { 'id' => existing_user.id.to_s, '_destroy' => '1' },
+        '1' => { 'id' => existing_user_2.id.to_s, 'first_name' => 'Jeff', 'driver_license' => 'NEXTCOMPUTER', '_destroy' => 'false' }
       }
     )
   end
 
   subject { saved_group }
 
-  its(:users) { should have(0).items }
+  its(:users) { should have(1).item }
 end
 
 shared_examples_for "has_many data records" do |data_provider|
@@ -178,6 +179,7 @@ shared_examples_for "has_many" do |data_provider|
   let(:group_repository) { "GroupRepository#{data_provider}".constantize }
   let(:new_user)         { SuperUser.new(:first_name => 'Fred', :driver_license => 'MOSDEVOPS') }
   let(:existing_user)    { user_repository.save! SuperUser.new(:first_name => 'Steve', :driver_license => 'APPLECOMPUTER') }
+  let(:existing_user_2)  { user_repository.save! SuperUser.new(:first_name => 'Bill', :driver_license => 'MICROCOMPUTER') }
   let(:group) do
     Group.new(
       :name  => 'People',
@@ -202,7 +204,6 @@ shared_examples_for "has_many" do |data_provider|
       it_behaves_like "has_many records"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
-      it_behaves_like "has_many records destroy from nested form attributes"
       it_behaves_like "has_many data records", data_provider
     end
 

@@ -8,7 +8,7 @@ module Datamappify
 
         def self.included(klass)
           klass.class_eval do
-            attribute :_destroy, Integer, :default => false
+            attribute :_destroy, Virtus::Attribute::Boolean, :default => false
           end
         end
 

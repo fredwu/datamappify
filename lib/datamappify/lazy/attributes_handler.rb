@@ -8,7 +8,7 @@ module Datamappify
       # @param entity [Entity]
       def initialize(entity)
         @entity              = entity
-        @uncached_attributes = entity.attributes.keys
+        @uncached_attributes = entity.attributes.keys - entity.class::IGNORED_ATTRIBUTE_NAMES
 
         entity.add_observer(self)
       end

@@ -32,7 +32,7 @@ module Datamappify
         # @return [void]
         def aggregate_validation_errors(context)
           self.associations.each do |association|
-            self.send(association).each do |entity|
+            self.send(association).reject(&:destroy?).each do |entity|
               entity.invalid?(context) && referenced_entity_validation_errors(entity)
             end
           end

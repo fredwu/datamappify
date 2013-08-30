@@ -65,7 +65,9 @@ module Datamappify
 
       # @return [Array<Symbol>]
       def all_attribute_names
-        entity_class.attribute_set.entries.collect(&:name)
+        entity_class.attribute_set.entries.collect(&:name).reject do |name|
+          entity_class::IGNORED_ATTRIBUTE_NAMES.include?(name)
+        end
       end
 
       # @return [Array<Symbol>]

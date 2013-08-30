@@ -1,6 +1,7 @@
 require 'observer'
 require 'virtus'
 require 'datamappify/entity/compatibility/active_model'
+require 'datamappify/entity/compatibility/active_record'
 require 'datamappify/entity/lazy_checking'
 require 'datamappify/entity/composable'
 require 'datamappify/entity/association'
@@ -11,10 +12,11 @@ module Datamappify
     def self.included(klass)
       klass.class_eval do
         include Observable
-        include ::ActiveModel::Model
-        include Compatibility::ActiveModel
         include Virtus
         include Virtus::Equalizer.new(inspect)
+        include ::ActiveModel::Model
+        include Compatibility::ActiveModel
+        include Compatibility::ActiveRecord
         include LazyChecking
         include Composable
         include Association

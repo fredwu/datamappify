@@ -128,6 +128,22 @@ shared_examples_for "has_many records from nested form attributes with invalid d
   end
 end
 
+shared_examples_for "has_many records destroy from nested form attributes" do
+  let(:group) do
+    Group.new(
+      :name             => 'People',
+      :users            => [existing_user],
+      :users_attributes => {
+        '0' => { 'id' => existing_user.id.to_s, '_destroy' => '1' }
+      }
+    )
+  end
+
+  subject { saved_group }
+
+  its(:users) { should have(0).items }
+end
+
 shared_examples_for "has_many data records" do |data_provider|
   let(:data_groups)               { "Datamappify::Data::Record::#{data_provider}::Group".constantize }
   let(:data_super_users)          { "Datamappify::Data::Record::#{data_provider}::SuperUser".constantize }
@@ -186,6 +202,7 @@ shared_examples_for "has_many" do |data_provider|
       it_behaves_like "has_many records"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
+      it_behaves_like "has_many records destroy from nested form attributes"
       it_behaves_like "has_many data records", data_provider
     end
 
@@ -195,6 +212,7 @@ shared_examples_for "has_many" do |data_provider|
       it_behaves_like "has_many records"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
+      it_behaves_like "has_many records destroy from nested form attributes"
     end
 
     context "collection return" do
@@ -203,6 +221,7 @@ shared_examples_for "has_many" do |data_provider|
       it_behaves_like "has_many records"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
+      it_behaves_like "has_many records destroy from nested form attributes"
     end
   end
 end

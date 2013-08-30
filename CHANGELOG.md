@@ -13,6 +13,7 @@
   - Added `reference_key` option to `map_attribute`.
   - Added support for ActiveRecord-style attribute-nesting, e.g. `form.fields_for`.
   - Added validation aggregation for associated entities.
+  - Added the ability to destroy associated items.
 
 ## 0.60.0 [2013-07-23]
 

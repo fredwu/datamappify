@@ -24,7 +24,7 @@ module Datamappify
 
           # @return [Array]
           def excluded_attributes
-            @excluded_attributes ||= @entity_class.reference_keys << :id
+            @excluded_attributes ||= @entity_class.reference_keys + [:id, *@entity_class::IGNORED_ATTRIBUTE_NAMES]
           end
 
           # @param attribute_name [Symbol]

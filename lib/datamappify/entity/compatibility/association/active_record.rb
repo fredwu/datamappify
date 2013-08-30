@@ -28,6 +28,10 @@ module Datamappify
                     self.#{name} << entity
                   end
                 end
+
+                self.#{name}.map! do |entity|
+                  entity.destroy? ? nil : entity
+                end.compact!
               end
             CODE
           end

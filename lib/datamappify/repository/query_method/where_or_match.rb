@@ -8,12 +8,7 @@ module Datamappify
             self.class.name.demodulize.to_sym, data_mapper.entity_class, criteria, data_mapper.attributes
           )
 
-          results.each do |entity|
-            states.find(entity)
-            walk_references(:Find, entity)
-          end
-
-          results
+          MultiResultBlender.new(self).blend(results)
         end
 
         # @see Method#reader?

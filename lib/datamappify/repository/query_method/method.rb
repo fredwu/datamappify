@@ -85,8 +85,6 @@ module Datamappify
           end
         end
 
-        private
-
         # Walks through the references and performs actions on them
         #
         # @param (see #dispatch_criteria_to_providers)
@@ -153,6 +151,8 @@ module Datamappify
             }).execute
           end
         end
+
+        private
 
         # return [Class]
         def source_attributes_walker

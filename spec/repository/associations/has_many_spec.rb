@@ -224,6 +224,12 @@ shared_examples_for "has_many" do |data_provider|
       it_behaves_like "has_many records from nested form attributes with invalid data"
       it_behaves_like "has_many records destroy from nested form attributes"
     end
+
+    context "criteria return" do
+      let(:saved_group) { group_repository.save!(group); group_repository.criteria(:where => { :id => group.id }).first }
+
+      it_behaves_like "has_many records"
+    end
   end
 end
 

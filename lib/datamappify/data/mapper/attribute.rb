@@ -62,24 +62,6 @@ module Datamappify
 
         # @example
         #
-        #   "user_comment"
-        #
-        # @return [String]
-        def source_name
-          @source_name ||= source_class_name.demodulize.underscore
-        end
-
-        # @example
-        #
-        #   :user_comment
-        #
-        # @return [Symbol]
-        def source_key
-          @source_key ||= source_name.to_sym
-        end
-
-        # @example
-        #
         #   :title
         #
         # @return [Symbol]

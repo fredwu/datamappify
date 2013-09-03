@@ -76,8 +76,7 @@ module Datamappify
             end
           end
 
-          # Constructs an attribute setter, the setter itself does NOT need
-          # to set the value as the value is never going to be used.
+          # Constructs an attribute setter
           #
           # The setter sets the `attr_will_change!` flag when necessary.
           #
@@ -87,6 +86,7 @@ module Datamappify
           def construct_setter(name)
             define_singleton_method "#{name}=" do |value|
               send(:attribute_will_change!, name) unless send(name) == value
+              set_value(name, value)
             end
           end
 

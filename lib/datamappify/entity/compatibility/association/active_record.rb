@@ -17,6 +17,10 @@ module Datamappify
                   #{options[:via]}.new(attributes)
                 end
 
+                # resets the association attribute if nil,
+                # this will reset it back to an empty array
+                self.#{name} ||= nil
+
                 self.#{name} = self.#{name}.map do |entity|
                   new_entites.detect { |e| e.id == entity.id } || entity
                 end

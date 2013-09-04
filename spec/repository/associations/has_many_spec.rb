@@ -25,6 +25,23 @@ shared_examples_for "has_many records" do
   end
 end
 
+shared_examples_for "has_many new records created from nested form attributes" do
+  let(:group) do
+    Group.new(
+      :name             => 'People',
+      :users_attributes => {
+        '0' => { 'first_name' => 'Bill', 'driver_license' => 'NEXTCOMPUTER' },
+        '1' => { 'first_name' => 'Alan', 'driver_license' => 'MICROCOMPUTER', 'id' => existing_user.id.to_s },
+        '2' => { 'first_name' => 'Jeff', 'driver_license' => 'JEFFCOMPUTER' },
+      }
+    )
+  end
+
+  subject { saved_group }
+
+  its(:users) { should have(3).items }
+end
+
 shared_examples_for "has_many records created from nested form attributes" do
   let(:group) do
     Group.new(
@@ -202,6 +219,7 @@ shared_examples_for "has_many" do |data_provider|
       let(:saved_group) { group_repository.save!(group) }
 
       it_behaves_like "has_many records"
+      it_behaves_like "has_many new records created from nested form attributes"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
       it_behaves_like "has_many data records", data_provider

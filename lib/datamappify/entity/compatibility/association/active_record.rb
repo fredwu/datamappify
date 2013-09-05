@@ -14,6 +14,7 @@ module Datamappify
             self.class_eval <<-CODE, __FILE__, __LINE__ + 1
               def #{name}_attributes=(params = {})
                 new_entites = params.map do |index, attributes|
+                  attributes.delete('id') if attributes['id'].blank?
                   #{options[:via]}.new(attributes)
                 end
 

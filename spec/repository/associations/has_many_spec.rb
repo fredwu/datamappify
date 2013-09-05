@@ -30,9 +30,9 @@ shared_examples_for "has_many new records created from nested form attributes" d
     Group.new(
       :name             => 'People',
       :users_attributes => {
-        '0' => { 'first_name' => 'Bill', 'driver_license' => 'NEXTCOMPUTER' },
+        '0' => { 'first_name' => 'Bill', 'driver_license' => 'NEXTCOMPUTER',  'id' => '' },
         '1' => { 'first_name' => 'Alan', 'driver_license' => 'MICROCOMPUTER', 'id' => existing_user.id.to_s },
-        '2' => { 'first_name' => 'Jeff', 'driver_license' => 'JEFFCOMPUTER' },
+        '2' => { 'first_name' => 'Jeff', 'driver_license' => 'JEFFCOMPUTER',  'id' => '' },
       }
     )
   end

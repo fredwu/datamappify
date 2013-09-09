@@ -28,7 +28,9 @@ module Datamappify
           def perform_write
             referenced_entities.each do |entity|
               if entity.destroy?
-                @repository.destroy!(entity) if entity.persisted?
+                if entity.persisted?
+                  @repository.destroy!(entity)
+                end
               else
                 entity.send("#{reference_key}=", @entity.id)
                 @repository.states.mark_as_dirty(entity)

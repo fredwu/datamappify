@@ -152,7 +152,8 @@ shared_examples_for "has_many records destroy from nested form attributes" do
       :users            => [existing_user, existing_user_2],
       :users_attributes => {
         '0' => { 'id' => existing_user.id.to_s, '_destroy' => '1' },
-        '1' => { 'id' => existing_user_2.id.to_s, 'first_name' => 'Jeff', 'driver_license' => 'NEXTCOMPUTER', '_destroy' => 'false' }
+        '1' => { 'id' => existing_user_2.id.to_s, 'first_name' => 'Jeff', 'driver_license' => 'NEXTCOMPUTER', '_destroy' => 'false' },
+        '2' => { 'id' => nil, 'first_name' => 'Jeff', 'driver_license' => 'NEXTCOMPUTER', '_destroy' => 'true' }
       }
     )
   end

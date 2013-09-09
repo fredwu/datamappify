@@ -14,7 +14,7 @@ module Datamappify
 
         # @return [Boolean]
         def destroy?
-          persisted? && !!_destroy
+          !!_destroy
         end
       end
     end

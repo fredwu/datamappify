@@ -18,7 +18,11 @@ module Datamappify
                 { secondary.reference_key => :id }
               end
 
-              scope.join(secondary.source_table, join_condition).select_all(scope.table_name)
+              begin
+                scope.join(secondary.source_table, join_condition).select_all(scope.table_name)
+              rescue
+                scope
+              end
             end
           end
 

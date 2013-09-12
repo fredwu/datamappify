@@ -9,12 +9,11 @@ module Datamappify
           #
           # @return [Sequel::DataSet]
           def records(scope = nil)
-            structured_criteria.inject(records_scope(scope)) do |scope, (attr, value)|
-              case value
-              when :asc  then scope.order(attr)
-              when :desc then scope.reverse_order(attr)
-              end
+            order_conditions = structured_criteria.map do |table_column, value|
+              ::Sequel.send(value, table_column)
             end
+
+            records_scope(scope).order(*order_conditions)
           end
         end
       end

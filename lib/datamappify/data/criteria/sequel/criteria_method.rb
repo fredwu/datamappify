@@ -11,7 +11,7 @@ module Datamappify
           #
           # @return [Sequel::DataSet]
           def records_scope(scope)
-            scope || secondaries.inject(source_class) do |scope, secondary|
+            secondaries.inject(scope || source_class) do |scope, secondary|
               join_condition = if secondary.options[:via]
                 { :id => secondary.options[:via] }
               else
@@ -19,8 +19,8 @@ module Datamappify
               end
 
               begin
-                scope.join(secondary.source_table, join_condition).select_all(scope.table_name)
-              rescue
+                scope.graph(secondary.source_table, join_condition)
+              rescue ::Sequel::Error
                 scope
               end
             end

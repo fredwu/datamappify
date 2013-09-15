@@ -27,15 +27,30 @@ module Datamappify
           #
           # @return [void]
           def execute(&block)
-            @attributes.classify(&:source_class).each do |source_class, attributes|
-              if do_walk?(source_class, attributes)
-                block.call(@provider_name, source_class, attributes)
-                walk_performed(attributes)
+            if @query_method && @query_method.writer?
+              @attributes.classify(&:source_class).each do |source_class, attributes|
+                perform_walk(source_class, attributes, &block)
               end
+            else
+              perform_walk(@attributes.first.source_class, @attributes, &block)
             end
           end
 
           private
+
+          # @param source_class [Class]
+          #
+          # @param attributes [Set<Data::Mapper::Attribute>]
+          #
+          # @yield (see #execute)
+          #
+          # @return [void]
+          def perform_walk(source_class, attributes, &block)
+            if do_walk?(source_class, attributes)
+              block.call(@provider_name, source_class, attributes)
+              walk_performed(attributes)
+            end
+          end
 
           # Whether it is necessary to do the walk
           #

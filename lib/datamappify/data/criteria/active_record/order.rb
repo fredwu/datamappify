@@ -5,26 +5,39 @@ module Datamappify
     module Criteria
       module ActiveRecord
         class Order < CriteriaMethod
+          def initialize(*args)
+            super
+
+            validate_order_args
+          end
+
           # @param scope [ActiveRecord::Relation]
           #
           # @return [ActiveRecord::Relation]
           def records(scope = nil)
-            records_scope(scope).order(structured_criteria)
+            records_scope(scope).order(string_criteria)
           end
 
           private
 
-          # @return [Array]
-          def structured_criteria
-            if super.values.first.is_a?(Hash)
-              super.map do |table_prefix, values|
-                values.map do |column, value|
-                  "#{table_prefix}.#{column} #{value}"
-                end
-              end
-            else
-              super
+          # @return [void]
+          def validate_order_args
+            unless (criteria.values - [:asc, :desc]).empty?
+              raise ArgumentError.new('Order direction should be :asc or :desc')
             end
+          end
+
+          # @return [Array]
+          def string_criteria
+            structured_criteria.map do |table, values|
+              if values.is_a?(Hash)
+                values.map do |column, value|
+                  "#{table}.#{column} #{value}"
+                end
+              else
+                "#{table} #{values}"
+              end
+            end.join(', ')
           end
         end
       end

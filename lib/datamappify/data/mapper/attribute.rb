@@ -42,12 +42,10 @@ module Datamappify
 
           @source_class_name, @source_attribute_name = parse_source(options[:to])
 
-          if secondary_attribute?
-            if reverse_mapped?
-              Record.build_reversed_association(self, primary_source_class)
-            else
-              Record.build_association(self, primary_source_class)
-            end
+          if reverse_mapped?
+            Record.build_reversed_association(self, primary_source_class)
+          elsif secondary_attribute?
+            Record.build_association(self, primary_source_class)
           end
         end
 

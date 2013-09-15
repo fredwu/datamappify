@@ -10,7 +10,7 @@ module Datamappify
           # @param scope [Sequel::DataSet]
           #
           # @return [Sequel::DataSet]
-          def records_scope(scope)
+          def records_scope(scope = nil)
             secondaries.inject(scope || source_class) do |scope, secondary|
               join_condition = if secondary.options[:via]
                 { :id => secondary.options[:via] }

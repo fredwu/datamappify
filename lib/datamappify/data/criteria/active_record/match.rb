@@ -9,11 +9,29 @@ module Datamappify
           #
           # @return [ActiveRecord::Relation]
           def records(scope = nil)
-            updated_attributes.inject(records_scope(scope)) do |scope, attr|
-              scope.where(
-                attr.source_class.all.table[attr.source_attribute_key].matches(attr.value)
-              )
-            end
+            records_scope(scope).where(string_criteria, *criteria.values)
+          end
+
+          private
+
+          # @return [String]
+          def string_criteria
+            structured_criteria.map do |column, value|
+              "#{column} LIKE ?"
+            end.join(' AND ')
+          end
+
+          # @return [Hash]
+          def structured_criteria
+            Hash[*super.flat_map do |table, values|
+              if values.is_a?(Hash)
+                values.flat_map do |column, value|
+                  ["#{table}.#{column}", value]
+                end
+              else
+                [table, values]
+              end
+            end]
           end
         end
       end

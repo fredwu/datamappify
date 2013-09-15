@@ -14,6 +14,9 @@
   - Added support for ActiveRecord-style attribute-nesting, e.g. `form.fields_for`.
   - Added validation aggregation for associated entities.
   - Added the ability to destroy associated items.
+- Performance optimisations.
+  - Refactored the way Datamappify walks attributes to allow query optimisations.
+  - Optimised ActiveRecord queries for entities.
 
 ## 0.60.0 [2013-07-23]
 

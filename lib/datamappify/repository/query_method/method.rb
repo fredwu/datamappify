@@ -94,7 +94,13 @@ module Datamappify
           _primary_record = nil
 
           attributes_walker(entity) do |provider_name, source_class, attributes|
-            attributes.classify { |attr| attr.options[:via] }.each do |via, attrs|
+            walk_path = if reader?
+              { nil => attributes }
+            else
+              attributes.classify { |attr| attr.options[:via] }
+            end
+
+            walk_path.each do |via, attrs|
               record = data_mapper.provider(provider_name).build_criteria(
                 criteria_name,
                 source_class,

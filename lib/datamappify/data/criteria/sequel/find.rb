@@ -1,4 +1,5 @@
 require 'datamappify/data/criteria/relational/concerns/find'
+require 'datamappify/data/criteria/sequel/criteria_method'
 
 module Datamappify
   module Data

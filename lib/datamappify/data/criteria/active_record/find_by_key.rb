@@ -1,4 +1,5 @@
 require 'datamappify/data/criteria/relational/concerns/find_by_key'
+require 'datamappify/data/criteria/active_record/find'
 
 module Datamappify
   module Data

@@ -17,7 +17,7 @@ module Datamappify
           # @return [String]
           def string_criteria
             structured_criteria.map do |column, value|
-              "#{column} LIKE ?"
+              "lower(#{column}) LIKE lower(?)"
             end.join(' AND ')
           end
 

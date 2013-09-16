@@ -29,7 +29,7 @@ module Datamappify
                   ["#{table}.#{column}", value]
                 end
               else
-                [table, values]
+                ["#{records_scope.table.name}.#{table}", values]
               end
             end]
           end

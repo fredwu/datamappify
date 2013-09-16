@@ -15,7 +15,15 @@ module Datamappify
           #
           # @return [ActiveRecord::Relation]
           def records(scope = nil)
-            records_scope(scope).order(string_criteria)
+            structured_criteria.inject(records_scope(scope)) do |scope, (table, values)|
+              if values.is_a?(Hash)
+                values.inject(scope) do |s, (column, value)|
+                  s.order("#{table}.#{column} #{value}")
+                end
+              else
+                scope.order(table => values)
+              end
+            end
           end
 
           private
@@ -25,19 +33,6 @@ module Datamappify
             unless (criteria.values - [:asc, :desc]).empty?
               raise ArgumentError.new('Order direction should be :asc or :desc')
             end
-          end
-
-          # @return [Array]
-          def string_criteria
-            structured_criteria.map do |table, values|
-              if values.is_a?(Hash)
-                values.map do |column, value|
-                  "#{table}.#{column} #{value}"
-                end
-              else
-                "#{table} #{values}"
-              end
-            end.join(', ')
           end
         end
       end

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 shared_examples_for "finders examples" do |data_provider|
   [
-    { :where => { :last_name => 'Superman' }, :limit => 2, :order => { :last_name => :asc, :first_name => :desc } },
-    { :order => { :last_name => :asc, :first_name => :desc }, :limit => 2, :where => { :last_name => 'Superman' } },
-    { :where => {}, :match => { :last_name => 'Super%' }, :limit => 2, :order => { :last_name => :asc, :first_name => :desc } }
+    { :where => { :last_name => 'Superman' }, :limit => 2, :order => { :last_name => :asc, :first_name => :desc, :id => :desc } },
+    { :order => { :last_name => :asc, :first_name => :desc, :id => :desc }, :limit => 2, :where => { :last_name => 'Superman' } },
+    { :where => {}, :match => { :last_name => 'Super%' }, :limit => 2, :order => { :last_name => :asc, :first_name => :desc, :id => :desc } }
   ].each_with_index do |criteria, index|
     describe "#criteria example #{index+1}" do
       let(:records) { user_repository.criteria(criteria) }

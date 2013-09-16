@@ -35,7 +35,7 @@ module Datamappify
             _criteria = {}
 
             primaries.each do |primary|
-              _criteria[primary.source_attribute_key] = primary.value
+              _criteria[:"#{primary.source_table}__#{primary.source_attribute_key}"] = primary.value
             end
 
             secondaries.each do |secondary|

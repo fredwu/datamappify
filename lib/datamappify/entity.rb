@@ -13,7 +13,7 @@ module Datamappify
       klass.class_eval do
         include Observable
         include Virtus.model
-        include Virtus::Equalizer.new(inspect)
+        include Equalizer.new(*klass.attribute_set)
         include ::ActiveModel::Model
         include Compatibility::ActiveModel
         include Compatibility::ActiveRecord

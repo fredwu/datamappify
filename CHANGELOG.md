@@ -1,5 +1,7 @@
 ## master
 
+## 0.70.0.beta1 [2013-09-26]
+
 - Fixed dirty tracking for entities returned from `where` and `all`.
 - Fixed a bug where in certain situations duplicated data records are created upon updating an entity.
 - Fixed a bug where reversed mapping option `:via` generates wrong join queries.

@@ -18,8 +18,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "virtus",      ">= 1.0.0.beta0", "<= 2.0"
-  spec.add_dependency "activemodel", ">= 4.0.0.rc1", "< 5"
+  spec.add_dependency "virtus",      ">= 1.0.0.beta5", "<= 2.0"
+  spec.add_dependency "activemodel", "~> 4.0.0"
   spec.add_dependency "hooks",       "~> 0.3.0"
 
   spec.add_development_dependency "bundler", "~> 1.3"
@@ -33,6 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "coveralls"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "sequel"
-  spec.add_development_dependency "activerecord",     ">= 4.0.0.rc1", "< 5"
+  spec.add_development_dependency "activerecord",     "~> 4.0.0"
   spec.add_development_dependency "database_cleaner", "~> 1.0.1"
 end

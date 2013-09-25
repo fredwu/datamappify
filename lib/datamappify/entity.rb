@@ -12,7 +12,7 @@ module Datamappify
     def self.included(klass)
       klass.class_eval do
         include Observable
-        include Virtus
+        include Virtus.model
         include Virtus::Equalizer.new(inspect)
         include ::ActiveModel::Model
         include Compatibility::ActiveModel

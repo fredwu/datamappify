@@ -17,7 +17,7 @@ module Datamappify
           def build_attributes
             @entity_class.attribute_set.each do |attribute|
               unless excluded_attributes.include?(attribute.name)
-                @entity.attribute_set << build_attribute(attribute.name, attribute.writer)
+                @entity.attribute_set << build_attribute(attribute)
               end
             end
           end
@@ -27,25 +27,17 @@ module Datamappify
             @excluded_attributes ||= @entity_class.reference_keys + [:id, *@entity_class::IGNORED_ATTRIBUTE_NAMES]
           end
 
-          # @param attribute_name [Symbol]
-          #
-          # @param attribute_writer [Virtus::Attribute::Writer]
+          # @param attribute [Virtus::Attribute]
           #
           # @return [Virtus::Attribute]
-          def build_attribute(attribute_name, attribute_writer)
-            name = if @options[:prefix_with]
-              Attribute.prefix(attribute_name, @options[:prefix_with])
+          def build_attribute(attribute)
+            attribute_name = if @options[:prefix_with]
+              Attribute.prefix(attribute.name, @options[:prefix_with])
             else
-              attribute_name
+              attribute.name
             end
 
-            Virtus::Attribute.build(
-              name,
-              attribute_writer.primitive,
-              :default    => attribute_writer.default_value,
-              :visibility => attribute_writer.visibility,
-              :coercer    => attribute_writer.coercer
-            )
+            Virtus::Attribute.build(attribute.type, attribute.options.merge(:name => attribute_name))
           end
         end
       end

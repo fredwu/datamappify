@@ -37,7 +37,7 @@ module Datamappify
               attribute.name
             end
 
-            Virtus::Attribute.build(attribute.type, attribute.options.merge(:name => attribute_name))
+            attribute.rename(attribute_name)
           end
         end
       end

@@ -140,11 +140,24 @@ module Datamappify
 
         # Ignores the attribute if it isn't dirty or if it's a primary key
         #
-        # @todo implement proper dirty attribute tracking
-        #
         # @return [Boolean]
         def ignore_attribute?(attribute)
-          entity.send(attribute.name).nil? || attribute.primary_key?
+          unchanged_nil_attribute?(attribute) || attribute.primary_key?
+        end
+
+        # Check if the attribute is nil, and not changed
+        # This ensures that we can set a value _to_ nil if needed.
+        #
+        # @return [Boolean]
+        def unchanged_nil_attribute?(attribute)
+          new_value = entity.send(attribute.name)
+          old_value = entity_changed_attributes[attribute.key]
+          new_value.nil? && old_value.nil?
+        end
+
+        # @return [Hash]
+        def entity_changed_attributes
+          options[:entity_states].fetch(entity).changed_attributes
         end
       end
     end

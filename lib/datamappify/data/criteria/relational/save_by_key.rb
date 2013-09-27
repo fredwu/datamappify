@@ -7,8 +7,10 @@ module Datamappify
         module SaveByKey
           include Concerns::SetCriteria
 
+          EMPTY_CRITERIA = {}.freeze
+
           def initialize(source_class, entity, attributes, options = {}, &block)
-            super(source_class, entity, {}, attributes, options, &block)
+            super(source_class, entity, EMPTY_CRITERIA, attributes, options, &block)
           end
         end
       end

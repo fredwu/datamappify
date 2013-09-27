@@ -9,6 +9,11 @@ module Datamappify
           @pool = {}
         end
 
+
+        def fetch(entity)
+          @pool[entity.object_id]
+        end
+
         # Finds or attaches an entity
         #
         # @param entity [Entity]

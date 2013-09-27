@@ -107,7 +107,8 @@ module Datamappify
                 entity,
                 attrs,
                 :via            => via,
-                :primary_record => _primary_record
+                :primary_record => _primary_record,
+                :entity_states  => states
               )
 
               _primary_record ||= record

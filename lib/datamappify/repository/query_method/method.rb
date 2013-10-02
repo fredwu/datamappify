@@ -93,11 +93,11 @@ module Datamappify
         def walk_attributes(criteria_name, entity)
           _primary_record = nil
 
-          attributes_walker(entity) do |provider_name, source_class, attributes|
+          attributes_walker(entity) do |provider_name, source_class, options|
             walk_path = if reader?
-              { nil => attributes }
+              { nil => options[:attributes] }
             else
-              attributes.classify { |attr| attr.options[:via] }
+              options[:attributes].classify { |attr| attr.options[:via] }
             end
 
             walk_path.each do |via, attrs|
@@ -106,8 +106,9 @@ module Datamappify
                 source_class,
                 entity,
                 attrs,
-                :via            => via,
-                :primary_record => _primary_record
+                :via              => via,
+                :primary_record   => _primary_record,
+                :dirty_attributes => options[:dirty_attributes]
               )
 
               _primary_record ||= record

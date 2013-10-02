@@ -52,6 +52,27 @@ shared_examples_for "repository persistence" do |data_provider|
           persisted_user.persisted?.should == true
         end
 
+        it "updates existing records with nil values" do
+          existing_user.first_name = 'Vivian'
+          existing_user.last_name = nil
+          existing_user.health_care = nil
+
+          updated_user = nil
+
+          expect { updated_user = user_repository.send(query_method, existing_user) }.to change { user_repository.count }.by(0)
+
+          updated_user.first_name.should == 'Vivian'
+          updated_user.last_name.should be_nil
+          updated_user.health_care.should be_nil
+
+          persisted_user = user_repository.find(updated_user.id)
+
+          persisted_user.first_name.should == 'Vivian'
+          persisted_user.last_name.should be_nil
+          persisted_user.health_care.should be_nil
+          persisted_user.persisted?.should == true
+        end
+
         it "updates existing and new records" do
           existing_user.first_name = 'Vivian'
           existing_user.health_care = 'BATMANCAVE'

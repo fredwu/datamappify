@@ -111,9 +111,9 @@ module Datamappify
             :attributes       => attributes,
             :dirty_aware?     => true,
             :dirty_attributes => []
-          }).execute do |provider_name, source_class, attributes|
+          }).execute do |provider_name, source_class, options|
             entity.repository.data_mapper.provider(provider_name).build_criteria(
-              :FindByKey, source_class, entity, attributes
+              :FindByKey, source_class, entity, options[:attributes]
             )
           end
         end

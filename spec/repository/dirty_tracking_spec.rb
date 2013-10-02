@@ -38,7 +38,6 @@ shared_examples_for "dirty tracking" do |data_provider|
       end
 
       describe "change by mutation" do
-
         it "changed" do
           existing_user.first_name << 'APPEND'
           state = user_repository.states.find(existing_user)

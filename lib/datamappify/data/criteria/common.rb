@@ -138,13 +138,13 @@ module Datamappify
 
         private
 
-        # Ignores the attribute if it isn't dirty or if it's a primary key
-        #
-        # @todo implement proper dirty attribute tracking
+        # Ignores the attribute accordingly
         #
         # @return [Boolean]
         def ignore_attribute?(attribute)
-          entity.send(attribute.name).nil? || attribute.primary_key?
+          unless new_record? || entity.lazy_loaded?
+            !options[:dirty_attributes].include?(attribute.key)
+          end
         end
       end
     end

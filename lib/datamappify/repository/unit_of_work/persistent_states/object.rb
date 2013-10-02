@@ -51,7 +51,7 @@ module Datamappify
           #
           # @return [Boolean]
           def new?
-            @entity.id.nil?
+            !@entity.persisted?
           end
 
           private
@@ -85,7 +85,7 @@ module Datamappify
           # @return [void]
           def construct_setter(name)
             define_singleton_method "#{name}=" do |value|
-              send(:attribute_will_change!, name) unless send(name) == value
+              mark_as_dirty(name) unless send(name) == value
               set_value(name, value)
             end
           end

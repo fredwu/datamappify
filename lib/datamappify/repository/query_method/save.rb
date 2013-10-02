@@ -13,11 +13,6 @@ module Datamappify
           false
         end
 
-        # @see Method#dirty_aware?
-        def dirty_aware?
-          true
-        end
-
         # @see Method#writer?
         def writer?
           true

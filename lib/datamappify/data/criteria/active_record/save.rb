@@ -15,7 +15,13 @@ module Datamappify
           end
 
           def save(record)
-            record.update_attributes attributes_and_values
+            sanitise_attributes!(record)
+
+            record.update_attributes(attributes_and_values) unless ignore?
+          end
+
+          def sanitise_attributes!(record)
+            attributes_and_values.delete_if { |_, v| v.nil? } if record.new_record?
           end
         end
       end

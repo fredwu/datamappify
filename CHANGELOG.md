@@ -1,5 +1,7 @@
 ## master
 
+- Proper dirty tracking in record updating, fixes an issue of setting an attribute to `nil`.
+
 ## 0.70.0.beta1 [2013-09-26]
 
 - Fixed dirty tracking for entities returned from `where` and `all`.

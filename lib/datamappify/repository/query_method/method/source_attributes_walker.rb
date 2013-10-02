@@ -12,6 +12,8 @@ module Datamappify
             @dirty_aware      = options[:dirty_aware?]
             @dirty_attributes = options[:dirty_attributes]
             @query_method     = options[:query_method]
+
+            @options = options
           end
 
           # @yield [provider_name, source_class, attributes]
@@ -47,7 +49,7 @@ module Datamappify
           # @return [void]
           def perform_walk(source_class, attributes, &block)
             if do_walk?(source_class, attributes)
-              block.call(@provider_name, source_class, attributes)
+              block.call(@provider_name, source_class, @options.merge(:attributes => attributes))
               walk_performed(attributes)
             end
           end

@@ -5,5 +5,6 @@ class Group
 
   attribute :name, String
 
-  has_many :users, :via => SuperUser
+  has_one  :leader, :via => SuperUser
+  has_many :users,  :via => SuperUser
 end

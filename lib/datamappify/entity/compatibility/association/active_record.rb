@@ -3,10 +3,26 @@ module Datamappify
     module Compatibility
       module Association
         # Compatibility layer for ActionRecord
+        #
+        # adds `association_name_attributes` as required by nested attributes assignment
         module ActiveRecord
-          # Adds `association_name_attributes` as required by
-          # nested attributes assignment
-          #
+          # @param (see DSL#has_one)
+          def has_one(name, options = {})
+            super
+
+            self.class_eval <<-CODE, __FILE__, __LINE__ + 1
+              def #{name}_attributes=(params = {})
+                params.delete('id') if params['id'].blank?
+
+                if self.#{name}
+                  params['id'] = self.#{name}.id
+                end
+
+                self.#{name} = #{options[:via]}.new(params)
+              end
+            CODE
+          end
+
           # @param (see DSL#has_many)
           def has_many(name, options = {})
             super

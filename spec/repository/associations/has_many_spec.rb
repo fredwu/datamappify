@@ -108,18 +108,6 @@ shared_examples_for "has_many records from nested form attributes with invalid d
     )
   end
 
-  context "before saving" do
-    subject { new_group }
-
-    its(:name)   { should == 'New People' }
-    its(:users)  { should have(3).items }
-    its(:valid?) { should be_false }
-
-    it "does not save" do
-      -> { group_repository.save!(new_group) }.should raise_error(Datamappify::Data::EntityNotSaved)
-    end
-  end
-
   context "non-saved dirty new group" do
     before do
       group_repository.save(new_group)
@@ -130,6 +118,10 @@ shared_examples_for "has_many records from nested form attributes with invalid d
     its(:name)   { should == 'New People' }
     its(:users)  { should have(3).items }
     its(:valid?) { should be_false }
+
+    it "does not save" do
+      -> { group_repository.save!(new_group) }.should raise_error(Datamappify::Data::EntityNotSaved)
+    end
   end
 
   context "fresh copy of the non-saved new group" do
@@ -230,18 +222,22 @@ shared_examples_for "has_many" do |data_provider|
       let(:saved_group) { group_repository.save!(group); group_repository.find(group.id) }
 
       it_behaves_like "has_many records"
+      it_behaves_like "has_many new records created from nested form attributes"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
       it_behaves_like "has_many records destroy from nested form attributes"
+      it_behaves_like "has_many data records", data_provider
     end
 
     context "collection return" do
       let(:saved_group) { group_repository.save!(group); group_repository.all.detect { |g| g.id == group.id } }
 
       it_behaves_like "has_many records"
+      it_behaves_like "has_many new records created from nested form attributes"
       it_behaves_like "has_many records created from nested form attributes"
       it_behaves_like "has_many records from nested form attributes with invalid data"
       it_behaves_like "has_many records destroy from nested form attributes"
+      it_behaves_like "has_many data records", data_provider
     end
 
     context "criteria return" do

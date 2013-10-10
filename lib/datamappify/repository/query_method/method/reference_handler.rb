@@ -21,7 +21,12 @@ module Datamappify
 
           # @return [void]
           def perform_read
-            @entity.send("#{@reference_name}=", fetch_referenced_entities)
+            case reference_type
+            when :one
+              @entity.send("#{@reference_name}=", fetch_referenced_entity)
+            when :many
+              @entity.send("#{@reference_name}=", fetch_referenced_entities)
+            end
           end
 
           # @return [void]
@@ -39,14 +44,32 @@ module Datamappify
             end
           end
 
-          # @return [Array]
+          # @return [Symbol]
+          #   :one or :many
+          def reference_type
+            reference = @entity.send(:attribute_set).detect do |attr|
+              attr.name == @reference_name
+            end
+
+            case reference
+            when Virtus::Attribute::EmbeddedValue then :one
+            when Virtus::Attribute::Collection    then :many
+            end
+          end
+
+          # @return [Entity]
+          def fetch_referenced_entity
+            @repository.where(reference_key => @entity.id).first
+          end
+
+          # @return [Array<Entity>]
           def fetch_referenced_entities
             @repository.where(reference_key => @entity.id)
           end
 
-          # @return [Array]
+          # @return [Array<Entity>]
           def referenced_entities
-            @entity.send(@reference_name)
+            Array.wrap(@entity.send(@reference_name))
           end
 
           # @return (see Data::Mapper::Attribute#reference_key)

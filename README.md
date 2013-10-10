@@ -428,6 +428,7 @@ Note: Returning either `nil` or `false` from the callback will cancel all subseq
 Datamappify also supports entity association. It is experimental and it currently supports the following association types:
 
 - belongs_to
+- has_one
 - has_many
 
 Set up your entities and repositories:
@@ -438,7 +439,14 @@ Set up your entities and repositories:
 class User
   include Datamappify::Entity
 
+  has_one  :title, :via => Title
   has_many :posts, :via => Post
+end
+
+class Title
+  include Datamappify::Entity
+
+  belongs_to :user
 end
 
 class Post
@@ -454,7 +462,14 @@ class UserRepository
 
   for_entity User
 
+  references :title, :via => TitleRepository
   references :posts, :via => PostRepository
+end
+
+class TitleRepository
+  include Datamappify::Repository
+
+  for_entity Title
 end
 
 class PostRepository
@@ -470,10 +485,12 @@ Usage examples:
 new_post         = Post.new(post_attributes)
 another_new_post = Post.new(post_attributes)
 user             = UserRepository.find(1)
+user.title       = Title.new(title_attributes)
 user.posts       = [new_post, another_new_post]
 
 persisted_user   = UserRepository.save!(user)
 
+persisted_user.title #=> associated title
 persisted_user.posts #=> an array of associated posts
 ```
 

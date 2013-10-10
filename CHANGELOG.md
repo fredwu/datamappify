@@ -1,6 +1,7 @@
 ## master
 
 - Proper dirty tracking in record updating, fixes an issue of setting an attribute to `nil`.
+- Added `has_one` association.
 
 ## 0.70.0.beta1 [2013-09-26]
 

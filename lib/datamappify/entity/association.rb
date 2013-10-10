@@ -33,6 +33,17 @@ module Datamappify
         # @param options [Hash]
         #
         # @return [void]
+        def has_one(name, options = {})
+          attribute name, options[:via]
+
+          self.associations << name
+        end
+
+        # @param name [Symbol, String]
+        #
+        # @param options [Hash]
+        #
+        # @return [void]
         def has_many(name, options = {})
           attribute name, Array[options[:via]]
 

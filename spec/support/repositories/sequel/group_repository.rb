@@ -6,5 +6,6 @@ class GroupRepositorySequel
   for_entity Group
   default_provider :Sequel
 
-  references :users, :via => SuperUserRepositorySequel
+  references :leader, :via => SuperUserRepositorySequel
+  references :users,  :via => SuperUserRepositorySequel
 end

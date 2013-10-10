@@ -6,5 +6,6 @@ class GroupRepositoryActiveRecord
   for_entity Group
   default_provider :ActiveRecord
 
-  references :users, :via => SuperUserRepositoryActiveRecord
+  references :leader, :via => SuperUserRepositoryActiveRecord
+  references :users,  :via => SuperUserRepositoryActiveRecord
 end

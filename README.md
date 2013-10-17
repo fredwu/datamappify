@@ -431,7 +431,7 @@ Note: Returning either `nil` or `false` from the callback will cancel all subseq
 
 Datamappify also supports entity association. It is experimental and it currently supports the following association types:
 
-- belongs_to
+- belongs_to (partially implemented)
 - has_one
 - has_many
 

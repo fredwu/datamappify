@@ -40,17 +40,26 @@ describe Datamappify::Repository do
 
   context "#find" do
     context "found" do
-      let(:entity) { valid_user.id }
+      let(:criteria) { valid_user.id }
+      let(:entity)   { valid_user }
 
       before do
         HeroUserRepository.save!(valid_user)
       end
 
-      it_behaves_like "callbacks", :find,    :before_load, :before_find, :after_find, :after_load
+      it "returns entity instead of criteria" do
+        HeroUserRepository.instance.should_receive(:performed).with(:before_load, criteria)
+        HeroUserRepository.instance.should_receive(:performed).with(:before_find, criteria)
+        HeroUserRepository.instance.should_receive(:performed).with(:after_find, entity)
+        HeroUserRepository.instance.should_receive(:performed).with(:after_load, entity)
+
+        HeroUserRepository.find(valid_user.id)
+      end
     end
 
     context "not found" do
-      let(:entity) { 42 }
+      let(:criteria) { 42 }
+      let(:entity)   { criteria }
 
       it_behaves_like "callbacks", :find,    :before_load, :before_find
     end

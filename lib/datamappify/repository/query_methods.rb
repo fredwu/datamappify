@@ -27,7 +27,7 @@ module Datamappify
       #
       # @return [Entity, nil]
       def find(criteria)
-        run_callbacks criteria, :load, :find do
+        run_callbacks_and_return_entity criteria, :load, :find do
           QueryMethod::Find.new(query_options, criteria).perform
         end
       end

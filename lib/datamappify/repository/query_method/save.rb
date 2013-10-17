@@ -34,7 +34,7 @@ module Datamappify
         end
 
         def context
-          self.class.name.demodulize.underscore.to_sym
+          self.class.name.demodulize.downcase.to_sym
         end
       end
     end

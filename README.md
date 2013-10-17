@@ -384,6 +384,8 @@ UserRepository.destroy(user)
 
 Datamappify supports the following callbacks via [Hooks](https://github.com/apotonick/hooks):
 
+- before_load
+- before_find
 - before_create
 - before_update
 - before_save
@@ -392,6 +394,8 @@ Datamappify supports the following callbacks via [Hooks](https://github.com/apot
 - after_update
 - after_save
 - after_destroy
+- after_find
+- after_load
 
 Callbacks are defined in repositories, and they have access to the entity. For example:
 

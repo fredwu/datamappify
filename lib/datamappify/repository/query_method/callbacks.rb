@@ -8,7 +8,9 @@ module Datamappify
           klass.class_eval do
             include Hooks
 
-            define_hooks :before_create,  :after_create,
+            define_hooks :before_load,    :after_load,
+                         :before_find,    :after_find,
+                         :before_create,  :after_create,
                          :before_update,  :after_update,
                          :before_save,    :after_save,
                          :before_destroy, :after_destroy,

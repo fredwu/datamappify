@@ -8,6 +8,8 @@ shared_examples_for "callbacks" do |query_method, *performed_callbacks|
   end
 
   all_callbacks = [
+    :before_load,    :after_load,
+    :before_find,    :after_find,
     :before_create,  :after_create,
     :before_update,  :after_update,
     :before_save,    :after_save,
@@ -36,21 +38,39 @@ describe Datamappify::Repository do
   it { valid_user.valid?.should == true }
   it { invalid_user.valid?.should == false }
 
+  context "#find" do
+    context "found" do
+      let(:entity) { valid_user.id }
+
+      before do
+        HeroUserRepository.save!(valid_user)
+      end
+
+      it_behaves_like "callbacks", :find,    :before_load, :before_find, :after_find, :after_load
+    end
+
+    context "not found" do
+      let(:entity) { 42 }
+
+      it_behaves_like "callbacks", :find,    :before_load, :before_find
+    end
+  end
+
   context "non-persisted" do
     context "on valid entity" do
       let(:entity) { valid_user }
 
-      it_behaves_like "callbacks", :create,  :before_save, :before_create, :before_create_2, :before_create_block, :after_create, :after_save
-      it_behaves_like "callbacks", :update,  :before_save, :before_update, :after_update, :after_save
-      it_behaves_like "callbacks", :save,    :before_save, :before_create, :before_create_2, :before_create_block, :after_create, :after_save
+      it_behaves_like "callbacks", :create,  :before_load, :before_save, :before_create, :before_create_2, :before_create_block, :after_create, :after_save, :after_load
+      it_behaves_like "callbacks", :update,  :before_load, :before_save, :before_update, :after_update, :after_save, :after_load
+      it_behaves_like "callbacks", :save,    :before_load, :before_find, :before_load, :before_save, :before_create, :before_create_2, :before_create_block, :after_create, :after_save, :after_load
     end
 
     context "on invalid entity" do
       let(:entity) { invalid_user }
 
-      it_behaves_like "callbacks", :create,  :before_save, :before_create, :before_create_2, :before_create_block
-      it_behaves_like "callbacks", :update,  :before_save, :before_update
-      it_behaves_like "callbacks", :save,    :before_save, :before_create, :before_create_2, :before_create_block
+      it_behaves_like "callbacks", :create,  :before_load, :before_save, :before_create, :before_create_2, :before_create_block
+      it_behaves_like "callbacks", :update,  :before_load, :before_save, :before_update
+      it_behaves_like "callbacks", :save,    :before_load, :before_find, :before_load, :before_save, :before_create, :before_create_2, :before_create_block
     end
   end
 
@@ -60,19 +80,19 @@ describe Datamappify::Repository do
     context "on valid entity" do
       let(:entity) { persisted_user }
 
-      it_behaves_like "callbacks", :create,  :before_save, :before_create, :before_create_2, :before_create_block, :after_create, :after_save
-      it_behaves_like "callbacks", :update,  :before_save, :before_update, :after_update, :after_save
-      it_behaves_like "callbacks", :save,    :before_save, :before_update, :after_update, :after_save
-      it_behaves_like "callbacks", :destroy, :before_destroy, :after_destroy
+      it_behaves_like "callbacks", :create,  :before_load, :before_save, :before_create, :before_create_2, :before_create_block, :after_create, :after_save, :after_load
+      it_behaves_like "callbacks", :update,  :before_load, :before_save, :before_update, :after_update, :after_save, :after_load
+      it_behaves_like "callbacks", :save,    :before_load, :before_find, :after_find, :after_load, :before_load, :before_save, :before_update, :after_update, :after_save, :after_load
+      it_behaves_like "callbacks", :destroy, :before_load, :before_destroy, :after_destroy, :after_load
     end
 
     context "on invalid entity" do
       let(:entity) { persisted_user.tap { |u| u.first_name = 'f' } }
 
-      it_behaves_like "callbacks", :create,  :before_save, :before_create, :before_create_2, :before_create_block
-      it_behaves_like "callbacks", :update,  :before_save, :before_update
-      it_behaves_like "callbacks", :save,    :before_save, :before_update
-      it_behaves_like "callbacks", :destroy, :before_destroy, :after_destroy
+      it_behaves_like "callbacks", :create,  :before_load, :before_save, :before_create, :before_create_2, :before_create_block
+      it_behaves_like "callbacks", :update,  :before_load, :before_save, :before_update
+      it_behaves_like "callbacks", :save,    :before_load, :before_find, :after_find, :after_load, :before_load, :before_save, :before_update
+      it_behaves_like "callbacks", :destroy, :before_load, :before_destroy, :after_destroy, :after_load
     end
   end
 

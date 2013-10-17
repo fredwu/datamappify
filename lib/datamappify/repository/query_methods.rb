@@ -17,7 +17,9 @@ module Datamappify
       #
       # @return [Boolean]
       def exists?(entity)
-        QueryMethod::Exists.new(query_options, entity).perform
+        run_callbacks entity, :load, :find do
+          QueryMethod::Exists.new(query_options, entity).perform
+        end
       end
 
       # @param criteria [Integer, String]
@@ -25,7 +27,9 @@ module Datamappify
       #
       # @return [Entity, nil]
       def find(criteria)
-        QueryMethod::Find.new(query_options, criteria).perform
+        run_callbacks criteria, :load, :find do
+          QueryMethod::Find.new(query_options, criteria).perform
+        end
       end
 
       # @param criteria [Hash]
@@ -33,7 +37,9 @@ module Datamappify
       #
       # @return [Entity]
       def where(criteria)
-        QueryMethod::Where.new(query_options, criteria).perform
+        QueryMethod::Where.new(query_options, criteria).perform.map do |entity|
+          run_callbacks(entity, :load, :find) { entity }
+        end
       end
 
       # @param criteria [Hash]
@@ -41,14 +47,18 @@ module Datamappify
       #
       # @return [Entity]
       def match(criteria)
-        QueryMethod::Match.new(query_options, criteria).perform
+        QueryMethod::Match.new(query_options, criteria).perform.map do |entity|
+          run_callbacks(entity, :load, :find) { entity }
+        end
       end
 
       # Returns a collection of all the entities in the repository
       #
       # @return [Array<Entity>]
       def all
-        QueryMethod::Where.new(query_options, {}).perform
+        QueryMethod::Where.new(query_options, {}).perform.map do |entity|
+          run_callbacks(entity, :load, :find) { entity }
+        end
       end
 
       # @param criteria [Hash]
@@ -56,7 +66,9 @@ module Datamappify
       #
       # @return [Array<Entity>]
       def criteria(criteria)
-        QueryMethod::Criteria.new(query_options, criteria).perform
+        QueryMethod::Criteria.new(query_options, criteria).perform.map do |entity|
+          run_callbacks(entity, :load, :find) { entity }
+        end
       end
 
       # @param entity [Entity]
@@ -64,7 +76,7 @@ module Datamappify
       #
       # @return [Entity, false]
       def create(entity)
-        run_callbacks entity, :save, :create do
+        run_callbacks entity, :load, :save, :create do
           QueryMethod::Create.new(query_options, entity).perform
         end
       end
@@ -83,7 +95,7 @@ module Datamappify
       #
       # @return [Entity, false]
       def update(entity)
-        run_callbacks entity, :save, :update do
+        run_callbacks entity, :load, :save, :update do
           QueryMethod::Update.new(query_options, entity).perform
         end
       end
@@ -118,7 +130,7 @@ module Datamappify
       #
       # @return [void, false]
       def destroy(entity)
-        run_callbacks entity, :destroy do
+        run_callbacks entity, :load, :destroy do
           QueryMethod::Destroy.new(query_options, entity).perform
         end
       end

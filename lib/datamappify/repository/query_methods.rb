@@ -11,6 +11,17 @@ module Datamappify
         end
       end
 
+      # Initialises the entity so hooks can be attached
+      #
+      # @param entity_class [Class]
+      #
+      # @return [Entity]
+      def init(entity_class)
+        run_callbacks_and_return_entity entity_class, :init do
+          entity_class.new
+        end
+      end
+
       # Does the entity exist already in the repository?
       #
       # @param entity [Entity]

@@ -380,16 +380,28 @@ Note that due to the attributes mapping, any data found in mapped records are no
 UserRepository.destroy(user)
 ```
 
+#### Initialising an entity
+
+Accepts an entity class and returns a new entity.
+
+This is useful for using `before_init` and `after_init` callbacks to set up the entity.
+
+```ruby
+UserRepository.init(user_class) #=> user
+```
+
 #### Callbacks
 
 Datamappify supports the following callbacks via [Hooks](https://github.com/apotonick/hooks):
 
+- before_init
 - before_load
 - before_find
 - before_create
 - before_update
 - before_save
 - before_destroy
+- before_init
 - after_create
 - after_update
 - after_save

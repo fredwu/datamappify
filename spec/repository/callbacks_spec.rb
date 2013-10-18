@@ -8,6 +8,7 @@ shared_examples_for "callbacks" do |query_method, *performed_callbacks|
   end
 
   all_callbacks = [
+    :before_init,    :after_init,
     :before_load,    :after_load,
     :before_find,    :after_find,
     :before_create,  :after_create,
@@ -38,6 +39,18 @@ describe Datamappify::Repository do
   it { valid_user.valid?.should == true }
   it { invalid_user.valid?.should == false }
 
+  context "#init" do
+    let(:criteria) { HeroUser }
+    let(:entity)   { HeroUser.new }
+
+    it "returns entity instead of criteria" do
+      HeroUserRepository.instance.should_receive(:performed).with(:before_init, criteria)
+      HeroUserRepository.instance.should_receive(:performed).with(:after_init, entity)
+
+      HeroUserRepository.init(criteria)
+    end
+  end
+
   context "#find" do
     context "found" do
       let(:criteria) { valid_user.id }
@@ -53,13 +66,12 @@ describe Datamappify::Repository do
         HeroUserRepository.instance.should_receive(:performed).with(:after_find, entity)
         HeroUserRepository.instance.should_receive(:performed).with(:after_load, entity)
 
-        HeroUserRepository.find(valid_user.id)
+        HeroUserRepository.find(criteria)
       end
     end
 
     context "not found" do
-      let(:criteria) { 42 }
-      let(:entity)   { criteria }
+      let(:entity) { 42 }
 
       it_behaves_like "callbacks", :find,    :before_load, :before_find
     end

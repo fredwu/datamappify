@@ -11,6 +11,7 @@ class HeroUserRepository
     map_attribute :gender,    :to => 'HeroUserLastName#gender'
   end
 
+  before_init    :action_before_init
   before_load    :action_before_load
   before_find    :action_before_find
   before_create  :action_before_create
@@ -20,6 +21,7 @@ class HeroUserRepository
   before_save    :action_before_save
   before_destroy :action_before_destroy
 
+  after_init     :action_after_init
   after_load     :action_after_load
   after_find     :action_after_find
   after_create   :action_after_create
@@ -29,6 +31,7 @@ class HeroUserRepository
 
   private
 
+  def action_before_init    (entity); performed(:before_init,     entity); true; end
   def action_before_load    (entity); performed(:before_load,     entity); true; end
   def action_before_find    (entity); performed(:before_find,     entity); true; end
   def action_before_create  (entity); performed(:before_create,   entity); true; end
@@ -37,6 +40,7 @@ class HeroUserRepository
   def action_before_save    (entity); performed(:before_save,     entity); true; end
   def action_before_destroy (entity); performed(:before_destroy,  entity); true; end
 
+  def action_after_init     (entity); performed(:after_init,      entity); true; end
   def action_after_load     (entity); performed(:after_load,      entity); true; end
   def action_after_find     (entity); performed(:after_find,      entity); true; end
   def action_after_create   (entity); performed(:after_create,    entity); true; end

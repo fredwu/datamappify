@@ -29,8 +29,6 @@ RSpec.configure do |config|
   DatabaseCleaner[:sequel].strategy        = :truncation
   DatabaseCleaner[:active_record].strategy = :truncation
 
-  require File.expand_path('../support/monkey_patches/database_cleaner.rb', __FILE__)
-
   config.before do
     DatabaseCleaner.clean
   end

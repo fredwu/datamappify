@@ -51,6 +51,10 @@ module Datamappify
           def_delegators :instance, *QueryMethods.instance_methods
         end
       end
+
+      def method_missing(symbol, *args, &block)
+        instance.send(symbol, *args, &block)
+      end
     end
   end
 end

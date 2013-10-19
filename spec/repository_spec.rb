@@ -10,8 +10,24 @@ shared_examples_for "a repository" do |data_provider|
       namespace.const_defined?(:User, false).should == true
     end
 
-    it "delegates methods to the instance singleton" do
-      expect { "UserRepository#{data_provider}".constantize.find(1) }.to_not raise_error
+    describe "delegation" do
+      subject { "UserRepository#{data_provider}".constantize }
+
+      it "delegates methods to the instance singleton" do
+        expect { subject.find(1) }.to_not raise_error
+      end
+
+      describe "catch-all delegation" do
+        before do
+          user_repository.class_eval do
+            attr_reader :dummy_method
+          end
+        end
+
+        it "delegates other methods to the instance singleton" do
+          expect { subject.dummy_method }.to_not raise_error
+        end
+      end
     end
   end
 end

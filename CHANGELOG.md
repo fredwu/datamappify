@@ -4,6 +4,7 @@
 - Added `has_one` association.
 - Added `before_load`, `after_load`, `before_find` and `after_find` callbacks.
 - Added `before_init` and `after_init` callbacks.
+- Added `offset` argument to the `limit` criteria.
 
 ## 0.70.0.beta1 [2013-09-26]
 

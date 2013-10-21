@@ -319,7 +319,7 @@ users = UserRepository.criteria(
   :order => {
     :last_name => :asc
   },
-  :limit => 10
+  :limit => [10, 20]
 )
 ```
 
@@ -328,7 +328,7 @@ Currently implemented criteria options:
 - where(Hash)
 - match(Hash)
 - order(Hash)
-- limit(Integer)
+- limit(Array<limit(Integer), offset(Integer)>)
 
 _Note: it does not currently support searching attributes from different data providers._
 

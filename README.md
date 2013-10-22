@@ -401,13 +401,13 @@ Datamappify supports the following callbacks via [Hooks](https://github.com/apot
 - before_update
 - before_save
 - before_destroy
-- before_init
+- after_init
+- after_load
+- after_find
 - after_create
 - after_update
 - after_save
 - after_destroy
-- after_find
-- after_load
 
 Callbacks are defined in repositories, and they have access to the entity. For example:
 

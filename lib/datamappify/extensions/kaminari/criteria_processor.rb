@@ -1,3 +1,5 @@
+require 'datamappify/extensions/kaminari/collection_methods'
+
 module Datamappify
   module Extensions
     module Kaminari
@@ -7,6 +9,8 @@ module Datamappify
           process_criteria!(criteria)
 
           collection = super
+
+          collection.class_eval { include CollectionMethods }
 
           collection.limit_value  = @limit
           collection.offset_value = @offset

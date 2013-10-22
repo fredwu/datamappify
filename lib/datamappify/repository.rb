@@ -1,3 +1,8 @@
+begin
+  require 'kaminari'
+rescue LoadError
+end
+
 require 'datamappify/repository/lazy_checking'
 require 'datamappify/repository/mapping_dsl'
 require 'datamappify/repository/unit_of_work'

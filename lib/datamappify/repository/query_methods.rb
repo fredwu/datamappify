@@ -8,6 +8,11 @@ module Datamappify
       def self.included(klass)
         klass.class_eval do
           include QueryMethod::Callbacks
+
+          if defined?(Kaminari)
+            require 'datamappify/extensions/kaminari/criteria_processor'
+            include Extensions::Kaminari::CriteriaProcessor
+          end
         end
       end
 
@@ -155,9 +160,12 @@ module Datamappify
         destroy(entity) || raise(Data::EntityNotDestroyed.new(entity.errors))
       end
 
+      # @param criteria [Hash]
+      #   a hash containing criteria
+      #
       # @return [Integer]
-      def count
-        QueryMethod::Count.new(query_options).perform
+      def count(criteria = {})
+        QueryMethod::Count.new(query_options, criteria).perform
       end
 
       private

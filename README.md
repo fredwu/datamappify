@@ -536,6 +536,25 @@ Datamappify.config do |c|
 end
 ```
 
+### Built-in extensions
+
+Datamappify ships with a few extensions to make certain tasks easier.
+
+#### Kaminari
+
+Use `Criteria` with `page` and `per`.
+
+```
+UserRepository.criteria(
+  :where => {
+    :gender => 'male',
+    :age    => 42
+  },
+  :page => 1,
+  :per  => 10
+)
+```
+
 ## API Documentation
 
 - [Rubygem release version](http://rubydoc.info/gems/datamappify/frames)

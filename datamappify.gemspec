@@ -35,5 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "sequel"
   spec.add_development_dependency "activerecord",     "~> 4.0.0"
+  spec.add_development_dependency "kaminari"
   spec.add_development_dependency "database_cleaner", "~> 1.2.0"
 end

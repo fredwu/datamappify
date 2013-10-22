@@ -4,7 +4,9 @@ module Datamappify
       class Count < Method
         # @return [Integer]
         def perform
-          dispatch_criteria_to_default_source(:Count)
+          dispatch_criteria_to_default_source(
+            :Count, data_mapper.entity_class, criteria, data_mapper.attributes
+          )
         end
 
         # @see Method#reader?

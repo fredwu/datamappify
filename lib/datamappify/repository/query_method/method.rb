@@ -29,6 +29,8 @@ module Datamappify
           @lazy_load   = options[:lazy_load?]
 
           @entity = @criteria = entity_or_criteria
+
+          @criteria.symbolize_keys! if @criteria.is_a?(Hash)
         end
 
         # Should the method be aware of the dirty state?

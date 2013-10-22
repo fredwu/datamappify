@@ -544,7 +544,7 @@ Datamappify ships with a few extensions to make certain tasks easier.
 
 Use `Criteria` with `page` and `per`.
 
-```
+```ruby
 UserRepository.criteria(
   :where => {
     :gender => 'male',

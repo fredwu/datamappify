@@ -1,5 +1,7 @@
 ## master
 
+## 0.70.0.beta2 [2013-10-22]
+
 - Proper dirty tracking in record updating, fixes an issue of setting an attribute to `nil`.
 - Added `has_one` association.
 - Added `before_load`, `after_load`, `before_find` and `after_find` callbacks.

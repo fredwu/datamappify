@@ -14,7 +14,7 @@ module Datamappify
             class_eval <<-CODE, __FILE__, __LINE__ + 1
               module Datamappify::Data::Record::ActiveRecord
                 class #{source_class_name} < ::ActiveRecord::Base
-                  self.table_name = '#{source_class_name.pluralize.gsub('::', '_').underscore}'
+                  self.table_name = '#{scoped_tableize(source_class_name)}'
                 end
               end
             CODE
@@ -38,6 +38,11 @@ module Datamappify
                          :class_name  => :"#{attribute.source_class.name}",
                          :foreign_key => :#{attribute.options[:via]}
             CODE
+          end
+
+          # @return [String]
+          def provider_name
+            'ActiveRecord'
           end
         end
       end

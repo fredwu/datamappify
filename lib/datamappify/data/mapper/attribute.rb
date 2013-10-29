@@ -73,7 +73,7 @@ module Datamappify
         #
         # @return [Symbol]
         def source_table
-          @source_table ||= source_class_name.pluralize.underscore.to_sym
+          @source_table ||= ::Datamappify::Data::Provider.scoped_tableize(source_class_name).to_sym
         end
 
         # @return [Boolean]
@@ -83,7 +83,7 @@ module Datamappify
 
         # @return [String]
         def primary_provider_name
-          @primary_provider_name ||= primary_source_class.parent.to_s.demodulize
+          @primary_provider_name ||= primary_source_class.provider_name
         end
 
         # Foreign key of the primary record, useful for joins

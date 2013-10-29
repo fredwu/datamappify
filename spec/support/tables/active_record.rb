@@ -112,5 +112,9 @@ ActiveRecord::Migration.suppress_messages do
       t.references :computer
       t.timestamps
     end
+
+    create_table :fridge_freezers do |t|
+      t.text :door
+    end
   end
 end

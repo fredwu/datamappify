@@ -9,6 +9,8 @@ module Datamappify
         end
 
         module ModuleMethods
+          delegate :scoped_tableize, :to => Provider
+
           # Loads all the criteria files from the data provider
           #
           # @return [void]
@@ -73,11 +75,6 @@ module Datamappify
                 '#{provider_name}'
               end
             CODE
-          end
-
-          # @return [String]
-          def scoped_tableize(class_name)
-            ::Datamappify::Data::Provider.scoped_tableize(class_name)
           end
 
           # @return [Boolean]

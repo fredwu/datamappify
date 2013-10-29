@@ -73,7 +73,7 @@ module Datamappify
         #
         # @return [Symbol]
         def source_table
-          @source_table ||= ::Datamappify::Data::Provider.scoped_tableize(source_class_name).to_sym
+          @source_table ||= Provider.scoped_tableize(source_class_name).to_sym
         end
 
         # @return [Boolean]

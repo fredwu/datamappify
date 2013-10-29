@@ -138,3 +138,7 @@ DB.create_table :computer_component_softwares do |t|
   DateTime :created_at
   DateTime :updated_at
 end
+
+DB.create_table :fridge_freezers do |t|
+  String :door
+end

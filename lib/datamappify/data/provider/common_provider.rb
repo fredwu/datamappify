@@ -9,6 +9,8 @@ module Datamappify
         end
 
         module ModuleMethods
+          delegate :scoped_tableize, :to => Provider
+
           # Loads all the criteria files from the data provider
           #
           # @return [void]
@@ -39,7 +41,7 @@ module Datamappify
             record_class = source_class_name.safe_constantize
 
             # check for existing record class
-            if record_class && !entity_class?(source_class_name)
+            record_class = if record_class && !entity_class?(source_class_name)
               record_class
 
             # check for existing record class in the Datamappify::Data::Record::Provider namespace
@@ -50,9 +52,30 @@ module Datamappify
             else
               build_record_class(source_class_name)
             end
+
+            annotate_provider_name(record_class)
+            record_class
+          end
+
+          # A provider must provide it's name. e.g. ActiveRecord or Sequel
+          #
+          # @return [String]
+          def provider_name
+            raise NotImplementedError
           end
 
           private
+
+          # Ensure the record class knows the name of the provider that owns it.
+          #
+          # @param class_instance [Class]
+          def annotate_provider_name(record_class)
+            record_class.instance_eval <<-CODE, __FILE__, __LINE__ + 1
+              def provider_name
+                '#{provider_name}'
+              end
+            CODE
+          end
 
           # @return [Boolean]
           def entity_class?(source_class_name)

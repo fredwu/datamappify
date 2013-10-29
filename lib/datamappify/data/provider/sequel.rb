@@ -13,7 +13,7 @@ module Datamappify
           def build_record_class(source_class_name)
             class_eval <<-CODE, __FILE__, __LINE__ + 1
               module Datamappify::Data::Record::Sequel
-                class #{source_class_name} < ::Sequel::Model(:#{source_class_name.pluralize.gsub('::', '_').underscore})
+                class #{source_class_name} < ::Sequel::Model(:#{scoped_tableize(source_class_name)})
                   raise_on_save_failure = true
                   unrestrict_primary_key
                 end
@@ -43,6 +43,10 @@ module Datamappify
                           :class => :"#{attribute.source_class.name}",
                           :key   => :#{attribute.options[:via]}
             CODE
+          end
+
+          def provider_name
+            'Sequel'
           end
         end
       end

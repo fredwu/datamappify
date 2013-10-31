@@ -570,6 +570,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 ## Todo
 
+- Performance tuning and query optimisation
 - [Authoritative source](http://msdn.microsoft.com/en-au/library/ff649505.aspx).
 - Support for configurable primary keys and reference (foreign) keys.
 

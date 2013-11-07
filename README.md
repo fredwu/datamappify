@@ -591,3 +591,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 ## License
 
 Licensed under [MIT](http://fredwu.mit-license.org/)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fredwu/datamappify/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

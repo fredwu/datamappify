@@ -1,3 +1,11 @@
+__Datamappify is no longer being maintained. It started off with a noble goal, unfortunately due to it being on the critical path of our project, we have decided not to continue developing it given the lack of development time from me.__
+
+Feel free to read the README and browse the code, I still believe in the solutions for this particular domain.
+
+For a more active albeit still young project, check out [Lotus::Model](https://github.com/lotus/model).
+
+---
+
 # Datamappify [![Gem Version](https://badge.fury.io/rb/datamappify.png)](http://badge.fury.io/rb/datamappify) [![Build Status](https://api.travis-ci.org/fredwu/datamappify.png?branch=master)](http://travis-ci.org/fredwu/datamappify) [![Coverage Status](https://coveralls.io/repos/fredwu/datamappify/badge.png)](https://coveralls.io/r/fredwu/datamappify) [![Code Climate](https://codeclimate.com/github/fredwu/datamappify.png)](https://codeclimate.com/github/fredwu/datamappify)
 
 #### Compose, decouple and manage domain logic and data persistence separately. Works particularly great for composing form objects!
@@ -585,7 +593,7 @@ Refer to [CHANGELOG](CHANGELOG.md).
 
 - [Fred Wu](http://fredwu.me/) - author.
 - [James Ladd](http://jamesladdcode.com/) for reviewing the code and giving advice on architectural decisions.
-- [Locomote](http://www.locomote.com.au/) - where Datamappify is built and used in our products.
+- [Locomote](http://www.locomote.com.au/) - where Datamappify was built.
 - And with these [awesome contributors](https://github.com/fredwu/datamappify/contributors)!
 
 ## License

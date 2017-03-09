@@ -37,6 +37,12 @@ ActiveRecord::Migration.suppress_messages do
       t.timestamps
     end
 
+    create_table :dumb_users do |t|
+      t.string :first_name, :null => false
+      t.string :surname
+      t.timestamps
+    end
+
     create_table :comments do |t|
       t.string :content
       t.references :user

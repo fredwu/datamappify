@@ -41,6 +41,12 @@ DB.create_table :user_infos do
   DateTime :updated_at
 end
 
+DB.create_table :dumb_users do
+  primary_key :id
+  String :first_name, :null => false
+  String :surname
+end
+
 DB.create_table :comments do
   primary_key :id
   String :content
